@@ -16,7 +16,7 @@ void graphics_loop(Menu * m, bool * exit)
     while(!(*exit))
     {
         erase();
-        m->show();
+        m->draw();
         refresh();
         napms(1);
     }
@@ -27,13 +27,9 @@ int main()
     cout << "Snake v" << Snake_VERSION_MAJOR << "." << Snake_VERSION_MINOR << endl;
 
     Menu myMenu({"Play","Game Settings","Exit","Test Option 7","balala ub"});
-
-    myMenu.setPosition(15,60);
-
-    //nodelay(stdscr, TRUE);
+    myMenu.setPosition(15,10);
     
     int input;
-
     bool exit{false};
 
     thread g_thread(graphics_loop, &myMenu, &exit);
@@ -43,13 +39,7 @@ int main()
     curs_set(0);
     keypad(stdscr,TRUE);
     while(true)
-    {
-        //erase();
-        //myMenu.show();
-        //move(10,0);
-        //addstr(to_string(counter).c_str());
-        //refresh();
-        
+    {   
         input = getch();
 
         if(input=='q')

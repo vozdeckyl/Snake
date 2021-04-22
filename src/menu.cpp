@@ -29,7 +29,7 @@ void Menu::setPosition(unsigned int vertical, unsigned int horizontal)
     m_horizontal_position = horizontal;
 }
 
-void Menu::show()
+void Menu::draw()
 {
     init_pair(1,COLOR_WHITE,COLOR_RED);
 

@@ -4,10 +4,11 @@
 #include <vector>
 #include <string>
 #include <mutex>
+#include "IDrawable.h"
 
 using namespace std;
 
-class Menu {
+class Menu : public iDrawable{
 public:
     Menu(vector<string> entries);
     Menu();
@@ -15,7 +16,7 @@ public:
     
     void addEntry(string entryText);
     void setPosition(unsigned int vertical, unsigned int horizontal);
-    void show();
+    void draw() override;
     void moveSelectorUp();
     void moveSelectorDown();
 
