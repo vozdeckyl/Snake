@@ -13,7 +13,13 @@ Menu::Menu(vector<string> entries) : Menu()
     }
 }
 
-Menu::Menu() : m_selector(0) {}
+Menu::Menu() : m_selector(0), m_vertical_position(0), m_horizontal_position(0) {}
+
+//copy constructor
+Menu::Menu(const Menu & other) : Menu()
+{
+    m_entries = other.getEntries();
+}
 
 //destructor
 Menu::~Menu(){}
@@ -69,4 +75,9 @@ void Menu::moveSelectorDown()
     int numOfEntries = m_entries.size();
     lock_guard<mutex> guard(m_selector_mutex);
     if(m_selector != numOfEntries-1) m_selector++;
+}
+
+vector<string> Menu::getEntries() const
+{
+    return m_entries;
 }

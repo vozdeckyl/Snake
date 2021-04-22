@@ -8,10 +8,11 @@
 
 using namespace std;
 
-class Menu : public iDrawable{
+class Menu : public IDrawable{
 public:
     Menu(vector<string> entries);
     Menu();
+    Menu(const Menu & other);
     ~Menu();
     
     void addEntry(string entryText);
@@ -19,6 +20,7 @@ public:
     void draw() override;
     void moveSelectorUp();
     void moveSelectorDown();
+    vector<string> getEntries() const;
 
 private:
     vector<string> m_entries;
