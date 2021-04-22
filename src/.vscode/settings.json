@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "*.in": "cpp",
-        "thread": "cpp",
-        "atomic": "cpp",
-        "ostream": "cpp"
-    }
-}
