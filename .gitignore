@@ -1,2 +1,3 @@
 #ignore the binary files
 build/
+src/.vscode
