@@ -20,9 +20,8 @@ void Counter::setInterval(unsigned int interval)
 
 void Counter::draw()
 {
-    move(m_vertical_position,m_horizontal_position);
     lock_guard<mutex> guard(m_counter_mutex);
-    addstr(to_string(m_counter).c_str());
+    mvprintw(m_vertical_position,m_horizontal_position, to_string(m_counter).c_str());
 }
 
 void Counter::update()

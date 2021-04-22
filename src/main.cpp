@@ -15,10 +15,7 @@ void graphics_loop(vector<IDrawable*> drawableElements, bool * exit)
      * all the drawable objects and calls draw() on them.
      */
 
-    initscr();
-    start_color();
-    curs_set(0);
-    clear();
+    noecho();
     while(!(*exit))
     {
         erase();
@@ -33,6 +30,18 @@ void graphics_loop(vector<IDrawable*> drawableElements, bool * exit)
     }
 }
 
+void update_loop(vector<IUpdatable*> updatableElements, bool * exit)
+{
+    while(!(*exit))
+    {
+        for(IUpdatable * element : updatableElements)
+        {
+            element->update();
+        }
+        napms(1);
+    }
+}
+
 
 int main()
 {
@@ -41,21 +50,35 @@ int main()
     Menu * myMenu = new Menu({"Play","Game Settings","Exit","Test Option 7","balala ub"});
     myMenu->setPosition(15,10);
 
-    Counter * counterOfSeconds = new Counter();
+    Counter * secondCounter = new Counter();
+    Counter * miliCounter = new Counter();
+    miliCounter->setInterval(1);
+    miliCounter->setPosition(1,0);
 
-    vector<IDrawable*> elements;
-    elements.push_back(myMenu);
-    elements.push_back(counterOfSeconds);
+    vector<IDrawable*> drawables;
+    drawables.push_back(myMenu);
+    drawables.push_back(secondCounter);
+    drawables.push_back(miliCounter);
+
+    vector<IUpdatable*> updatables;
+    updatables.push_back(secondCounter);
+    updatables.push_back(miliCounter);
     
     int input;
     bool exit{false};
 
-    thread g_thread(graphics_loop, elements, &exit);
+    thread g_thread(graphics_loop, drawables, &exit);
+    thread u_thread(update_loop, updatables, &exit);
+
+    
 
     initscr();
     start_color();
     curs_set(0);
     keypad(stdscr,TRUE);
+    cbreak();
+    noecho();
+
     while(true)
     {   
         input = getch();
@@ -77,6 +100,6 @@ int main()
     }
 
     g_thread.join();
-
+    u_thread.join();
     endwin();   
 }

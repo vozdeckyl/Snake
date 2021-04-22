@@ -45,20 +45,19 @@ void Menu::draw()
 
     for(string entry : m_entries)
     {
-        move(m_vertical_position+counter,m_horizontal_position);
+        //move(m_vertical_position+counter,m_horizontal_position);
         
         if(counter==m_selector)
         {
             // if the menu item is selected, decorate it:
             attrset(COLOR_PAIR(1));
-            addstr(">");
-            addstr(entry.c_str());
-            addstr("<");
-            attrset(0); 
+            mvprintw(m_vertical_position+counter,m_horizontal_position-1, (">" + entry + "<").c_str());
+            attrset(0);
         }
         else
         {
-            addstr(entry.c_str());
+            //addstr(entry.c_str());
+            mvprintw(m_vertical_position+counter,m_horizontal_position, entry.c_str());
         }
         counter++;
     }   
