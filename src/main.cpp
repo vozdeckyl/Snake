@@ -101,5 +101,10 @@ int main()
 
     g_thread.join();
     u_thread.join();
+
+    delete myMenu;
+    delete secondCounter;
+    delete miliCounter;
+
     endwin();   
 }
