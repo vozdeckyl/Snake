@@ -113,5 +113,5 @@ int main()
     delete miliCounter;
     delete versionNumber;
 
-    endwin();   
+    endwin();
 }
