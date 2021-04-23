@@ -5,6 +5,7 @@
 #include <mutex>
 #include "IDrawable.h"
 
+
 using namespace std;
 
 class Window {
@@ -19,7 +20,7 @@ class Window {
         void graphicsLoop();
         void updateLoop();
         void notifyLoop();
-        
+
         bool exit();
         void shutDown();
 
