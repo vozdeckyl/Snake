@@ -9,6 +9,7 @@ using namespace std;
 class Counter : public IDrawable {
 public:
     Counter();
+    Counter(unsigned int interval);
     ~Counter();
 
     void setInterval(unsigned int intervalMS);

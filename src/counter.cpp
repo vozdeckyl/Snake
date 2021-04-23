@@ -2,7 +2,10 @@
 #include "counter.h"
 
 
-Counter::Counter() : IDrawable(), m_counter(0), m_pulse_counter(0), m_interval(1000){}
+Counter::Counter(unsigned int interval) : IDrawable(), m_counter(0), m_pulse_counter(0), m_interval(interval){}
+
+Counter::Counter() : Counter(1000){}
+
 
 Counter::~Counter() {}
 

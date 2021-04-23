@@ -12,7 +12,7 @@ class Window {
         Window();
         ~Window();
 
-        void addElement(IDrawable * element);
+        void addElement(IDrawable * element, unsigned int yPosition, unsigned int xPosition);
         void run();
         bool exit();
         void shutDown();

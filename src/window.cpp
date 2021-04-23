@@ -18,8 +18,9 @@ Window::~Window()
     endwin();
 }
 
-void Window::addElement(IDrawable * element)
+void Window::addElement(IDrawable * element, unsigned int yPosition, unsigned int xPosition)
 {
+    element->setPosition(yPosition,xPosition);
     m_elements.push_back(element);
 }
 
@@ -89,7 +90,7 @@ void Window::updateLoop()
 void Window::notifyLoop()
 {
     int input;
-    
+
     while(!exit())
     {   
         input = getch();
