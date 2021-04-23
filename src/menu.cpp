@@ -13,7 +13,7 @@ Menu::Menu(vector<string> entries) : Menu()
     }
 }
 
-Menu::Menu() : m_selector(0), m_vertical_position(0), m_horizontal_position(0) {}
+Menu::Menu() : IDrawable(), m_selector(0){}
 
 //copy constructor
 Menu::Menu(const Menu & other) : Menu()
@@ -29,11 +29,6 @@ void Menu::addEntry(string entry)
     m_entries.push_back(entry);
 }
 
-void Menu::setPosition(unsigned int vertical, unsigned int horizontal)
-{
-    m_vertical_position = vertical;
-    m_horizontal_position = horizontal;
-}
 
 void Menu::draw()
 {
@@ -61,6 +56,18 @@ void Menu::draw()
         }
         counter++;
     }   
+}
+
+void Menu::notify(int ch)
+{
+    if(ch==KEY_DOWN)
+    {
+        moveSelectorDown();
+    }
+    else if(ch==KEY_UP)
+    {
+        moveSelectorUp();
+    }
 }
 
 void Menu::moveSelectorUp()

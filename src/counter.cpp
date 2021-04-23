@@ -2,16 +2,9 @@
 #include "counter.h"
 
 
-Counter::Counter() : m_counter(0), m_pulse_counter(0), m_interval(1000),
-                    m_vertical_position(0), m_horizontal_position(0) {}
+Counter::Counter() : IDrawable(), m_counter(0), m_pulse_counter(0), m_interval(1000){}
 
 Counter::~Counter() {}
-
-void Counter::setPosition(unsigned int vertical, unsigned int horizontal)
-{
-    m_vertical_position = vertical;
-    m_horizontal_position = horizontal;
-}
 
 void Counter::setInterval(unsigned int interval)
 {

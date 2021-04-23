@@ -22,7 +22,10 @@ void graphics_loop(vector<IDrawable*> drawableElements, bool * exit)
         
         for(IDrawable * element : drawableElements)
         {
-            element->draw();
+            if(element->isVisible())
+            {
+                element->draw();
+            }
         }
 
         refresh();
@@ -30,13 +33,16 @@ void graphics_loop(vector<IDrawable*> drawableElements, bool * exit)
     }
 }
 
-void update_loop(vector<IUpdatable*> updatableElements, bool * exit)
+void update_loop(vector<IDrawable*> updatableElements, bool * exit)
 {
     while(!(*exit))
     {
-        for(IUpdatable * element : updatableElements)
+        for(IDrawable * element : updatableElements)
         {
-            element->update();
+            if(element->isUpdatable())
+            {
+                element->update();
+            }
         }
         napms(1);
     }
@@ -55,20 +61,16 @@ int main()
     miliCounter->setInterval(1);
     miliCounter->setPosition(1,0);
 
-    vector<IDrawable*> drawables;
-    drawables.push_back(myMenu);
-    drawables.push_back(secondCounter);
-    drawables.push_back(miliCounter);
-
-    vector<IUpdatable*> updatables;
-    updatables.push_back(secondCounter);
-    updatables.push_back(miliCounter);
+    vector<IDrawable*> elements;
+    elements.push_back(myMenu);
+    elements.push_back(secondCounter);
+    elements.push_back(miliCounter);
     
     int input;
     bool exit{false};
 
-    thread g_thread(graphics_loop, drawables, &exit);
-    thread u_thread(update_loop, updatables, &exit);
+    thread g_thread(graphics_loop, elements, &exit);
+    thread u_thread(update_loop, elements, &exit);
 
     
 
@@ -88,15 +90,14 @@ int main()
             exit = true;
             break;
         }
-        else if(input==KEY_DOWN)
-        {
-            myMenu->moveSelectorDown();
-        }
-        else if(input==KEY_UP)
-        {
-            myMenu->moveSelectorUp();
-        }
         
+        for(IDrawable * element : elements)
+        {
+            if(element->isNotifiable())
+            {
+                element->notify(input);
+            }
+        }
     }
 
     g_thread.join();

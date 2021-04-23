@@ -14,10 +14,17 @@ public:
     Menu();
     Menu(const Menu & other);
     ~Menu();
-    
-    void addEntry(string entryText);
-    void setPosition(unsigned int vertical, unsigned int horizontal);
+
     void draw() override;
+    bool isVisible() override {return true;};
+
+    void update() override {};
+    bool isUpdatable() override {return false;};
+
+    void notify(int ch) override;
+    bool isNotifiable() override {return true;};
+
+    void addEntry(string entryText);
     void moveSelectorUp();
     void moveSelectorDown();
     vector<string> getEntries() const;
@@ -26,9 +33,6 @@ private:
     vector<string> m_entries;
     int m_selector;
     mutex m_selector_mutex;
-    unsigned int m_vertical_position;
-    unsigned int m_horizontal_position;
-
 };
 
 #endif

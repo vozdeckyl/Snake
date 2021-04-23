@@ -3,20 +3,24 @@
 
 #include <mutex>
 #include "IDrawable.h"
-#include "IUpdatable.h"
 
 using namespace std;
 
-class Counter : public IDrawable, public IUpdatable{
+class Counter : public IDrawable {
 public:
     Counter();
     ~Counter();
-    
-    void setPosition(unsigned int vertical, unsigned int horizontal);
+
     void setInterval(unsigned int intervalMS);
 
     void draw() override;
+    bool isVisible() override {return true;};
+
     void update() override;
+    bool isUpdatable() override {return true;};
+
+    void notify(int ch) override {};
+    bool isNotifiable() override {return false;};
 
 private:
     unsigned int m_counter;
@@ -24,9 +28,6 @@ private:
     unsigned int m_interval;
 
     mutex m_counter_mutex;
-
-    unsigned int m_vertical_position;
-    unsigned int m_horizontal_position;
 };
 
 #endif
