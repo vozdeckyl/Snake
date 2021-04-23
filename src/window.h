@@ -14,13 +14,14 @@ class Window {
 
         void addElement(IDrawable * element, unsigned int yPosition, unsigned int xPosition);
         void run();
-        bool exit();
-        void shutDown();
 
     private:
         void graphicsLoop();
         void updateLoop();
         void notifyLoop();
+        
+        bool exit();
+        void shutDown();
 
     private:
         vector<IDrawable*> m_elements;
