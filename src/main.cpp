@@ -27,9 +27,10 @@ int main()
     preGameWindow.addElement(versionNumber,5,10);
     
     preGameWindow.run();
-
+    /*
     delete myMenu;
     delete secondCounter;
     delete miliCounter;
     delete versionNumber;
+    */
 }

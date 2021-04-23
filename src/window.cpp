@@ -15,6 +15,10 @@ Window::Window() : m_exit(false)
 
 Window::~Window()
 {
+    for(IDrawable * element : m_elements)
+    {
+        delete element;
+    }
     endwin();
 }
 

@@ -4,7 +4,7 @@
 class IDrawable {
     public:
         IDrawable() : m_vertical_position(0), m_horizontal_position(0) {};
-        ~IDrawable() {};
+        virtual ~IDrawable() {};
         virtual void draw() = 0;
         virtual void update() = 0;
         virtual void notify(int ch) = 0;
