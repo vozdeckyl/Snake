@@ -16,13 +16,15 @@ public:
     ~Menu();
 
     void draw() override;
-    bool isVisible() override {return true;};
+    bool isVisible() override {return true;}
 
     void update() override {};
-    bool isUpdatable() override {return false;};
+    bool isUpdatable() override {return false;}
 
     void notify(int ch) override;
-    bool isNotifiable() override {return true;};
+    bool isNotifiable() override {return true;}
+
+    virtual int getResult() override {return m_selector;}
 
     void addEntry(string entryText);
     void moveSelectorUp();

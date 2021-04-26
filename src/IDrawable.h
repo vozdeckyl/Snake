@@ -19,6 +19,8 @@ class IDrawable {
             m_horizontal_position=horizontal;
         }
 
+        virtual int getResult() {return -1;}
+
     protected:
         unsigned int m_vertical_position;
         unsigned int m_horizontal_position;

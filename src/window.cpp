@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <thread>
 #include "window.h"
+#include "result.h"
 
 Window::Window() : m_exit(false), m_nextObjectID(0)
 {
@@ -30,7 +31,7 @@ ObjectID Window::addElement(IDrawable * element, unsigned int yPosition, unsigne
     return (m_nextObjectID-1);
 }
 
-void Window::run()
+Result * Window::run()
 {
     thread graphicsThread(&Window::graphicsLoop, this);
     thread updateThread(&Window::updateLoop, this);
@@ -39,6 +40,8 @@ void Window::run()
     graphicsThread.join();
     updateThread.join();
     notifyThread.join();
+
+    return new Result(m_elements);
 }
 
 bool Window::exit()

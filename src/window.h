@@ -4,8 +4,7 @@
 #include <map>
 #include <mutex>
 #include "IDrawable.h"
-
-typedef unsigned int ObjectID;
+#include "result.h"
 
 using namespace std;
 
@@ -16,7 +15,7 @@ class Window {
         ~Window();
 
         ObjectID addElement(IDrawable * element, unsigned int yPosition, unsigned int xPosition);
-        void run();
+        Result * run();
 
     private:
         void graphicsLoop();
