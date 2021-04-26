@@ -1,19 +1,21 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <vector>
+#include <map>
 #include <mutex>
 #include "IDrawable.h"
 
+typedef unsigned int ObjectID;
 
 using namespace std;
+
 
 class Window {
     public:
         Window();
         ~Window();
 
-        void addElement(IDrawable * element, unsigned int yPosition, unsigned int xPosition);
+        ObjectID addElement(IDrawable * element, unsigned int yPosition, unsigned int xPosition);
         void run();
 
     private:
@@ -25,7 +27,8 @@ class Window {
         void shutDown();
 
     private:
-        vector<IDrawable*> m_elements;
+        map<ObjectID,IDrawable*> m_elements;
+        ObjectID m_nextObjectID;
         int m_numOfRows;
         int m_numOfColumns;
         mutex m_mutex_exit;

@@ -2,7 +2,7 @@
 #include <thread>
 #include "window.h"
 
-Window::Window() : m_exit(false)
+Window::Window() : m_exit(false), m_nextObjectID(0)
 {
     initscr();
 	getmaxyx(stdscr, m_numOfRows, m_numOfRows);
@@ -15,17 +15,19 @@ Window::Window() : m_exit(false)
 
 Window::~Window()
 {
-    for(IDrawable * element : m_elements)
+    for(pair<ObjectID, IDrawable*> pair : m_elements)
     {
+        IDrawable * element = pair.second;
         delete element;
     }
     endwin();
 }
 
-void Window::addElement(IDrawable * element, unsigned int yPosition, unsigned int xPosition)
+ObjectID Window::addElement(IDrawable * element, unsigned int yPosition, unsigned int xPosition)
 {
     element->setPosition(yPosition,xPosition);
-    m_elements.push_back(element);
+    m_elements.insert({m_nextObjectID++,element});
+    return (m_nextObjectID-1);
 }
 
 void Window::run()
@@ -63,8 +65,9 @@ void Window::graphicsLoop()
     {
         erase();
         
-        for(IDrawable * element : m_elements)
+        for(pair<ObjectID, IDrawable*> pair : m_elements)
         {
+            IDrawable * element = pair.second;
             if(element->isVisible())
             {
                 element->draw();
@@ -80,8 +83,9 @@ void Window::updateLoop()
 {
     while(!exit())
     {
-        for(IDrawable * element : m_elements)
+        for(pair<ObjectID, IDrawable*> pair : m_elements)
         {
+            IDrawable * element = pair.second;
             if(element->isUpdatable())
             {
                 element->update();
@@ -104,8 +108,9 @@ void Window::notifyLoop()
             shutDown();
         }
         
-        for(IDrawable * element : m_elements)
+        for(pair<ObjectID, IDrawable*> pair : m_elements)
         {
+            IDrawable * element = pair.second;
             if(element->isNotifiable())
             {
                 element->notify(input);
