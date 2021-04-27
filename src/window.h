@@ -6,7 +6,6 @@
 #include <mutex>
 #include <ncurses.h>
 
-#include "IDrawable.h"
 #include "result.h"
 
 using namespace std;

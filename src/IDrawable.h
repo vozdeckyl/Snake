@@ -1,6 +1,7 @@
 #ifndef IDRAWABLE_H
 #define IDRAWABLE_H
 
+class Window;
 
 class IDrawable {
     public:
@@ -18,10 +19,10 @@ class IDrawable {
 
         virtual int getResult();
 
-        //void setOwner(Window * owner);
+        void setOwner(Window * owner);
 
     protected:
-        //Window * m_owner;
+        Window * m_owner;
         unsigned int m_vertical_position;
         unsigned int m_horizontal_position;
 };
