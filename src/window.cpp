@@ -2,6 +2,7 @@
 #include <thread>
 #include "window.h"
 #include "result.h"
+#include "IDrawable.h"
 
 Window::Window() : m_exit(false), m_nextObjectID(0)
 {
