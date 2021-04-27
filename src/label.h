@@ -1,6 +1,7 @@
 #ifndef LABEL_H
 #define LABEL_H
 
+#include <ncurses.h>
 #include <string>
 #include "IDrawable.h"
 

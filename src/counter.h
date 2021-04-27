@@ -1,6 +1,7 @@
 #ifndef COUNTER_H
 #define COUNTER_H
 
+#include <ncurses.h>
 #include <mutex>
 #include "IDrawable.h"
 

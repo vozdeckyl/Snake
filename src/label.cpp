@@ -1,5 +1,5 @@
 #include "label.h"
-#include <ncurses.h>
+
 
 Label::Label(string labelString) : IDrawable()
 {

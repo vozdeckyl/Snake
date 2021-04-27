@@ -2,7 +2,10 @@
 #define WINDOW_H
 
 #include <map>
+#include <thread>
 #include <mutex>
+#include <ncurses.h>
+
 #include "IDrawable.h"
 #include "result.h"
 

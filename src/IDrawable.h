@@ -1,7 +1,6 @@
 #ifndef IDRAWABLE_H
 #define IDRAWABLE_H
 
-//#include "window.h"
 
 class IDrawable {
     public:

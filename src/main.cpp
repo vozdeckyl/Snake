@@ -1,6 +1,4 @@
 #include <iostream>
-#include <thread>
-#include <ncurses.h>
 #include "SnakeConfig.h"
 #include "window.h"
 #include "menu.h"
