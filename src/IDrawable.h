@@ -15,7 +15,7 @@ class IDrawable {
         virtual bool isUpdatable() = 0;
         virtual bool isNotifiable() = 0;
 
-        void setPosition(unsigned int vertical, unsigned int horizontal);
+        void setPosition(int vertical, int horizontal);
 
         virtual int getResult();
 
@@ -23,8 +23,8 @@ class IDrawable {
 
     protected:
         Window * m_owner;
-        unsigned int m_vertical_position;
-        unsigned int m_horizontal_position;
+        int m_vertical_position;
+        int m_horizontal_position;
 };
 
 #endif

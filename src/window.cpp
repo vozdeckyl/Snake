@@ -26,7 +26,7 @@ Window::~Window()
     endwin();
 }
 
-ObjectID Window::addElement(IDrawable * element, unsigned int yPosition, unsigned int xPosition)
+ObjectID Window::addElement(IDrawable * element, int yPosition, int xPosition)
 {
     element->setPosition(yPosition,xPosition);
     element->setOwner(this);

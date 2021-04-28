@@ -15,9 +15,9 @@ class Window {
         Window();
         ~Window();
 
-        ObjectID addElement(IDrawable * element, unsigned int yPosition, unsigned int xPosition);
+        ObjectID addElement(IDrawable * element, int yPosition, int xPosition);
         Result * run();
-        
+
         void kill();
 
     private:
