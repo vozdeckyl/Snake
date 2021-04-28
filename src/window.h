@@ -2,14 +2,13 @@
 #define WINDOW_H
 
 #include <map>
-#include <thread>
 #include <mutex>
-#include <ncurses.h>
+#include "objectid.h"
 
-#include "result.h"
 
+class IDrawable;
+class Result;
 using namespace std;
-
 
 class Window {
     public:

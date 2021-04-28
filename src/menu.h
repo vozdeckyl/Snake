@@ -1,17 +1,13 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include <ncurses.h>
 #include <vector>
 #include <string>
-#include <mutex>
 #include "IDrawable.h"
-
-using namespace std;
 
 class Menu : public IDrawable{
 public:
-    Menu(vector<string> entries);
+    Menu(std::vector<std::string> entries);
     Menu();
     Menu(const Menu & other);
     ~Menu();
@@ -27,15 +23,15 @@ public:
 
     virtual int getResult() override {return m_selector;}
 
-    void addEntry(string entryText);
+    void addEntry(std::string entryText);
     void moveSelectorUp();
     void moveSelectorDown();
-    vector<string> getEntries() const;
+    std::vector<std::string> getEntries() const;
 
 private:
-    vector<string> m_entries;
+    std::vector<std::string> m_entries;
     int m_selector;
-    mutex m_selector_mutex;
+    std::mutex m_selector_mutex;
 };
 
 #endif

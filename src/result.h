@@ -2,22 +2,20 @@
 #define RESULT_H
 
 #include <map>
-#include "IDrawable.h"
+#include "objectid.h"
 
-typedef unsigned int ObjectID;
-
-using namespace std;
+class IDrawable;
 
 class Result {
     public:
-        Result(const map<ObjectID,IDrawable*> & objects);
+        Result(const std::map<ObjectID,IDrawable*> & objects);
 
         ~Result();
 
         int getResultOfEelement(ObjectID id);
 
     private:
-        map<ObjectID,int> * m_resultTable;
+        std::map<ObjectID,int> * m_resultTable;
 };
 
 #endif

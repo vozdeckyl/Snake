@@ -1,7 +1,10 @@
+#include <ncurses.h>
+#include <mutex>
 #include "menu.h"
 
 
 using namespace std;
+
 
 // constructors
 Menu::Menu(vector<string> entries) : Menu()

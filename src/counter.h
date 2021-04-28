@@ -1,11 +1,7 @@
 #ifndef COUNTER_H
 #define COUNTER_H
 
-#include <ncurses.h>
-#include <mutex>
 #include "IDrawable.h"
-
-using namespace std;
 
 class Counter : public IDrawable {
 public:
@@ -29,7 +25,7 @@ private:
     unsigned int m_pulse_counter;
     unsigned int m_interval;
 
-    mutex m_counter_mutex;
+    std::mutex m_counter_mutex;
 };
 
 #endif

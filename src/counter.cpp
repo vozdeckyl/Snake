@@ -1,5 +1,8 @@
+#include <ncurses.h>
+#include <mutex>
 #include "counter.h"
 
+using namespace std;
 
 Counter::Counter(unsigned int interval) : IDrawable(), m_counter(0), m_pulse_counter(0), m_interval(interval){}
 

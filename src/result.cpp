@@ -1,4 +1,7 @@
+#include "IDrawable.h"
 #include "result.h"
+
+using namespace std;
 
 Result::Result(const map<ObjectID,IDrawable*> & objects)
 {

@@ -1,5 +1,7 @@
+#include <ncurses.h>
 #include "label.h"
 
+using namespace std;
 
 Label::Label(string labelString) : IDrawable()
 {

@@ -1,15 +1,12 @@
 #ifndef LABEL_H
 #define LABEL_H
 
-#include <ncurses.h>
 #include <string>
 #include "IDrawable.h"
 
-using namespace std;
-
 class Label : public IDrawable {
     public:
-        Label(string labelString);
+        Label(std::string labelString);
         ~Label();
 
         void draw() override;
@@ -22,7 +19,7 @@ class Label : public IDrawable {
         bool isNotifiable() override {return false;};
 
     private:
-        string m_labelString;
+        std::string m_labelString;
 };
 
 #endif

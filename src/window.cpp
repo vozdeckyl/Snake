@@ -1,4 +1,9 @@
+#include <thread>
+#include <ncurses.h>
+#include "IDrawable.h"
+#include "result.h"
 #include "window.h"
+
 
 Window::Window() : m_exit(false), m_nextObjectID(0)
 {
@@ -24,6 +29,7 @@ Window::~Window()
 ObjectID Window::addElement(IDrawable * element, unsigned int yPosition, unsigned int xPosition)
 {
     element->setPosition(yPosition,xPosition);
+    element->setOwner(this);
     m_elements.insert({m_nextObjectID++,element});
     return (m_nextObjectID-1);
 }

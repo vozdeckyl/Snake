@@ -16,9 +16,9 @@ int IDrawable::getResult()
     return -1;
 }
 
-/*
+
 void IDrawable::setOwner(Window * owner)
 {
     m_owner = owner;
 }
-*/
+
