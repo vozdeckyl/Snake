@@ -68,6 +68,6 @@ void Traveller::update()
     else if(m_horizontalFractionPosition < -1.0)
     {
         m_horizontalFractionPosition = 0.0;
-        m_horizontal_position++;
+        m_horizontal_position--;
     }
 }
