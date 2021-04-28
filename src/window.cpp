@@ -53,7 +53,7 @@ bool Window::exit()
     return m_exit;
 }
 
-void Window::shutDown()
+void Window::kill()
 {
     lock_guard<mutex> guard(m_mutex_exit);
     m_exit = true;
@@ -111,7 +111,7 @@ void Window::notifyLoop()
 
         if(input=='q')
         {
-            shutDown();
+            kill();
         }
         
         for(pair<ObjectID, IDrawable*> pair : m_elements)

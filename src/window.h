@@ -17,14 +17,14 @@ class Window {
 
         ObjectID addElement(IDrawable * element, unsigned int yPosition, unsigned int xPosition);
         Result * run();
+        
+        void kill();
 
     private:
         void graphicsLoop();
         void updateLoop();
         void notifyLoop();
-
         bool exit();
-        void shutDown();
 
     private:
         map<ObjectID,IDrawable*> m_elements;

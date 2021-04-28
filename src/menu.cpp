@@ -1,7 +1,7 @@
 #include <ncurses.h>
 #include <mutex>
 #include "menu.h"
-
+#include "window.h"
 
 using namespace std;
 
@@ -69,6 +69,10 @@ void Menu::notify(int ch)
     else if(ch==KEY_UP)
     {
         moveSelectorUp();
+    }
+    else if(ch==10) /* 10 = KEY_ENTER */
+    {
+        m_owner->kill();
     }
 }
 
