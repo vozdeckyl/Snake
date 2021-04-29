@@ -17,7 +17,10 @@ Traveller::~Traveller()
 
 void Traveller::draw()
 {
-    mvprintw(m_vertical_position,m_horizontal_position, "xOx");
+    init_pair(2,COLOR_RED,COLOR_WHITE);
+    attrset(COLOR_PAIR(2));
+    mvprintw(m_vertical_position,m_horizontal_position, " ");
+    attrset(0);
 }
 
 void Traveller::notify(int ch)
@@ -25,12 +28,12 @@ void Traveller::notify(int ch)
     if(ch==KEY_LEFT)
     {
         m_verticalVelocity = 0.0;
-        m_horizontalVelocity = -0.005;
+        m_horizontalVelocity = -0.010;
     }
     else if(ch==KEY_RIGHT)
     {
         m_verticalVelocity = 0.0;
-        m_horizontalVelocity = +0.005;
+        m_horizontalVelocity = +0.010;
     }
     else if(ch==KEY_UP)
     {
