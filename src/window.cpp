@@ -5,7 +5,7 @@
 #include "window.h"
 
 
-Window::Window() : m_exit(false), m_nextObjectID(0)
+Window::Window() : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
 {
     initscr();
 	getmaxyx(stdscr, m_numOfRows, m_numOfRows);
@@ -59,6 +59,11 @@ void Window::kill()
     m_exit = true;
 }
 
+void Window::enableKillByKeyQ()
+{
+    m_killByKeyQ = true;
+}
+
 void Window::graphicsLoop()
 {
     /*
@@ -109,7 +114,7 @@ void Window::notifyLoop()
     {   
         input = getch();
 
-        if(input=='q')
+        if(input=='q' && m_killByKeyQ)
         {
             kill();
         }

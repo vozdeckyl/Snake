@@ -30,6 +30,7 @@ void play()
 
     play.addElement(new Traveller(0.0,0.005), 10, 0);
     play.addElement(new Label("Press Q to quit..."), 30, 5);
+    play.enableKillByKeyQ();
 
     play.run();
 }
@@ -39,6 +40,7 @@ void gameSettings()
     Window settings;
 
     settings.addElement(new Label("Game settings \n A \n BKLA \n kakak"), 0, 0);
+    settings.enableKillByKeyQ();
 
     settings.run();
 }

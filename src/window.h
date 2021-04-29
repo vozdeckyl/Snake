@@ -19,6 +19,7 @@ class Window {
         Result * run();
 
         void kill();
+        void enableKillByKeyQ();
 
     private:
         void graphicsLoop();
@@ -33,6 +34,7 @@ class Window {
         int m_numOfColumns;
         mutex m_mutex_exit;
         bool m_exit;
+        bool m_killByKeyQ;
 };
 
 #endif
