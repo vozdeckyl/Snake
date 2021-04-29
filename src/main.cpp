@@ -9,28 +9,61 @@
 
 using namespace std;
 
+int mainMenu()
+{
+    Window preGameWindow;
+
+    ObjectID menuID = preGameWindow.addElement(new Menu({"Play","Game Settings","Exit","Test Option 7","balala ub"}), 15, 10);
+    preGameWindow.addElement(new Counter(), 0, 0);
+    preGameWindow.addElement(new Counter(1), 1, 0);
+    preGameWindow.addElement(new Label("Press Q to quit \n A \n B"), 35, 0);
+
+    Result * preGameWindowResults = preGameWindow.run();
+    int result = preGameWindowResults->getResultOfEelement(menuID);
+
+    return result;
+}
+
+void play()
+{
+    Window play;
+
+    play.addElement(new Traveller(0.0,0.005), 10, 0);
+    play.addElement(new Label("Press Q to quit..."), 30, 5);
+
+    play.run();
+}
+
+void gameSettings()
+{
+    Window settings;
+
+    settings.addElement(new Label("Game settings \n A \n BKLA \n kakak"), 0, 0);
+
+    settings.run();
+}
+
+
 
 int main()
 {
     cout << "Snake v" << Snake_VERSION_MAJOR << "." << Snake_VERSION_MINOR << endl;
-    int outcome;
+
+    while(true)
     {
-        //Menu * myMenu = new Menu({"Play","Game Settings","Exit","Test Option 7","balala ub"});
-        Counter * secondCounter = new Counter();
-        Counter * miliCounter = new Counter(1);
-        Label * helpText = new Label("Press Q to quit");
-        Traveller * snake = new Traveller(0.0,0.005);
+        int mainMenuResult = mainMenu();
 
-        Window preGameWindow;
-
-        //ObjectID menuID = preGameWindow.addElement(myMenu,15,10);
-        //preGameWindow.addElement(secondCounter,0,0);
-        //preGameWindow.addElement(miliCounter,1,0);
-        //preGameWindow.addElement(helpText,30,0);
-        preGameWindow.addElement(snake,10,0);
-        
-        Result * preGameWindowResults = preGameWindow.run();
-        //outcome = preGameWindowResults->getResultOfEelement(menuID); 
+        if(mainMenuResult == 2)
+        {
+            break;
+        }
+        else if(mainMenuResult == 0)
+        {
+            play();
+        }
+        else if(mainMenuResult == 1)
+        {
+            gameSettings();
+        }
     }
-    cout << outcome << endl;
 }
