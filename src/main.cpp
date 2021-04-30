@@ -6,6 +6,7 @@
 #include "label.h"
 #include "result.h"
 #include "traveller.h"
+#include "image.h"
 
 using namespace std;
 
@@ -18,6 +19,7 @@ int mainMenu()
     preGameWindow.addElement(new Counter(1), 1, 0);
     string copyright("(C) Lubos Vozdecky, 2021");
     preGameWindow.addElement(new Label(copyright), preGameWindow.getHeight()-1, preGameWindow.getWidth()-copyright.length()-1);
+    preGameWindow.addElement(new Image("../data/logo.txt"), 3, 15);
 
     Result * preGameWindowResults = preGameWindow.run();
     int result = preGameWindowResults->getResultOfEelement(menuID);
@@ -54,8 +56,6 @@ int main()
 
     while(true)
     {
-        std::system("clear");
-
         int mainMenuResult = mainMenu();
 
         if(mainMenuResult == 2)

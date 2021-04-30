@@ -8,6 +8,7 @@
 Window::Window() : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
 {
     initscr();
+    clear();
 	getmaxyx(stdscr, m_numOfRows, m_numOfColumns);
     start_color();
     curs_set(0);
@@ -28,6 +29,7 @@ Window::~Window()
         IDrawable * element = pair.second;
         delete element;
     }
+    clear();
     endwin();
 }
 
