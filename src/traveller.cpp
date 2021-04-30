@@ -17,7 +17,6 @@ Traveller::~Traveller()
 
 void Traveller::draw()
 {
-    init_pair(2,COLOR_RED,COLOR_WHITE);
     attrset(COLOR_PAIR(2));
     mvprintw(m_vertical_position,m_horizontal_position, " ");
     attrset(0);

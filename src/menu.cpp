@@ -34,7 +34,6 @@ void Menu::addEntry(string entry)
 
 void Menu::draw()
 {
-    init_pair(1,COLOR_WHITE,COLOR_RED);
 
     int counter{0};
 

@@ -14,6 +14,11 @@ Window::Window() : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
     keypad(stdscr,TRUE);
     cbreak();
     noecho();
+
+    //initialize all color settings
+    init_pair(1,COLOR_WHITE,COLOR_RED);
+    init_pair(2,COLOR_RED,COLOR_WHITE);
+    init_pair(3,COLOR_BLACK,COLOR_BLACK);
 }
 
 Window::~Window()
@@ -75,6 +80,11 @@ void Window::graphicsLoop()
     while(!exit())
     {
         erase();
+
+        
+        attrset(COLOR_PAIR(3));
+        box(stdscr, 0, 0);
+        attrset(0);
         
         for(pair<ObjectID, IDrawable*> pair : m_elements)
         {
