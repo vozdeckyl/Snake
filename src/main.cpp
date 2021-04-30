@@ -16,7 +16,8 @@ int mainMenu()
     ObjectID menuID = preGameWindow.addElement(new Menu({"Play","Game Settings","Exit","Test Option 7","balala ub"}), 15, 10);
     preGameWindow.addElement(new Counter(), 0, 0);
     preGameWindow.addElement(new Counter(1), 1, 0);
-    preGameWindow.addElement(new Label("Press Q to quit \n A \n B"), 35, 0);
+    string copyright("(C) Lubos Vozdecky, 2021");
+    preGameWindow.addElement(new Label(copyright), preGameWindow.getHeight()-1, preGameWindow.getWidth()-copyright.length()-1);
 
     Result * preGameWindowResults = preGameWindow.run();
     int result = preGameWindowResults->getResultOfEelement(menuID);
@@ -53,6 +54,8 @@ int main()
 
     while(true)
     {
+        std::system("clear");
+
         int mainMenuResult = mainMenu();
 
         if(mainMenuResult == 2)

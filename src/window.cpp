@@ -8,7 +8,7 @@
 Window::Window() : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
 {
     initscr();
-	getmaxyx(stdscr, m_numOfRows, m_numOfRows);
+	getmaxyx(stdscr, m_numOfRows, m_numOfColumns);
     start_color();
     curs_set(0);
     keypad(stdscr,TRUE);
@@ -67,6 +67,16 @@ void Window::kill()
 void Window::enableKillByKeyQ()
 {
     m_killByKeyQ = true;
+}
+
+int Window::getHeight()
+{
+    return m_numOfRows;
+}
+
+int Window::getWidth()
+{
+    return m_numOfColumns;
 }
 
 void Window::graphicsLoop()

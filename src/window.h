@@ -21,6 +21,9 @@ class Window {
         void kill();
         void enableKillByKeyQ();
 
+        int getWidth();
+        int getHeight();
+
     private:
         void graphicsLoop();
         void updateLoop();
