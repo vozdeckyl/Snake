@@ -9,7 +9,7 @@ Window::Window() : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
 {
     initscr();
     clear();
-	getmaxyx(stdscr, m_numOfRows, m_numOfColumns);
+    getmaxyx(stdscr, m_numOfRows, m_numOfColumns);
     start_color();
     curs_set(0);
     keypad(stdscr,TRUE);
@@ -41,7 +41,7 @@ ObjectID Window::addElement(IDrawable * element, int yPosition, int xPosition)
     return (m_nextObjectID-1);
 }
 
-Result * Window::run()
+Result Window::run()
 {
     thread graphicsThread(&Window::graphicsLoop, this);
     thread updateThread(&Window::updateLoop, this);
@@ -51,7 +51,7 @@ Result * Window::run()
     updateThread.join();
     notifyThread.join();
 
-    return new Result(m_elements);
+    return Result(m_elements);
 }
 
 bool Window::exit()
@@ -87,8 +87,6 @@ void Window::graphicsLoop()
      * This function runs on a separate thread. It iterates through
      * all the drawable objects and calls draw() on them.
      */
-
-    noecho();
     while(!exit())
     {
         erase();

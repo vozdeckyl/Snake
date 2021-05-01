@@ -21,8 +21,8 @@ int mainMenu()
     preGameWindow.addElement(new Label(copyright), preGameWindow.getHeight()-1, preGameWindow.getWidth()-copyright.length()-1);
     preGameWindow.addElement(new Image("../data/logo.txt"), 3, 15);
 
-    Result * preGameWindowResults = preGameWindow.run();
-    int result = preGameWindowResults->getResultOfEelement(menuID);
+    Result preGameWindowResults = preGameWindow.run();
+    int result = preGameWindowResults.getResultOfEelement(menuID);
 
     return result;
 }

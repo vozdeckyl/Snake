@@ -15,7 +15,7 @@ class Result {
         int getResultOfEelement(ObjectID id);
 
     private:
-        std::map<ObjectID,int> * m_resultTable;
+        std::map<ObjectID,int> m_resultTable;
 };
 
 #endif

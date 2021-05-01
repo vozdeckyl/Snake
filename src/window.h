@@ -16,7 +16,7 @@ class Window {
         ~Window();
 
         ObjectID addElement(IDrawable * element, int yPosition, int xPosition);
-        Result * run();
+        Result run();
 
         void kill();
         void enableKillByKeyQ();
