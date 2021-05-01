@@ -12,10 +12,9 @@ Window::Window() : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
     getmaxyx(stdscr, m_numOfRows, m_numOfColumns);
     start_color();
     curs_set(0);
-    keypad(stdscr,TRUE);
     cbreak();
     noecho();
-
+    
     //initialize all color settings
     init_pair(1,COLOR_WHITE,COLOR_RED);
     init_pair(2,COLOR_RED,COLOR_WHITE);
@@ -25,11 +24,10 @@ Window::Window() : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
 Window::~Window()
 {
     for(pair<ObjectID, IDrawable*> pair : m_elements)
-    {
+    { 
         IDrawable * element = pair.second;
         delete element;
     }
-    clear();
     endwin();
 }
 
@@ -90,12 +88,19 @@ void Window::graphicsLoop()
     while(!exit())
     {
         erase();
+	
+	move(0,0);
+        for(int i = 0; i<=m_numOfRows*m_numOfColumns; i++)
+	{
+	  printw(" ");
+	}
 
-        
-        attrset(COLOR_PAIR(3));
+	 
+	attrset(COLOR_PAIR(3));
         box(stdscr, 0, 0);
         attrset(0);
-        
+
+	
         for(pair<ObjectID, IDrawable*> pair : m_elements)
         {
             IDrawable * element = pair.second;
@@ -106,7 +111,7 @@ void Window::graphicsLoop()
         }
 
         refresh();
-        napms(1);
+        //napms(1);
     }
 }
 
@@ -131,9 +136,11 @@ void Window::notifyLoop()
     int input;
 
     while(!exit())
-    {   
+    {
+        keypad(stdscr,TRUE);
         input = getch();
-
+        keypad(stdscr,FALSE);
+	
         if(input=='q' && m_killByKeyQ)
         {
             kill();

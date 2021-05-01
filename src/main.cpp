@@ -53,7 +53,7 @@ void gameSettings()
 int main()
 {
     cout << "Snake v" << Snake_VERSION_MAJOR << "." << Snake_VERSION_MINOR << endl;
-
+    
     while(true)
     {
         int mainMenuResult = mainMenu();
@@ -71,4 +71,5 @@ int main()
             gameSettings();
         }
     }
+
 }
