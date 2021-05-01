@@ -14,6 +14,8 @@ Window::Window() : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
     curs_set(0);
     cbreak();
     noecho();
+    nodelay(stdscr, TRUE);
+    keypad(stdscr,TRUE);
     
     //initialize all color settings
     init_pair(1,COLOR_WHITE,COLOR_RED);
@@ -43,11 +45,9 @@ Result Window::run()
 {
     thread graphicsThread(&Window::graphicsLoop, this);
     thread updateThread(&Window::updateLoop, this);
-    thread notifyThread(&Window::notifyLoop, this);
 
     graphicsThread.join();
     updateThread.join();
-    notifyThread.join();
 
     return Result(m_elements);
 }
@@ -85,8 +85,27 @@ void Window::graphicsLoop()
      * This function runs on a separate thread. It iterates through
      * all the drawable objects and calls draw() on them.
      */
+
+    int input;
+  
     while(!exit())
     {
+        input = getch();
+       
+        if(input=='q' && m_killByKeyQ)
+        {
+            kill();
+        }
+        
+        for(pair<ObjectID, IDrawable*> pair : m_elements)
+        {
+            IDrawable * element = pair.second;
+            if(element->isNotifiable())
+            {
+                element->notify(input);
+            }
+        }
+      
         erase();
 	
 	move(0,0);
@@ -95,7 +114,6 @@ void Window::graphicsLoop()
 	  printw(" ");
 	}
 
-	 
 	attrset(COLOR_PAIR(3));
         box(stdscr, 0, 0);
         attrset(0);
@@ -111,7 +129,6 @@ void Window::graphicsLoop()
         }
 
         refresh();
-        //napms(1);
     }
 }
 
@@ -128,31 +145,5 @@ void Window::updateLoop()
             }
         }
         napms(1);
-    }
-}
-
-void Window::notifyLoop()
-{
-    int input;
-
-    while(!exit())
-    {
-        keypad(stdscr,TRUE);
-        input = getch();
-        keypad(stdscr,FALSE);
-	
-        if(input=='q' && m_killByKeyQ)
-        {
-            kill();
-        }
-        
-        for(pair<ObjectID, IDrawable*> pair : m_elements)
-        {
-            IDrawable * element = pair.second;
-            if(element->isNotifiable())
-            {
-                element->notify(input);
-            }
-        }
     }
 }

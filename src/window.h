@@ -27,7 +27,6 @@ class Window {
     private:
         void graphicsLoop();
         void updateLoop();
-        void notifyLoop();
         bool exit();
 
     private:
