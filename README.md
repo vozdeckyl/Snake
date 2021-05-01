@@ -1,6 +1,11 @@
 # Snake
 A simple terminal based game for Linux
 
+## Install the ncurses library
+```bash
+sudo apt install libncurses5-dev
+```
+
 ## Installation from the source code
 Download the source code
 ```bash
