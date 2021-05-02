@@ -7,6 +7,7 @@
 #include "result.h"
 #include "traveller.h"
 #include "image.h"
+#include "snake.h"
 
 using namespace std;
 
@@ -31,7 +32,7 @@ void play()
 {
     Window play;
 
-    play.addElement(new Traveller(0.0,0.005), 10, 0);
+    play.addElement(new Snake(0.0,0.005), 0, 0);
     play.addElement(new Label("Press Q to quit..."), 30, 5);
     play.enableKillByKeyQ();
 
