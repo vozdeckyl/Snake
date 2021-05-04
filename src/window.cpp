@@ -21,6 +21,8 @@ Window::Window() : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
     init_pair(1,COLOR_WHITE,COLOR_RED);
     init_pair(2,COLOR_RED,COLOR_WHITE);
     init_pair(3,COLOR_BLACK,COLOR_BLACK);
+    init_pair(4,COLOR_RED,COLOR_GREEN);
+    init_pair(5,COLOR_BLACK,COLOR_YELLOW);
 }
 
 Window::~Window()
@@ -108,13 +110,13 @@ void Window::graphicsLoop()
       
         erase();
 	
-	move(0,0);
+	    move(0,0);
         for(int i = 0; i<=m_numOfRows*m_numOfColumns; i++)
-	{
-	  printw(" ");
-	}
+        {
+            printw(" ");
+        }
 
-	attrset(COLOR_PAIR(3));
+	    attrset(COLOR_PAIR(3));
         box(stdscr, 0, 0);
         attrset(0);
 
