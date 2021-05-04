@@ -10,11 +10,15 @@ Snake::Snake(double verticalVelocity, double horizontalVelocity) : IDrawable(),
 m_verticalFractionPosition(0.0),
 m_horizontalFractionPosition(0.0),
 m_verticalVelocity(0.0),
-m_horizontalVelocity(0.0),
-m_target_vertical(0),
-m_target_horizontal(0)
+m_horizontalVelocity(0.01),
+m_target_vertical(5),
+m_target_horizontal(5),
+m_gameOver(false),
+m_playWindowHeight(30),
+m_playWindowWidth(100), 
+m_score(0)
 {
-    m_cells.emplace_back(0,-1);
+    gameOverLabel = string("* * * *   GAME OVER   * * * *");
 }
 
 
@@ -24,24 +28,28 @@ Snake::~Snake()
 
 void Snake::draw()
 {
-    attrset(COLOR_PAIR(2));
+    drawWalls();
+
+    mvprintw(m_playWindowHeight+1,30,("Score: " + to_string(m_score)).c_str());
+
+    attrset(COLOR_PAIR(5));
     mvprintw(m_target_vertical,m_target_horizontal,"X");
-    mvprintw(m_vertical_position,m_horizontal_position, ":");
-    int i{0};
+
+    attrset(COLOR_PAIR(4));
+
     for(pair<int,int> cell : m_cells)
     {
         mvprintw(cell.first,cell.second, " ");
-        //mvprintw(20+i++, 1, (to_string(cell.first) + " " + to_string(cell.second)).c_str());
     }
+
+    mvprintw(m_vertical_position,m_horizontal_position, ":");
+
     attrset(0);
 
-    auto last_pair = ++m_cells.end();
-
-    mvprintw(20,1,to_string((*last_pair).first).c_str());
-    mvprintw(21,1,to_string((*last_pair).second).c_str());
-    mvprintw(22,1,to_string(m_target_vertical).c_str());
-    mvprintw(23,1,to_string(m_target_horizontal).c_str());
-
+    if(m_gameOver)
+    {
+        mvprintw((int) (0.5*m_playWindowHeight),(int) (0.5*(m_playWindowWidth-gameOverLabel.size())), gameOverLabel.c_str());
+    }
 }
 
 void Snake::notify(int ch)
@@ -70,33 +78,49 @@ void Snake::notify(int ch)
 
 void Snake::update()
 {
-    m_verticalFractionPosition += m_verticalVelocity;
-    m_horizontalFractionPosition += m_horizontalVelocity;
+    if(!m_gameOver)
+    {
+        m_verticalFractionPosition += m_verticalVelocity;
+        m_horizontalFractionPosition += m_horizontalVelocity;
 
-    if(m_verticalFractionPosition > 1.0)
-    {
-        m_verticalFractionPosition = 0.0;
-        shiftCells();
-        m_vertical_position++;
-    }
-    else if(m_verticalFractionPosition < -1.0)
-    {
-        m_verticalFractionPosition = 0.0;
-        shiftCells();
-        m_vertical_position--;
-    }
+        if(m_verticalFractionPosition > 1.0)
+        {
+            m_verticalFractionPosition = 0.0;
+            shiftCells();
+            m_vertical_position++;
+        }
+        else if(m_verticalFractionPosition < -1.0)
+        {
+            m_verticalFractionPosition = 0.0;
+            shiftCells();
+            m_vertical_position--;
+        }
 
-    if(m_horizontalFractionPosition > 1.0)
-    {
-        m_horizontalFractionPosition = 0.0;
-        shiftCells();
-        m_horizontal_position++;
-    }
-    else if(m_horizontalFractionPosition < -1.0)
-    {
-        m_horizontalFractionPosition = 0.0;
-        shiftCells();
-        m_horizontal_position--;
+        if(m_horizontalFractionPosition > 1.0)
+        {
+            m_horizontalFractionPosition = 0.0;
+            shiftCells();
+            m_horizontal_position++;
+        }
+        else if(m_horizontalFractionPosition < -1.0)
+        {
+            m_horizontalFractionPosition = 0.0;
+            shiftCells();
+            m_horizontal_position--;
+        }
+
+        for(auto cell : m_cells)
+        {
+            if(cell.first == m_vertical_position && cell.second == m_horizontal_position)
+            {
+                m_gameOver = true;
+            }
+        }
+
+        if(m_vertical_position <= 0 || m_vertical_position >= m_playWindowHeight || m_horizontal_position <= 0 || m_horizontal_position >= m_playWindowWidth)
+        {
+            m_gameOver = true;
+        }
     }
 }
 
@@ -108,11 +132,29 @@ void Snake::shiftCells()
     
     if((*(m_cells.begin())).first == m_target_vertical && (*(m_cells.begin())).second == m_target_horizontal)
     {
-        m_target_horizontal = rand() % m_owner->getWidth();
-        m_target_vertical = rand() % m_owner->getHeight();
+        m_target_horizontal = (rand() % (m_playWindowWidth-1))+1;
+        m_target_vertical = (rand() % (m_playWindowHeight-1))+1;
+        m_score++;
     }
     else
     {
         m_cells.pop_front();
     }
+}
+
+void Snake::drawWalls()
+{
+    attrset(COLOR_PAIR(2));
+    for(int i=0; i<=m_playWindowWidth; i++)
+    {
+        mvprintw(0,i," ");
+        mvprintw(m_playWindowHeight,i," ");
+    }
+
+    for(int i=0; i<=m_playWindowHeight; i++)
+    {
+        mvprintw(i,0," ");
+        mvprintw(i,m_playWindowWidth," ");
+    }
+    attrset(0);
 }

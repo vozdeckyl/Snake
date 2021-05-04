@@ -3,6 +3,7 @@
 
 #include <list>
 #include <utility>
+#include <string>
 #include "IDrawable.h"
 
 class Snake : public IDrawable {
@@ -21,6 +22,7 @@ class Snake : public IDrawable {
 
     private:
         void shiftCells();
+        void drawWalls();
 
     private:
         std::list<std::pair<int,int>> m_cells;
@@ -30,6 +32,11 @@ class Snake : public IDrawable {
         double m_horizontalVelocity;
         int m_target_vertical;
         int m_target_horizontal;
+        bool m_gameOver;
+        int m_playWindowHeight;
+        int m_playWindowWidth;
+        std::string gameOverLabel;
+        int m_score;
 };
 
 #endif
