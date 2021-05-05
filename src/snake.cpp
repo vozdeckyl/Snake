@@ -3,6 +3,7 @@
 #include <stdlib.h> 
 #include "snake.h"
 #include "window.h"
+#include "colors.h"
 
 using namespace std;
 
@@ -32,10 +33,10 @@ void Snake::draw()
 
     mvprintw(m_playWindowHeight+1,30,("Score: " + to_string(m_score)).c_str());
 
-    attrset(COLOR_PAIR(5));
+    Colors::activateColor(COLOR_BLACK,COLOR_YELLOW);
     mvprintw(m_target_vertical,m_target_horizontal,"X");
 
-    attrset(COLOR_PAIR(4));
+    Colors::activateColor(COLOR_RED,COLOR_GREEN);
 
     for(pair<int,int> cell : m_cells)
     {
@@ -44,7 +45,7 @@ void Snake::draw()
 
     mvprintw(m_vertical_position,m_horizontal_position, ":");
 
-    attrset(0);
+    Colors::deactivateColor();
 
     if(m_gameOver)
     {
@@ -144,7 +145,7 @@ void Snake::shiftCells()
 
 void Snake::drawWalls()
 {
-    attrset(COLOR_PAIR(2));
+    Colors::activateColor(COLOR_RED,COLOR_WHITE);
     for(int i=0; i<=m_playWindowWidth; i++)
     {
         mvprintw(0,i," ");
@@ -156,5 +157,5 @@ void Snake::drawWalls()
         mvprintw(i,0," ");
         mvprintw(i,m_playWindowWidth," ");
     }
-    attrset(0);
+    Colors::deactivateColor();
 }

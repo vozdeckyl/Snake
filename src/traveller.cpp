@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <cmath>
 #include "traveller.h"
+#include "colors.h"
 
 Traveller::Traveller(double verticalVelocity, double horizontalVelocity) : IDrawable(),
                                                                         m_verticalFractionPosition(0.0),
@@ -17,9 +18,9 @@ Traveller::~Traveller()
 
 void Traveller::draw()
 {
-    attrset(COLOR_PAIR(2));
+    Colors::activateColor(COLOR_RED,COLOR_WHITE);
     mvprintw(m_vertical_position,m_horizontal_position, " ");
-    attrset(0);
+    Colors::deactivateColor();
 }
 
 void Traveller::notify(int ch)

@@ -2,6 +2,7 @@
 #include <mutex>
 #include "menu.h"
 #include "window.h"
+#include "colors.h"
 
 using namespace std;
 
@@ -46,9 +47,9 @@ void Menu::draw()
         if(counter==m_selector)
         {
             // if the menu item is selected, decorate it:
-            attrset(COLOR_PAIR(1));
+            Colors::activateColor(COLOR_WHITE,COLOR_RED);
             mvprintw(m_vertical_position+counter,m_horizontal_position-1, (">" + entry + "<").c_str());
-            attrset(0);
+            Colors::deactivateColor();
         }
         else
         {

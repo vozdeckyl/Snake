@@ -3,6 +3,7 @@
 #include "IDrawable.h"
 #include "result.h"
 #include "window.h"
+#include "colors.h"
 
 
 Window::Window() : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
@@ -10,19 +11,13 @@ Window::Window() : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
     initscr();
     clear();
     getmaxyx(stdscr, m_numOfRows, m_numOfColumns);
-    start_color();
     curs_set(0);
     cbreak();
     noecho();
     nodelay(stdscr, TRUE);
     keypad(stdscr,TRUE);
     
-    //initialize all color settings
-    init_pair(1,COLOR_WHITE,COLOR_RED);
-    init_pair(2,COLOR_RED,COLOR_WHITE);
-    init_pair(3,COLOR_BLACK,COLOR_BLACK);
-    init_pair(4,COLOR_RED,COLOR_GREEN);
-    init_pair(5,COLOR_BLACK,COLOR_YELLOW);
+    Colors::generateColors();
 }
 
 Window::~Window()
@@ -116,9 +111,9 @@ void Window::graphicsLoop()
             printw(" ");
         }
 
-	    attrset(COLOR_PAIR(3));
+        Colors::activateColor(COLOR_BLACK,COLOR_BLACK);
         box(stdscr, 0, 0);
-        attrset(0);
+        Colors::deactivateColor();
 
 	
         for(pair<ObjectID, IDrawable*> pair : m_elements)

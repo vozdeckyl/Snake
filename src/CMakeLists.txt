@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 configure_file(SnakeConfig.h.in SnakeConfig.h)
 
 # add the executable
-add_executable(snake main.cpp IDrawable.cpp menu.cpp counter.cpp label.cpp window.cpp result.cpp traveller.cpp image.cpp snake.cpp)
+add_executable(snake main.cpp IDrawable.cpp menu.cpp counter.cpp label.cpp window.cpp result.cpp traveller.cpp image.cpp snake.cpp colors.cpp)
 
 #importing the ncurses library
 target_link_libraries(snake ncurses)
