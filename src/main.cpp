@@ -8,6 +8,7 @@
 #include "traveller.h"
 #include "image.h"
 #include "snake.h"
+#include "scoreLogger.h"
 
 using namespace std;
 
@@ -54,7 +55,13 @@ void gameSettings()
 int main()
 {
     cout << "Snake v" << Snake_VERSION_MAJOR << "." << Snake_VERSION_MINOR << endl;
+
+    ScoreLogger scoreHistory;
+
+    scoreHistory.print();
     
+    return 0;
+
     while(true)
     {
         int mainMenuResult = mainMenu();
