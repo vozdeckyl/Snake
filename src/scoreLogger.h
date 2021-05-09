@@ -14,7 +14,7 @@ class ScoreLogger {
         ~ScoreLogger();
 
         void logScore(int score);
-        void print();
+        vector<pair<string,string>> getLogList();
     
     private:
         vector<pair<time_t,int>> m_scoreList;

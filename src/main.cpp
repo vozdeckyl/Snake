@@ -16,7 +16,7 @@ int mainMenu()
 {
     Window preGameWindow;
 
-    ObjectID menuID = preGameWindow.addElement(new Menu({"Play","Game Settings","Exit","Test Option 7","balala ub"}), 15, 10);
+    ObjectID menuID = preGameWindow.addElement(new Menu({"Play","Game Settings","Records","Exit"}), 15, 10);
     preGameWindow.addElement(new Counter(), 0, 0);
     preGameWindow.addElement(new Counter(1), 1, 0);
     string copyright("(C) Lubos Vozdecky, 2021");
@@ -50,23 +50,39 @@ void gameSettings()
     settings.run();
 }
 
+void records()
+{
+    Window records;
+    records.enableKillByKeyQ();
+
+    records.addElement(new Label("Press Q to quit"), records.getHeight()-1, 1);
+
+    ScoreLogger score;
+
+    vector<pair<string,string>> scoresList = score.getLogList();
+
+    int verticalPosition{4}, horizontalPosition{10};
+    int offset{0};
+
+    for(pair<string,string> scoreRecord : scoresList)
+    {
+        records.addElement(new Label(scoreRecord.first.append(" . . . ").append(scoreRecord.second)), verticalPosition+offset, horizontalPosition);
+        offset++;
+    }
+
+    records.run();
+}
 
 
 int main()
 {
     cout << "Snake v" << Snake_VERSION_MAJOR << "." << Snake_VERSION_MINOR << endl;
 
-    ScoreLogger scoreHistory;
-
-    scoreHistory.print();
-    
-    return 0;
-
     while(true)
     {
         int mainMenuResult = mainMenu();
 
-        if(mainMenuResult == 2)
+        if(mainMenuResult == 3)
         {
             break;
         }
@@ -77,6 +93,10 @@ int main()
         else if(mainMenuResult == 1)
         {
             gameSettings();
+        }
+        else if(mainMenuResult == 2)
+        {
+            records();
         }
     }
 

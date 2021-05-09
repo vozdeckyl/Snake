@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
+#include <algorithm>
 
 using namespace std;
 
@@ -58,16 +59,28 @@ void ScoreLogger::logScore(int score)
     {
         std::cerr << e.what() << '\n';
     }
-
-
-    
-    
 }
 
-void ScoreLogger::print()
+vector<pair<string,string>> ScoreLogger::getLogList()
 {
-    for(auto pair : m_scoreList)
+    vector<pair<string,string>> logList;
+
+    vector<pair<time_t,int>> scoreListSorted(m_scoreList);
+
+    sort(scoreListSorted.begin(),scoreListSorted.end(), [](pair<time_t,int> a, pair<time_t,int> b){return a.second > b.second;});
+
+    for(auto pair : scoreListSorted)
     {
-        cout << asctime(localtime(&pair.first)) << " " << pair.second << endl; 
+        char buffer[20];
+        string date;
+        string score{to_string(pair.second)};
+
+        strftime(buffer,80,"%d %b %Y %T", localtime(&pair.first));
+
+        date.assign(buffer);
+        logList.push_back(make_pair(date,score));
     }
+
+    return logList;
 }
+
