@@ -55,6 +55,7 @@ void records()
     Window records;
     records.enableKillByKeyQ();
 
+    records.addElement(new Label(" TOP 10 SCORES ",0,15),2,10);
     records.addElement(new Label("Press Q to quit"), records.getHeight()-1, 1);
 
     ScoreLogger score;
@@ -66,7 +67,14 @@ void records()
 
     for(pair<string,string> scoreRecord : scoresList)
     {
-        records.addElement(new Label(scoreRecord.first.append(" . . . ").append(scoreRecord.second)), verticalPosition+offset, horizontalPosition);
+        if(offset >= 10)
+        {
+            break;
+        }
+
+        records.addElement(new Label(scoreRecord.first), verticalPosition+offset, horizontalPosition);
+        records.addElement(new Label(scoreRecord.second, 5), verticalPosition+offset, horizontalPosition+30);
+
         offset++;
     }
 

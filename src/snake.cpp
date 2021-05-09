@@ -4,6 +4,7 @@
 #include "snake.h"
 #include "window.h"
 #include "colors.h"
+#include "scoreLogger.h"
 
 using namespace std;
 
@@ -25,6 +26,8 @@ m_score(0)
 
 Snake::~Snake()
 {
+    ScoreLogger log;
+    log.logScore(m_score);
 }
 
 void Snake::draw()
