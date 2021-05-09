@@ -7,6 +7,8 @@
 class Label : public IDrawable {
     public:
         Label(std::string labelString);
+        Label(std::string labelString, int fontColor);
+        Label(std::string labelString, int fontColor, int backgroundColor);
         ~Label();
 
         void draw() override;
@@ -20,6 +22,8 @@ class Label : public IDrawable {
 
     private:
         std::string m_labelString;
+        int m_fontColor;
+        int m_backgroundColor;
 };
 
 #endif
