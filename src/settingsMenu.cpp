@@ -68,3 +68,8 @@ void SettingsMenu::notify(int ch)
         m_owner->kill();
     }
 }
+
+void SettingsMenu::addSetting(Setting setting)
+{
+    m_settings.push_back(setting);
+}
