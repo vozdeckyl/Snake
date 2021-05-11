@@ -9,6 +9,7 @@
 #include "image.h"
 #include "snake.h"
 #include "scoreLogger.h"
+#include "settingsMenu.h"
 
 using namespace std;
 
@@ -44,7 +45,12 @@ void gameSettings()
 {
     Window settings;
 
-    settings.addElement(new Label("Game settings \n A \n BKLA \n kakak"), 0, 0);
+    SettingsMenu * settingsMenu = new SettingsMenu();
+    settingsMenu->addSetting(Setting("First Setting",{"A","C","D"}));
+    settingsMenu->addSetting(Setting("Second Setting",{"A","C","D"}));
+    settingsMenu->addSetting(Setting("Third Setting",{"A","C","D"}));
+    
+    settings.addElement(settingsMenu, 5, 5);
     settings.enableKillByKeyQ();
 
     settings.run();

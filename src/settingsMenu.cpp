@@ -27,12 +27,11 @@ void SettingsMenu::draw()
         {
             // if the menu item is selected, decorate it:
             Colors::activateColor(COLOR_WHITE,COLOR_RED);
-            mvprintw(m_vertical_position+counter,m_horizontal_position-1, (">" + setting.getName() + "<").c_str());
+            mvprintw(m_vertical_position+counter,m_horizontal_position-1, ("< " + setting.getName() + " >").c_str());
             Colors::deactivateColor();
         }
         else
         {
-            //addstr(entry.c_str());
             mvprintw(m_vertical_position+counter,m_horizontal_position, setting.getName().c_str());
         }
         counter++;
