@@ -10,6 +10,9 @@ class SettingsMenu : public IDrawable {
     public:
         SettingsMenu();
         ~SettingsMenu();
+        
+        void loadFromFile(std::string fileName);
+
         void draw() override;
         bool isVisible() override {return true;}
 
@@ -23,6 +26,8 @@ class SettingsMenu : public IDrawable {
 
         void moveSelectorDown();
         void moveSelectorUp();
+
+        void saveSettings();
 
     private:
         std::vector<Setting> m_settings;

@@ -14,6 +14,7 @@ class Setting {
 
         void nextOption();
         void previousOption();
+        void selectOption(std::string option);
 
     private:
         std::string m_name;

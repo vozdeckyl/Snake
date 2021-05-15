@@ -49,6 +49,7 @@ void gameSettings()
     settingsMenu->addSetting(Setting("Map size",{"small","medium","large"}));
     settingsMenu->addSetting(Setting("Snake speed",{"slow","medium","fast"}));
     settingsMenu->addSetting(Setting("Penetrable walls",{"Yes","No"}));
+    settingsMenu->loadFromFile("../data/settings.dat");
     
     settings.addElement(settingsMenu, 5, 20);
     settings.enableKillByKeyQ();
