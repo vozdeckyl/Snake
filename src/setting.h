@@ -10,11 +10,16 @@ class Setting {
         ~Setting();
 
         std::string getName();
-        std::vector<std::string> getOptions();
-    
+        std::string getOption();
+
+        void nextOption();
+        void previousOption();
+
     private:
         std::string m_name;
-        std::vector<std::string> m_options;    
+        std::vector<std::string> m_options;
+        int m_selection;
+        int m_selection_max;  
 };
 
 #endif

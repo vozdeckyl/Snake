@@ -46,11 +46,11 @@ void gameSettings()
     Window settings;
 
     SettingsMenu * settingsMenu = new SettingsMenu();
-    settingsMenu->addSetting(Setting("First Setting",{"A","C","D"}));
-    settingsMenu->addSetting(Setting("Second Setting",{"A","C","D"}));
-    settingsMenu->addSetting(Setting("Third Setting",{"A","C","D"}));
+    settingsMenu->addSetting(Setting("Map size",{"small","medium","large"}));
+    settingsMenu->addSetting(Setting("Snake speed",{"slow","medium","fast"}));
+    settingsMenu->addSetting(Setting("Penetrable walls",{"Yes","No"}));
     
-    settings.addElement(settingsMenu, 5, 5);
+    settings.addElement(settingsMenu, 5, 20);
     settings.enableKillByKeyQ();
 
     settings.run();

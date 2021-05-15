@@ -28,8 +28,6 @@ class SettingsMenu : public IDrawable {
         std::vector<Setting> m_settings;
         std::mutex m_selector_mutex;
         int m_selector;
-        int m_option_selector;
-        int m_option_selector_max;
 };
 
 #endif
