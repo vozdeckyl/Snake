@@ -19,6 +19,11 @@ string Setting::getName()
     return m_name;
 }
 
+int Setting::getOptionIndex()
+{
+    return m_selection;
+}
+
 string Setting::getOption()
 {
     return m_options[m_selection];
@@ -34,12 +39,7 @@ void Setting::previousOption()
     if (m_selection > 0) m_selection--; 
 }
 
-void Setting::selectOption(string option)
+void Setting::selectOption(int option)
 {
-    auto iter = find(m_options.begin(), m_options.end(), option);
-    if( iter != m_options.end())
-    {
-        int index = std::distance(m_options.begin(), iter);
-        m_selection = index;
-    }
+    m_selection = option;
 }

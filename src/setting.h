@@ -11,10 +11,11 @@ class Setting {
 
         std::string getName();
         std::string getOption();
+        int getOptionIndex();
 
         void nextOption();
         void previousOption();
-        void selectOption(std::string option);
+        void selectOption(int option);
 
     private:
         std::string m_name;
