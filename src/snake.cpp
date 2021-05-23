@@ -1,6 +1,8 @@
 #include <ncurses.h>
 #include <cmath>
-#include <stdlib.h> 
+#include <stdlib.h>
+#include <iostream>
+#include <fstream>
 #include "snake.h"
 #include "window.h"
 #include "colors.h"
@@ -16,11 +18,49 @@ m_horizontalVelocity(0.01),
 m_target_vertical(5),
 m_target_horizontal(5),
 m_gameOver(false),
-m_playWindowHeight(30),
-m_playWindowWidth(100), 
 m_score(0)
 {
     gameOverLabel = string("* * * *   GAME OVER   * * * *");
+
+    int settings{0};
+
+    try
+    {
+        ifstream settingsFile("../data/settings.bin", ifstream::binary);
+        settingsFile.read((char *) &settings, sizeof(int));
+        settingsFile.close();
+    }
+    catch(const exception& e)
+    {
+        cerr << e.what() << '\n';
+    }
+    
+    
+    int mapSize = (settings >> 4*0) & 0b1111;
+
+    switch (mapSize)
+    {
+    case 0:
+        // small window
+        m_playWindowHeight = 10;
+        m_playWindowWidth = 25; 
+        break;
+    case 1:
+        // medium window
+        m_playWindowHeight = 20;
+        m_playWindowWidth = 50; 
+        break;
+    case 2:
+        // large window
+        m_playWindowHeight = 30;
+        m_playWindowWidth = 100; 
+        break;
+    default:
+        m_playWindowHeight = 20;
+        m_playWindowWidth = 50;
+        break;
+    }
+
 }
 
 
@@ -34,7 +74,7 @@ void Snake::draw()
 {
     drawWalls();
 
-    mvprintw(m_playWindowHeight+1,30,("Score: " + to_string(m_score)).c_str());
+    mvprintw(m_playWindowHeight+1,(int)m_playWindowWidth*0.5,("Score: " + to_string(m_score)).c_str());
 
     Colors::activateColor(COLOR_BLACK,COLOR_YELLOW);
     mvprintw(m_target_vertical,m_target_horizontal,"X");
