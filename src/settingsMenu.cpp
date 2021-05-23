@@ -14,7 +14,6 @@ SettingsMenu::SettingsMenu() : IDrawable(), m_selector(0)
 
 void SettingsMenu::loadFromFile(string fileName)
 {
-    ifstream settingsFile;
     int settings{0};
     int counter{0};
     try
