@@ -35,7 +35,7 @@ void play()
     Window play;
 
     play.addElement(new Snake(0.0,0.005), 1, 1);
-    play.addElement(new Label("Press Q to quit..."), 31, 1);
+    play.addElement(new Label("Press Q to quit..."), play.getHeight()-1, 1);
     play.enableKillByKeyQ();
 
     play.run();
