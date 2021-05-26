@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
+#include <mutex>
 #include "snake.h"
 #include "window.h"
 #include "colors.h"
@@ -19,7 +20,8 @@ m_speed(0.0),
 m_target_vertical(5),
 m_target_horizontal(5),
 m_gameOver(false),
-m_score(0)
+m_score(0),
+m_keyLock(false)
 {
     gameOverLabel = string("* * * GAME OVER * * *");
 
@@ -58,7 +60,7 @@ m_score(0)
     case 2:
         // large window
         m_playWindowHeight = 30;
-        m_playWindowWidth = 100; 
+        m_playWindowWidth = 100;
         break;
     default:
         m_playWindowHeight = 20;
@@ -105,25 +107,36 @@ void Snake::draw()
 
 void Snake::notify(int ch)
 {
-    if(ch==KEY_LEFT && m_horizontalVelocity==0.0)
+    if(!m_keyLock)
     {
-        m_verticalVelocity = 0.0;
-        m_horizontalVelocity = -m_speed*2.0;
-    }
-    else if(ch==KEY_RIGHT && m_horizontalVelocity==0.0)
-    {
-        m_verticalVelocity = 0.0;
-        m_horizontalVelocity = +m_speed*2.0;
-    }
-    else if(ch==KEY_UP && m_verticalVelocity==0.0)
-    {
-        m_verticalVelocity = -m_speed;
-        m_horizontalVelocity = 0.0;
-    }
-    else if(ch==KEY_DOWN && m_verticalVelocity==0.0)
-    {
-        m_verticalVelocity = m_speed;
-        m_horizontalVelocity = 0.0;
+        if(ch==KEY_LEFT && m_horizontalVelocity==0.0)
+        {
+            m_verticalVelocity = 0.0;
+            m_horizontalVelocity = -m_speed*2.0;
+            lock_guard<mutex> guard(m_keyLockMutex);
+            m_keyLock = true;
+        }
+        else if(ch==KEY_RIGHT && m_horizontalVelocity==0.0)
+        {
+            m_verticalVelocity = 0.0;
+            m_horizontalVelocity = +m_speed*2.0;
+            lock_guard<mutex> guard(m_keyLockMutex);
+            m_keyLock = true;
+        }
+        else if(ch==KEY_UP && m_verticalVelocity==0.0)
+        {
+            m_verticalVelocity = -m_speed;
+            m_horizontalVelocity = 0.0;
+            lock_guard<mutex> guard(m_keyLockMutex);
+            m_keyLock = true;
+        }
+        else if(ch==KEY_DOWN && m_verticalVelocity==0.0)
+        {
+            m_verticalVelocity = m_speed;
+            m_horizontalVelocity = 0.0;
+            lock_guard<mutex> guard(m_keyLockMutex);
+            m_keyLock = true;
+        }
     }
 }
 
@@ -139,12 +152,16 @@ void Snake::update()
             m_verticalFractionPosition = 0.0;
             shiftCells();
             m_vertical_position++;
+            lock_guard<mutex> guard(m_keyLockMutex);
+            m_keyLock = false;
         }
         else if(m_verticalFractionPosition < -1.0)
         {
             m_verticalFractionPosition = 0.0;
             shiftCells();
             m_vertical_position--;
+            lock_guard<mutex> guard(m_keyLockMutex);
+            m_keyLock = false;
         }
 
         if(m_horizontalFractionPosition > 1.0)
@@ -152,12 +169,16 @@ void Snake::update()
             m_horizontalFractionPosition = 0.0;
             shiftCells();
             m_horizontal_position++;
+            lock_guard<mutex> guard(m_keyLockMutex);
+            m_keyLock = false;
         }
         else if(m_horizontalFractionPosition < -1.0)
         {
             m_horizontalFractionPosition = 0.0;
             shiftCells();
             m_horizontal_position--;
+            lock_guard<mutex> guard(m_keyLockMutex);
+            m_keyLock = false;
         }
 
         for(auto cell : m_cells)

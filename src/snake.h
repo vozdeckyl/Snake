@@ -38,6 +38,8 @@ class Snake : public IDrawable {
         int m_playWindowWidth;
         std::string gameOverLabel;
         int m_score;
+        bool m_keyLock;
+        std::mutex m_keyLockMutex;
 };
 
 #endif
