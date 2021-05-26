@@ -20,7 +20,7 @@ m_target_horizontal(5),
 m_gameOver(false),
 m_score(0)
 {
-    gameOverLabel = string("* * * *   GAME OVER   * * * *");
+    gameOverLabel = string("* * * GAME OVER * * *");
 
     int settings{0};
 
@@ -43,7 +43,7 @@ m_score(0)
     case 0:
         // small window
         m_playWindowHeight = 10;
-        m_playWindowWidth = 25; 
+        m_playWindowWidth = 30; 
         break;
     case 1:
         // medium window
