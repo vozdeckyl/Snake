@@ -30,6 +30,7 @@ class Snake : public IDrawable {
         double m_horizontalFractionPosition;
         double m_verticalVelocity;
         double m_horizontalVelocity;
+        double m_speed;
         int m_target_vertical;
         int m_target_horizontal;
         bool m_gameOver;

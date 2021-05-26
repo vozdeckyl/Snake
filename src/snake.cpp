@@ -14,7 +14,8 @@ Snake::Snake(double verticalVelocity, double horizontalVelocity) : IDrawable(),
 m_verticalFractionPosition(0.0),
 m_horizontalFractionPosition(0.0),
 m_verticalVelocity(0.0),
-m_horizontalVelocity(0.01),
+m_horizontalVelocity(0.0),
+m_speed(0.0),
 m_target_vertical(5),
 m_target_horizontal(5),
 m_gameOver(false),
@@ -24,19 +25,23 @@ m_score(0)
 
     int settings{0};
 
+    int mapSize{1};
+    int speedSetting{1};
+
     try
     {
         ifstream settingsFile("../data/settings.bin", ifstream::binary);
         settingsFile.read((char *) &settings, sizeof(int));
         settingsFile.close();
+
+        mapSize = (settings >> 4*0) & 0b1111;
+        speedSetting = (settings >> 4*1) & 0b1111;
     }
     catch(const exception& e)
     {
         cerr << e.what() << '\n';
     }
     
-    
-    int mapSize = (settings >> 4*0) & 0b1111;
 
     switch (mapSize)
     {
@@ -61,6 +66,8 @@ m_score(0)
         break;
     }
 
+    m_speed = (speedSetting+1)*0.0025;
+    m_horizontalVelocity = 2*m_speed;
 }
 
 
@@ -101,21 +108,21 @@ void Snake::notify(int ch)
     if(ch==KEY_LEFT && m_horizontalVelocity==0.0)
     {
         m_verticalVelocity = 0.0;
-        m_horizontalVelocity = -0.010;
+        m_horizontalVelocity = -m_speed*2.0;
     }
     else if(ch==KEY_RIGHT && m_horizontalVelocity==0.0)
     {
         m_verticalVelocity = 0.0;
-        m_horizontalVelocity = +0.010;
+        m_horizontalVelocity = +m_speed*2.0;
     }
     else if(ch==KEY_UP && m_verticalVelocity==0.0)
     {
-        m_verticalVelocity = -0.005;
+        m_verticalVelocity = -m_speed;
         m_horizontalVelocity = 0.0;
     }
     else if(ch==KEY_DOWN && m_verticalVelocity==0.0)
     {
-        m_verticalVelocity = 0.005;
+        m_verticalVelocity = m_speed;
         m_horizontalVelocity = 0.0;
     }
 }
