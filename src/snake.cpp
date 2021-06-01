@@ -21,7 +21,8 @@ m_target_vertical(5),
 m_target_horizontal(5),
 m_gameOver(false),
 m_score(0),
-m_keyLock(false)
+m_keyLock(false),
+m_penetrableWalls(true)
 {
     gameOverLabel = string("* * * GAME OVER * * *");
 
@@ -29,6 +30,7 @@ m_keyLock(false)
 
     int mapSize{1};
     int speedSetting{1};
+    int penetrableWalls;
 
     try
     {
@@ -38,6 +40,7 @@ m_keyLock(false)
 
         mapSize = (settings >> 4*0) & 0b1111;
         speedSetting = (settings >> 4*1) & 0b1111;
+        penetrableWalls = (settings >> 4*2) & 0b1111;
     }
     catch(const exception& e)
     {
@@ -66,6 +69,21 @@ m_keyLock(false)
         m_playWindowHeight = 20;
         m_playWindowWidth = 50;
         break;
+    }
+
+    switch(penetrableWalls)
+    {
+        case 0:
+            m_penetrableWalls = true;
+            break;
+
+        case 1:
+            m_penetrableWalls = false;
+            break;
+        
+        default:
+            m_penetrableWalls = true;
+            break;
     }
 
     m_speed = (speedSetting+1)*0.0025;
@@ -189,9 +207,50 @@ void Snake::update()
             }
         }
 
-        if(m_vertical_position <= 0 || m_vertical_position >= m_playWindowHeight || m_horizontal_position <= 0 || m_horizontal_position >= m_playWindowWidth)
+        if(m_vertical_position <= 0)
         {
-            m_gameOver = true;
+            if(!m_penetrableWalls)
+            {
+                m_gameOver = true;
+            }
+            else
+            {
+                m_vertical_position = m_playWindowHeight-1;
+            }
+        }
+        else if(m_vertical_position >= m_playWindowHeight)
+        {
+            if(!m_penetrableWalls)
+            {
+                m_gameOver = true;
+            }
+            else
+            {
+                m_vertical_position=1;
+            }
+        }
+
+        if(m_horizontal_position <= 0)
+        {
+            if(!m_penetrableWalls)
+            {
+                m_gameOver = true;
+            }
+            else
+            {
+                m_horizontal_position = m_playWindowWidth-1;
+            }
+        }
+        else if(m_horizontal_position >= m_playWindowWidth)
+        {
+            if(!m_penetrableWalls)
+            {
+                m_gameOver = true;
+            }
+            else
+            {
+                m_horizontal_position = 1;
+            }
         }
     }
 }

@@ -40,6 +40,7 @@ class Snake : public IDrawable {
         int m_score;
         bool m_keyLock;
         std::mutex m_keyLockMutex;
+        bool m_penetrableWalls;
 };
 
 #endif
