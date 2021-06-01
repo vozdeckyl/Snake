@@ -1,3 +1,13 @@
+/*! \mainpage %Snake
+ *
+ * This is a documentation to %Snake - a simple terminal based Linux game.
+ * 
+ * 
+ * Dependencies
+ * - \subpage ncurses-base
+ * 
+ */ 
+
 #include <iostream>
 #include "SnakeConfig.h"
 #include "window.h"
