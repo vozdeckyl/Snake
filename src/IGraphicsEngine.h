@@ -23,12 +23,12 @@ enum class Color {
 };
 
 class IGraphicsEngine {
-public:
-    virtual void init() = 0;
-    virtual void draw(std::string text, int y, int x, Color text, Color background) = 0;
-    virtual void clear() = 0;
-    virtual int numberOfRows() = 0;
-    virtual int numberOfColumns() = 0;
+    public:
+        virtual void init() = 0;
+        virtual void draw(std::string text, int y, int x, Color textColor, Color backgroundColor) = 0;
+        virtual void clear() = 0;
+        virtual int numberOfRows() = 0;
+        virtual int numberOfColumns() = 0;
 };
 
 #endif
