@@ -32,3 +32,11 @@ From the `build` directory
 ```bash
 ./snake
 ```
+
+## Generate documentation
+From the root directory
+```bash
+mkdir docs
+cd src
+doxygen ../dconfig
+```
