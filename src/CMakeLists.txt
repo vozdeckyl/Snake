@@ -12,7 +12,7 @@ configure_file(SnakeConfig.h.in SnakeConfig.h)
 
 # add the executable
 add_executable(snake main.cpp IDrawable.cpp menu.cpp counter.cpp label.cpp window.cpp result.cpp traveller.cpp 
-                image.cpp snake.cpp colors.cpp scoreLogger.cpp setting.cpp settingsMenu.cpp)
+                image.cpp snake.cpp colors.cpp scoreLogger.cpp setting.cpp settingsMenu.cpp NCursesEngine.cpp)
 
 #importing the ncurses library
 target_link_libraries(snake ncurses)

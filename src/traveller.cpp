@@ -16,11 +16,14 @@ Traveller::~Traveller()
 {
 }
 
-void Traveller::draw()
+void Traveller::draw(const IGraphicsEngine * engine)
 {
+    /*
     Colors::activateColor(COLOR_RED,COLOR_WHITE);
     mvprintw(m_vertical_position,m_horizontal_position, " ");
     Colors::deactivateColor();
+    */
+   engine->draw(" ",m_vertical_position,m_horizontal_position,Color::white,Color::black);
 }
 
 void Traveller::notify(int ch)

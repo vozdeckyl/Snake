@@ -8,6 +8,8 @@ NCursesEngine::NCursesEngine() : m_columns(0), m_rows(0)
 
 NCursesEngine::~NCursesEngine()
 {
+    clear();
+    endwin();
 }
 
 void NCursesEngine::init()
@@ -24,15 +26,35 @@ void NCursesEngine::init()
     Colors::generateColors();
 }
 
+void NCursesEngine::prepareScreen()
+{
+    erase();
+	
+    move(0,0);
+    for(int i = 0; i<=m_rows*m_columns; i++)
+    {
+        printw(" ");
+    }
 
-void NCursesEngine::draw(std::string text, int y, int x, Color textColor, Color backgroundColor)
+    Colors::activateColor(COLOR_BLACK,COLOR_BLACK);
+    box(stdscr, 0, 0);
+    Colors::deactivateColor();
+}
+
+
+void NCursesEngine::draw(std::string text, int y, int x, Color textColor, Color backgroundColor) const
 {
     Colors::activateColor((int) textColor, (int) backgroundColor);
     mvprintw(y,x,text.c_str());
     Colors::deactivateColor();    
 }
 
-void NCursesEngine::clear()
+void NCursesEngine::refreshScreen()
+{
+    refresh();
+}
+
+void NCursesEngine::clearScreen() const
 {
     clear();
 }

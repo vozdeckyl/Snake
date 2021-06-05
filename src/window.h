@@ -4,7 +4,7 @@
 #include <map>
 #include <mutex>
 #include "objectid.h"
-
+#include "IGraphicsEngine.h"
 
 class IDrawable;
 class Result;
@@ -12,7 +12,7 @@ using namespace std;
 
 class Window {
     public:
-        Window();
+        Window(IGraphicsEngine * engine);
         ~Window();
 
         ObjectID addElement(IDrawable * element, int yPosition, int xPosition);
@@ -37,6 +37,7 @@ class Window {
         mutex m_mutex_exit;
         bool m_exit;
         bool m_killByKeyQ;
+        IGraphicsEngine * m_engine;
 };
 
 #endif

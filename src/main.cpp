@@ -20,12 +20,13 @@
 #include "snake.h"
 #include "scoreLogger.h"
 #include "settingsMenu.h"
+#include "NCursesEngine.h"
 
 using namespace std;
 
 int mainMenu()
 {
-    Window preGameWindow;
+    Window preGameWindow(new NCursesEngine());
 
     ObjectID menuID = preGameWindow.addElement(new Menu({"Play","Game Settings","Records","Exit"}), 15, 10);
     preGameWindow.addElement(new Counter(), 0, 0);
@@ -36,13 +37,13 @@ int mainMenu()
 
     Result preGameWindowResults = preGameWindow.run();
     int result = preGameWindowResults.getResultOfEelement(menuID);
-
+    
     return result;
 }
 
 void play()
 {
-    Window play;
+    Window play(new NCursesEngine());
 
     play.addElement(new Snake(0.0,0.005), 1, 1);
     play.addElement(new Label("Press Q to quit..."), play.getHeight()-1, 1);
@@ -53,7 +54,7 @@ void play()
 
 void gameSettings()
 {
-    Window settings;
+    Window settings(new NCursesEngine());
 
     SettingsMenu * settingsMenu = new SettingsMenu();
     settingsMenu->addSetting(Setting("Map size",{"small","medium","large"}));
@@ -69,10 +70,10 @@ void gameSettings()
 
 void records()
 {
-    Window records;
+    Window records(new NCursesEngine());
     records.enableKillByKeyQ();
 
-    records.addElement(new Label(" TOP 10 SCORES ",0,15),2,10);
+    records.addElement(new Label(" TOP 10 SCORES ",Color::black,Color::white),2,10);
     records.addElement(new Label("Press Q to quit"), records.getHeight()-1, 1);
 
     ScoreLogger score;
@@ -90,7 +91,7 @@ void records()
         }
 
         records.addElement(new Label(scoreRecord.first), verticalPosition+offset, horizontalPosition);
-        records.addElement(new Label(scoreRecord.second, 5), verticalPosition+offset, horizontalPosition+30);
+        records.addElement(new Label(scoreRecord.second, Color::magenta), verticalPosition+offset, horizontalPosition+30);
 
         offset++;
     }

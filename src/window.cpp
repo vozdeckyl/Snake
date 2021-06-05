@@ -6,8 +6,9 @@
 #include "colors.h"
 
 
-Window::Window() : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
+Window::Window(IGraphicsEngine * engine) : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
 {
+    /*
     initscr();
     clear();
     getmaxyx(stdscr, m_numOfRows, m_numOfColumns);
@@ -18,6 +19,13 @@ Window::Window() : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
     keypad(stdscr,TRUE);
     
     Colors::generateColors();
+    */
+   
+    m_engine = engine;
+    m_engine->init();
+
+    m_numOfRows = m_engine->numberOfRows();
+    m_numOfColumns = m_engine->numberOfColumns();
 }
 
 Window::~Window()
@@ -27,7 +35,8 @@ Window::~Window()
         IDrawable * element = pair.second;
         delete element;
     }
-    endwin();
+    //endwin();
+    delete m_engine;
 }
 
 ObjectID Window::addElement(IDrawable * element, int yPosition, int xPosition)
@@ -103,6 +112,7 @@ void Window::graphicsLoop()
             }
         }
       
+        /*
         erase();
 	
 	    move(0,0);
@@ -114,6 +124,9 @@ void Window::graphicsLoop()
         Colors::activateColor(COLOR_BLACK,COLOR_BLACK);
         box(stdscr, 0, 0);
         Colors::deactivateColor();
+        */
+
+       m_engine->prepareScreen();
 
 	
         for(pair<ObjectID, IDrawable*> pair : m_elements)
@@ -121,11 +134,13 @@ void Window::graphicsLoop()
             IDrawable * element = pair.second;
             if(element->isVisible())
             {
-                element->draw();
+                element->draw(m_engine);
             }
         }
 
-        refresh();
+        //refresh();
+
+        m_engine->refreshScreen();
     }
 }
 

@@ -8,7 +8,7 @@ class Traveller : public IDrawable {
         Traveller(double verticalVelocity, double horizontalVelocity);
         ~Traveller();
 
-        void draw() override;
+        void draw(const IGraphicsEngine * engine) override;
         bool isVisible() override {return true;};
 
         void update() override;

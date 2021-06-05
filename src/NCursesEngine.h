@@ -8,8 +8,10 @@ class NCursesEngine : public IGraphicsEngine {
         NCursesEngine();
         ~NCursesEngine();
         void init() override;
-        void draw(std::string text, int y, int x, Color textColor, Color backgroundColor) override;
-        void clear() override;
+        void prepareScreen() override;
+        void draw(std::string text, int y, int x, Color textColor, Color backgroundColor) const override;
+        void refreshScreen() override;
+        void clearScreen() const override;
         int numberOfRows() override;
         int numberOfColumns() override;
     

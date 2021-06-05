@@ -97,29 +97,34 @@ Snake::~Snake()
     log.logScore(m_score);
 }
 
-void Snake::draw()
+void Snake::draw(const IGraphicsEngine * engine)
 {
-    drawWalls();
+    drawWalls(engine);
 
-    mvprintw(m_playWindowHeight+1,(int)m_playWindowWidth*0.5,("Score: " + to_string(m_score)).c_str());
+    //mvprintw(m_playWindowHeight+1,(int)m_playWindowWidth*0.5,("Score: " + to_string(m_score)).c_str());
+    engine->draw(("Score: " + to_string(m_score)),m_playWindowHeight+1,(int)m_playWindowWidth*0.5,Color::white,Color::black);
 
-    Colors::activateColor(COLOR_BLACK,COLOR_YELLOW);
-    mvprintw(m_target_vertical,m_target_horizontal,"X");
+    //Colors::activateColor(COLOR_BLACK,COLOR_YELLOW);
+    //mvprintw(m_target_vertical,m_target_horizontal,"X");
+    engine->draw("X",m_target_vertical,m_target_horizontal,Color::black,Color::yellow);
 
-    Colors::activateColor(COLOR_RED,COLOR_GREEN);
+    //Colors::activateColor(COLOR_RED,COLOR_GREEN);
 
     for(pair<int,int> cell : m_cells)
     {
-        mvprintw(cell.first,cell.second, " ");
+        //mvprintw(cell.first,cell.second, " ");
+        engine->draw(" ",cell.first,cell.second,Color::red,Color::green);
     }
 
-    mvprintw(m_vertical_position,m_horizontal_position, ":");
+    //mvprintw(m_vertical_position,m_horizontal_position, ":");
+    engine->draw(":",m_vertical_position,m_horizontal_position,Color::red,Color::green);
 
-    Colors::deactivateColor();
+    //Colors::deactivateColor();
 
     if(m_gameOver)
     {
-        mvprintw((int) (0.5*m_playWindowHeight),(int) (0.5*(m_playWindowWidth-gameOverLabel.size())), gameOverLabel.c_str());
+        //mvprintw((int) (0.5*m_playWindowHeight),(int) (0.5*(m_playWindowWidth-gameOverLabel.size())), gameOverLabel.c_str());
+        engine->draw(gameOverLabel,(int) (0.5*m_playWindowHeight),(int) (0.5*(m_playWindowWidth-gameOverLabel.size())),Color::white,Color::black);
     }
 }
 
@@ -273,19 +278,23 @@ void Snake::shiftCells()
     }
 }
 
-void Snake::drawWalls()
+void Snake::drawWalls(const IGraphicsEngine * engine)
 {
-    Colors::activateColor(COLOR_RED,COLOR_WHITE);
+    //Colors::activateColor(COLOR_RED,COLOR_WHITE);
     for(int i=0; i<=m_playWindowWidth; i++)
     {
-        mvprintw(0,i," ");
-        mvprintw(m_playWindowHeight,i," ");
+        //mvprintw(0,i," ");
+        //mvprintw(m_playWindowHeight,i," ");
+        engine->draw(" ",0,i,Color::red,Color::white);
+        engine->draw(" ",m_playWindowHeight,i,Color::red,Color::white);
     }
 
     for(int i=0; i<=m_playWindowHeight; i++)
     {
-        mvprintw(i,0," ");
-        mvprintw(i,m_playWindowWidth," ");
+        //mvprintw(i,0," ");
+        //mvprintw(i,m_playWindowWidth," ");
+        engine->draw(" ",i,0,Color::red,Color::white);
+        engine->draw(" ",i,m_playWindowWidth,Color::red,Color::white);
     }
-    Colors::deactivateColor();
+    //Colors::deactivateColor();
 }

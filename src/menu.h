@@ -33,7 +33,7 @@ public:
     */
     ~Menu();
 
-    void draw() override;
+    void draw(const IGraphicsEngine * engine) override;
     bool isVisible() override {return true;}
 
     void update() override {};

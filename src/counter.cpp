@@ -16,10 +16,11 @@ void Counter::setInterval(unsigned int interval)
     m_interval = interval;
 }
 
-void Counter::draw()
+void Counter::draw(const IGraphicsEngine * engine)
 {
     lock_guard<mutex> guard(m_counter_mutex);
-    mvprintw(m_vertical_position,m_horizontal_position, to_string(m_counter).c_str());
+    //mvprintw(m_vertical_position,m_horizontal_position, to_string(m_counter).c_str());
+    engine->draw(to_string(m_counter),m_vertical_position,m_horizontal_position,Color::white,Color::black);
 }
 
 void Counter::update()

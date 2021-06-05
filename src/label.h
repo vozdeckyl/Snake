@@ -7,11 +7,11 @@
 class Label : public IDrawable {
     public:
         Label(std::string labelString);
-        Label(std::string labelString, int fontColor);
-        Label(std::string labelString, int fontColor, int backgroundColor);
+        Label(std::string labelString, Color fontColor);
+        Label(std::string labelString, Color fontColor, Color backgroundColor);
         ~Label();
 
-        void draw() override;
+        void draw(const IGraphicsEngine * engine) override;
         bool isVisible() override {return true;};
 
         void update() override {};
@@ -22,8 +22,8 @@ class Label : public IDrawable {
 
     private:
         std::string m_labelString;
-        int m_fontColor;
-        int m_backgroundColor;
+        Color m_fontColor;
+        Color m_backgroundColor;
 };
 
 #endif

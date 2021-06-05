@@ -11,7 +11,7 @@ class Snake : public IDrawable {
         Snake(double verticalVelocity, double horizontalVelocity);
         ~Snake();
 
-        void draw() override;
+        void draw(const IGraphicsEngine * engine) override;
         bool isVisible() override {return true;};
 
         void update() override;
@@ -22,7 +22,7 @@ class Snake : public IDrawable {
 
     private:
         void shiftCells();
-        void drawWalls();
+        void drawWalls(const IGraphicsEngine * engine);
 
     private:
         std::list<std::pair<int,int>> m_cells;

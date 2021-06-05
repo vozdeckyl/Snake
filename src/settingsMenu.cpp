@@ -39,7 +39,7 @@ SettingsMenu::~SettingsMenu()
     this->saveSettings();
 }
 
-void SettingsMenu::draw()
+void SettingsMenu::draw(const IGraphicsEngine * engine)
 {
     int counter{0};
 
@@ -47,13 +47,23 @@ void SettingsMenu::draw()
 
     for(Setting setting : m_settings)
     {   
+        Color textColor, backgroundColor;
         if(counter==m_selector)
         {
             // if the menu item is selected, decorate it:
-            Colors::activateColor(COLOR_WHITE,COLOR_RED);
+            //Colors::activateColor(COLOR_WHITE,COLOR_RED);
+            textColor = Color::white;
+            backgroundColor = Color::red;
         }
-        mvprintw(m_vertical_position+counter,m_horizontal_position-setting.getName().size(), (setting.getName() + "    <" + setting.getOption() + ">").c_str());
-        Colors::deactivateColor();
+        else
+        {
+            textColor = Color::white;
+            backgroundColor = Color::black;
+        }
+
+        engine->draw((setting.getName() + "    <" + setting.getOption() + ">"),m_vertical_position+counter,m_horizontal_position-setting.getName().size(),textColor,backgroundColor);
+        //mvprintw(m_vertical_position+counter,m_horizontal_position-setting.getName().size(), (setting.getName() + "    <" + setting.getOption() + ">").c_str());
+        //Colors::deactivateColor();
         counter++;
     }
 }

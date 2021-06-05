@@ -1,13 +1,15 @@
 #ifndef IDRAWABLE_H
 #define IDRAWABLE_H
 
+#include "IGraphicsEngine.h"
+
 class Window;
 
 class IDrawable {
     public:
         IDrawable();
         virtual ~IDrawable();
-        virtual void draw() = 0;
+        virtual void draw(const IGraphicsEngine * engine) = 0;
         virtual void update() = 0;
         virtual void notify(int ch) = 0;
 

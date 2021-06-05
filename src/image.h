@@ -10,7 +10,7 @@ class Image : public IDrawable {
         Image(std::string imagePath);
         ~Image();
 
-        void draw() override;
+        void draw(const IGraphicsEngine * engine) override;
         bool isVisible() override {return true;}
 
         void update() override {};
