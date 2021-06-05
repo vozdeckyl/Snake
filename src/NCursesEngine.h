@@ -14,6 +14,7 @@ class NCursesEngine : public IGraphicsEngine {
         void clearScreen() const override;
         int numberOfRows() override;
         int numberOfColumns() override;
+        void endScreen() override;
     
     private:
         int m_rows;

@@ -35,7 +35,7 @@ Window::~Window()
         IDrawable * element = pair.second;
         delete element;
     }
-    //endwin();
+    m_engine->endScreen();
     delete m_engine;
 }
 

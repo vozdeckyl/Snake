@@ -8,8 +8,6 @@ NCursesEngine::NCursesEngine() : m_columns(0), m_rows(0)
 
 NCursesEngine::~NCursesEngine()
 {
-    clear();
-    endwin();
 }
 
 void NCursesEngine::init()
@@ -57,6 +55,11 @@ void NCursesEngine::refreshScreen()
 void NCursesEngine::clearScreen() const
 {
     clear();
+}
+
+void NCursesEngine::endScreen()
+{
+    endwin();
 }
 
 int NCursesEngine::numberOfRows()

@@ -22,6 +22,7 @@ class IGraphicsEngine {
         virtual void draw(std::string text, int y, int x, Color textColor, Color backgroundColor) const = 0;
         virtual void refreshScreen() = 0;
         virtual void clearScreen() const = 0;
+        virtual void endScreen() = 0;
         virtual int numberOfRows() = 0;
         virtual int numberOfColumns() = 0;
 };
