@@ -3,6 +3,9 @@
 
 #include "IDrawable.h"
 
+/*!
+    @brief A object with a constant velocity travelling across the screen
+*/
 class Traveller : public IDrawable {
     public:
         Traveller(double verticalVelocity, double horizontalVelocity);

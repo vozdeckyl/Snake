@@ -15,15 +15,54 @@ enum class Color {
     yellow = COLOR_YELLOW,
 };
 
+/*! 
+@brief Interface for a graphics library that is used to draw on screen.
+*/
 class IGraphicsEngine {
     public:
+        /*!
+            @brief Initialization of the framwork. The function is called at the beginning.
+        */
         virtual void init() = 0;
-        virtual void prepareScreen() = 0; 
+
+        /*!
+            @brief Prepars screen for the drawing. The function is called before every drawing.
+        */
+        virtual void prepareScreen() = 0;
+
+        /*!
+            @brief Draws text on screen.
+            @param text text string to be drawn on screen
+            @param y vertical position of the first character
+            @param x horizontal position of the first character
+            @param textColor color of the text
+            @param backgroundColor color of the background
+        */
         virtual void draw(std::string text, int y, int x, Color textColor, Color backgroundColor) const = 0;
+
+        /*!
+            @brief This function is called after all objects are drawn on the screen.
+        */
         virtual void refreshScreen() = 0;
+
+        /*!
+            @brief Clears the screen.
+        */
         virtual void clearScreen() const = 0;
+
+        /*!
+            @brief This function is called at the end.
+        */
         virtual void endScreen() = 0;
+
+        /*!
+            @brief Returns number of rows of the screen.
+        */
         virtual int numberOfRows() = 0;
+
+        /*!
+            @brief Returns number of columns of the screen.
+        */
         virtual int numberOfColumns() = 0;
 };
 

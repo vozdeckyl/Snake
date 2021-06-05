@@ -3,6 +3,9 @@
 
 #include "IGraphicsEngine.h"
 
+/*!
+    @brief Graphics engine that makes use of the NCurses library.
+*/
 class NCursesEngine : public IGraphicsEngine {
     public:
         NCursesEngine();

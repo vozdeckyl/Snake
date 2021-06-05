@@ -5,8 +5,18 @@
 #include <vector>
 #include <string>
 
+
+/*! 
+@brief Character based image
+
+The image is loaded from a text file whose path is submitted to the constructor.
+*/
 class Image : public IDrawable {
     public:
+        /*!
+            @brief Contructor.
+            @param imagePath path to the textfile with the image
+        */
         Image(std::string imagePath);
         ~Image();
 
@@ -19,7 +29,14 @@ class Image : public IDrawable {
         void notify(int ch) override {};
         bool isNotifiable() override {return false;}
 
+        /*!
+            @brief Returns the width of the image.
+        */
         int getWidth();
+
+        /*!
+            @brief Returns the height of the image.
+        */
         int getHeight();
 
     private:

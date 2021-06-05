@@ -6,6 +6,9 @@
 #include <string>
 #include "IDrawable.h"
 
+/*!
+    @brief Object representing the actual snake and the game map
+*/
 class Snake : public IDrawable {
     public:
         Snake(double verticalVelocity, double horizontalVelocity);
@@ -21,7 +24,16 @@ class Snake : public IDrawable {
         bool isNotifiable() override {return true;};
 
     private:
+        /*!
+            @brief Shifts the whole snake
+
+            If the last cell of the snake is on the target X, it gets extended.
+        */
         void shiftCells();
+
+        /*!
+            @brief Draws the walls around the map
+        */
         void drawWalls(const IGraphicsEngine * engine);
 
     private:

@@ -6,7 +6,9 @@
 #include "IDrawable.h"
 
 /*! 
-This class represents a vertical menu. Items can be selected using up and down keys. It inherits from the class IDrawable.
+@brief Vertical menu drawn on the screen 
+
+Items can be selected using up and down keys. It inherits from the class IDrawable.
 
 The class is drawable, notifiable(up/keys to change the menu selection), but not updatable.
 */
