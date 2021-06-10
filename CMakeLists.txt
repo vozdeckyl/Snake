@@ -13,4 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 include_directories(src)
 
 add_subdirectory(src)
-#add_subdirectory(test)
+add_subdirectory(test)
+
+enable_testing()
+add_test(NAME CounterTest COMMAND counterTest)
