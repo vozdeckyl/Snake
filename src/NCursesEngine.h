@@ -14,7 +14,7 @@ class NCursesEngine : public IGraphicsEngine {
         void prepareScreen() override;
         void draw(std::string text, int y, int x, Color textColor, Color backgroundColor) const override;
         void refreshScreen() override;
-        void clearScreen() const override;
+        void clearScreen() override;
         int numberOfRows() override;
         int numberOfColumns() override;
         void endScreen() override;

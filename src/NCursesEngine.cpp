@@ -52,7 +52,7 @@ void NCursesEngine::refreshScreen()
     refresh();
 }
 
-void NCursesEngine::clearScreen() const
+void NCursesEngine::clearScreen()
 {
     clear();
 }

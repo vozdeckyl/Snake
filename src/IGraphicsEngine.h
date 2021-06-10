@@ -48,7 +48,7 @@ class IGraphicsEngine {
         /*!
             @brief Clears the screen.
         */
-        virtual void clearScreen() const = 0;
+        virtual void clearScreen() = 0;
 
         /*!
             @brief This function is called at the end.
