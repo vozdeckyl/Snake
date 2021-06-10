@@ -2,6 +2,7 @@
 #define COUNTER_H
 
 #include "IDrawable.h"
+#include <mutex>
 
 /*!
     @brief Drawable number whose value increases by one in a given interval.

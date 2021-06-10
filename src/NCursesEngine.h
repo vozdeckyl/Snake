@@ -18,6 +18,8 @@ class NCursesEngine : public IGraphicsEngine {
         int numberOfRows() override;
         int numberOfColumns() override;
         void endScreen() override;
+        void wait(int timeMS) override;
+        int input() override;
     
     private:
         int m_rows;

@@ -71,3 +71,13 @@ int NCursesEngine::numberOfColumns()
 {
     return m_columns;
 }
+
+void NCursesEngine::wait(int timeMS)
+{
+    napms(timeMS);
+}
+
+int NCursesEngine::input()
+{
+    return getch();
+}

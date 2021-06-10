@@ -1,5 +1,4 @@
 #include <thread>
-#include <ncurses.h>
 #include "IDrawable.h"
 #include "result.h"
 #include "window.h"
@@ -8,19 +7,6 @@
 
 Window::Window(IGraphicsEngine * engine) : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
 {
-    /*
-    initscr();
-    clear();
-    getmaxyx(stdscr, m_numOfRows, m_numOfColumns);
-    curs_set(0);
-    cbreak();
-    noecho();
-    nodelay(stdscr, TRUE);
-    keypad(stdscr,TRUE);
-    
-    Colors::generateColors();
-    */
-   
     m_engine = engine;
     m_engine->init();
 
@@ -96,7 +82,7 @@ void Window::graphicsLoop()
   
     while(!exit())
     {
-        input = getch();
+        input = m_engine->input();
        
         if(input=='q' && m_killByKeyQ)
         {
@@ -156,6 +142,6 @@ void Window::updateLoop()
                 element->update();
             }
         }
-        napms(1);
+        m_engine->wait(1);
     }
 }

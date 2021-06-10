@@ -64,6 +64,17 @@ class IGraphicsEngine {
             @brief Returns number of columns of the screen.
         */
         virtual int numberOfColumns() = 0;
+
+        /*!
+            @brief Briefly pauses the program
+            @param timeMS number of miliseconds
+        */
+        virtual void wait(int timeMS) = 0;
+
+        /*!
+            @brief Get input from the keyboard
+        */
+        virtual int input() = 0;
 };
 
 #endif
