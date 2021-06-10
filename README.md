@@ -23,7 +23,7 @@ cd build
 Compile
 
 ```bash
-cmake ../src
+cmake ..
 cmake --build .
 ```
 

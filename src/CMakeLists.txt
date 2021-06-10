@@ -1,23 +1,13 @@
-cmake_minimum_required(VERSION 3.10)
+#add all cpp files
+file(GLOB ALL_CPP_FILES "*.cpp")
 
-# set the project name
-project(Snake VERSION 0.1)
+#create a library from the files
+add_library(libSnake ${ALL_CPP_FILES})
 
-# specify the C++ standard
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})
 
-# making the configuration file
-configure_file(SnakeConfig.h.in SnakeConfig.h)
-
-# add the executable
-add_executable(snake main.cpp IDrawable.cpp menu.cpp counter.cpp label.cpp window.cpp result.cpp traveller.cpp 
-                image.cpp snake.cpp colors.cpp scoreLogger.cpp setting.cpp settingsMenu.cpp NCursesEngine.cpp)
-
-#importing the ncurses library
-target_link_libraries(snake ncurses)
-
-#library needed for multithreading
-target_link_libraries(snake pthread)
+#create the binary and add the library
+add_executable(snake main.cpp)
+target_link_libraries(snake libSnake ncurses pthread)
 
 target_include_directories(snake PUBLIC "${PROJECT_BINARY_DIR}")
