@@ -17,3 +17,4 @@ add_subdirectory(test)
 
 enable_testing()
 add_test(NAME CounterTest COMMAND counterTest)
+add_test(NAME LabelTest COMMAND labelTest)
