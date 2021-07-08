@@ -9,5 +9,5 @@ target_link_libraries(counterTest ${GTEST_LIBRARIES} pthread libSnake)
 add_executable(labelTest labelTest.cpp)
 target_link_libraries(labelTest ${GTEST_LIBRARIES} pthread libSnake)
 
-
-
+add_executable(imageTest imageTest.cpp)
+target_link_libraries(imageTest ${GTEST_LIBRARIES} pthread libSnake)
