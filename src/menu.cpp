@@ -1,5 +1,4 @@
 #include <ncurses.h>
-#include <mutex>
 #include "menu.h"
 #include "window.h"
 #include "colors.h"
