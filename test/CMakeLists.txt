@@ -11,3 +11,6 @@ target_link_libraries(labelTest ${GTEST_LIBRARIES} pthread libSnake)
 
 add_executable(imageTest imageTest.cpp)
 target_link_libraries(imageTest ${GTEST_LIBRARIES} pthread libSnake)
+
+add_executable(menuTest menuTest.cpp)
+target_link_libraries(menuTest ${GTEST_LIBRARIES} pthread libSnake)
