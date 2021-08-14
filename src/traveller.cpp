@@ -23,7 +23,7 @@ void Traveller::draw(const IGraphicsEngine * engine)
     mvprintw(m_vertical_position,m_horizontal_position, " ");
     Colors::deactivateColor();
     */
-   engine->draw(" ",m_vertical_position,m_horizontal_position,Color::white,Color::black);
+   engine->draw("X",m_vertical_position,m_horizontal_position,Color::white,Color::black);
 }
 
 void Traveller::notify(int ch)
