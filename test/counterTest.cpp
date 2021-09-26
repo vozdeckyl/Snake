@@ -7,7 +7,7 @@ TEST(counterTest, boolStates)
     auto c = new Counter();
     ASSERT_TRUE(c->isVisible());
     ASSERT_TRUE(c->isUpdatable());
-    ASSERT_FALSE(c->isNotifiable());
+    ASSERT_TRUE(c->isNotifiable());
     
     delete c;
 }
