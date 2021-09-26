@@ -2,9 +2,11 @@ name: CMake workflow
 
 on:
   push:
-    branches: [ feature-ci ]
+    branches:
+      - '*'
   pull_request:
-    branches: [ feature-ci ]
+    branches:
+      - '*'
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
