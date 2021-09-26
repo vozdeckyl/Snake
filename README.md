@@ -1,3 +1,4 @@
+![example workflow](https://github.com/vozdeckyl/Snake/actions/workflows/ci.yml/badge.svg)
 # Snake
 A simple terminal based game for Linux
 
