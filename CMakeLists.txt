@@ -21,6 +21,7 @@ add_test(NAME LabelTest COMMAND labelTest)
 add_test(NAME ImageTest COMMAND imageTest)
 add_test(NAME MenuTest COMMAND menuTest)
 add_test(NAME ResultTest COMMAND resultTest)
+add_test(NAME FileManagerTest COMMAND fileManagerTest)
 
 
 set(CPACK_PACKAGE_NAME "shellsnake")
