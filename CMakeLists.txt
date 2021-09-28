@@ -49,9 +49,14 @@ install(
 install(
     FILES
     "data/logo.txt"
-    "data/scores.bin"
-    "data/settings.bin"
     DESTINATION /usr/share/${CPACK_PACKAGE_NAME}
     )
 
+install(
+    FILES
+    "data/scores.bin"
+    "data/settings.bin"
+    DESTINATION /var/${CPACK_PACKAGE_NAME}
+    )
+  
 include(CPack)
