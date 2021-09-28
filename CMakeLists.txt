@@ -21,3 +21,37 @@ add_test(NAME LabelTest COMMAND labelTest)
 add_test(NAME ImageTest COMMAND imageTest)
 add_test(NAME MenuTest COMMAND menuTest)
 add_test(NAME ResultTest COMMAND resultTest)
+
+
+set(CPACK_PACKAGE_NAME "shellsnake")
+set(CPACK_PACKAGE_VENDOR "LV")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Lubos Vozdecky")
+set(CPACK_VERBATIM_VARIABLES true)
+set(CPACK_PACKAGE_VERSION_MAJOR 0)
+set(CPACK_PACKAGE_VERSION_MINOR 2)
+set(CPACK_PACKAGE_VERSION_PATCH 0)
+set(CPACK_PACKAGE_EXECUTABLES snake)
+
+
+install(
+    TARGETS "snake"
+    EXPORT "${PROJECT_NAME}Targets"
+    COMPONENT ${PROJECT_NAME} # must be here, not any line lower
+    # these get default values from GNUInstallDirs, no need to set them
+    #RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} # bin
+    #LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} # lib
+    #ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} # lib
+    # except for public headers, as we want them to be inside a library folder
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} # include
+    )
+
+install(
+    FILES
+    "data/logo.txt"
+    "data/scores.bin"
+    "data/settings.bin"
+    DESTINATION /usr/share/${CPACK_PACKAGE_NAME}
+    )
+
+include(CPack)
