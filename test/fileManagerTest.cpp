@@ -16,9 +16,10 @@ TEST(fileManagerTest, singlePath)
 	FileManager::getFilePath("nonexisting");	
 	FAIL();
     }
-    catch(...)
+    catch(FileManagerException e)
     {
 	// pass
+	std::cout << e.what() << std::endl;
     }
 
 
@@ -47,9 +48,10 @@ TEST(fileManagerTest, multiplePaths)
 	FileManager::addFile("myFile5",std::vector<std::string>({"none/testfile","none/anothertestfile"}));
 	FAIL();
     }
-    catch(...)
+    catch(FileManagerException e)
     {
 	// pass
+	std::cout << e.what() << std::endl;
     }
     
     system("rm -r mockFolder");
@@ -67,9 +69,10 @@ TEST(fileManagerTest, robustness)
 	FileManager::addFile("asd",std::vector<std::string>({"mockFolder/testfile","mockFolder/anothertestfile"}));
 	FAIL();
     }
-    catch(...)
+    catch(FileManagerException e)
     {
 	// pass
+	std::cout << e.what() << std::endl;
     }
 
     try
@@ -78,9 +81,21 @@ TEST(fileManagerTest, robustness)
 	FileManager::addFile("asd","mockFolder/anothertestfile");
 	FAIL();
     }
-    catch(...)
+    catch(FileManagerException e)
     {
 	// pass
+	std::cout << e.what() << std::endl;
+    }
+
+    try
+    {
+	FileManager::getFilePath("nonexistent");
+	FAIL();
+    }
+    catch(FileManagerException e)
+    {
+	// pass
+	std::cout << e.what() << std::endl;
     }
     
     system("rm -r mockFolder");
