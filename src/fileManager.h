@@ -41,7 +41,23 @@ private:
      */
     FileManager();
     
-    std::map<std::string,std::string> paths;
+    static std::map<std::string,std::string> m_paths;
+};
+
+class FileManagerException : public std::exception {
+public:
+    FileManagerException(std::string message) : std::exception()
+    {
+	m_message = "FileManagerException: " + message;
+    }
+
+    virtual const char* what() const throw()
+    {
+	return m_message.c_str();
+    }
+
+private:
+    std::string m_message;
 };
 
 #endif
