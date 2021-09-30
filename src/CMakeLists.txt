@@ -13,6 +13,7 @@ add_library(
     scoreLogger.cpp
     setting.cpp
     settingsMenu.cpp
+    fileManager.cpp
 )
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})

@@ -21,6 +21,7 @@
 #include "scoreLogger.h"
 #include "settingsMenu.h"
 #include "NCursesEngine.h"
+#include "fileManager.h"
 
 #ifdef DEBUG
   #define BUILD "Debug"
@@ -39,7 +40,7 @@ int mainMenu()
     preGameWindow.addElement(new Counter(1), 1, 0);
     string copyright("(C) Lubos Vozdecky, 2021");
     preGameWindow.addElement(new Label(copyright), preGameWindow.getHeight()-1, preGameWindow.getWidth()-copyright.length()-1);
-    preGameWindow.addElement(new Image("../data/logo.txt"), 3, 15);
+    preGameWindow.addElement(new Image(FileManager::getFilePath("logo")), 3, 15);
 
     Result preGameWindowResults = preGameWindow.run();
     int result = preGameWindowResults.getResultOfEelement(menuID);
@@ -66,7 +67,7 @@ void gameSettings()
     settingsMenu->addSetting(Setting("Map size",{"small","medium","large"}));
     settingsMenu->addSetting(Setting("Snake speed",{"slow","medium","fast"}));
     settingsMenu->addSetting(Setting("Penetrable walls",{"Yes","No"}));
-    settingsMenu->loadFromFile("../data/settings.bin");
+    settingsMenu->loadFromFile(FileManager::getFilePath("settings"));
     
     settings.addElement(settingsMenu, 5, 20);
     settings.enableKillByKeyQ();
@@ -110,6 +111,11 @@ int main()
 {
     cout << "Snake v" << Snake_VERSION_MAJOR << "." << Snake_VERSION_MINOR << " " << BUILD << endl;
 
+    FileManager::addFile("logo",std::vector<std::string>({"../data/logo.txt","/usr/local/share/shellsnake/logo.txt"}));
+    FileManager::addFile("settings",std::vector<std::string>({"../data/settings.bin","/var/shellsnake/settings.bin"}));
+    FileManager::addFile("scores",std::vector<std::string>({"../data/scores.bin","/var/shellsnake/scores.bin"}));
+
+    
     while(true)
     {
         int mainMenuResult = mainMenu();

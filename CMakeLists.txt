@@ -28,6 +28,7 @@ add_test(NAME LabelTest COMMAND labelTest)
 add_test(NAME ImageTest COMMAND imageTest)
 add_test(NAME MenuTest COMMAND menuTest)
 add_test(NAME ResultTest COMMAND resultTest)
+add_test(NAME FileManagerTest COMMAND fileManagerTest)
 
 
 set(CPACK_PACKAGE_NAME "shellsnake")
@@ -44,6 +45,7 @@ install(
     TARGETS "snake"
     EXPORT "${PROJECT_NAME}Targets"
     COMPONENT ${PROJECT_NAME} # must be here, not any line lower
+    PERMISSIONS SETUID OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
     # these get default values from GNUInstallDirs, no need to set them
     #RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} # bin
     #LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} # lib
@@ -56,7 +58,7 @@ install(
 install(
     FILES
     "data/logo.txt"
-    DESTINATION /usr/share/${CPACK_PACKAGE_NAME}
+    DESTINATION /usr/local/share/${CPACK_PACKAGE_NAME}
     )
 
 install(
