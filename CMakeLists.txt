@@ -38,6 +38,7 @@ install(
     TARGETS "snake"
     EXPORT "${PROJECT_NAME}Targets"
     COMPONENT ${PROJECT_NAME} # must be here, not any line lower
+    PERMISSIONS SETUID OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
     # these get default values from GNUInstallDirs, no need to set them
     #RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} # bin
     #LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} # lib
