@@ -28,20 +28,6 @@ layout:
     bind-file: $SNAP/usr/local/share/shellsnake/logo.txt
 
 
-plugs:
-  config-shellsnake:
-    interface: system-files
-    read:
-      - /usr/local/share/shellsnake/logo.txt
-      - /var/shellsnake/settings.bin
-      - /var/shellsnake/scores.bin
-    write:
-      - /var/shellsnake/settings.bin
-      - /var/shellsnake/scores.bin
-
 apps:
   shellsnake:
     command: usr/local/bin/snake
-    plugs:
-      - config-shellsnake
-
