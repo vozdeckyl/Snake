@@ -4,8 +4,10 @@ cmake_minimum_required(VERSION 3.13)
 project(Snake VERSION 0.2)
 
 #set the DEBUG flag if necessary
-if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-  add_compile_definitions(DEBUG)
+if(CMAKE_BUILD_TYPE)
+  if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    add_compile_definitions(DEBUG)
+  endif()
 endif()
   
 # making the configuration file
