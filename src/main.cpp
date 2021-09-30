@@ -6,7 +6,7 @@
  * Dependencies
  * - \subpage ncurses-base
  * 
- */ 
+ */
 
 #include <iostream>
 #include "SnakeConfig.h"
@@ -21,6 +21,12 @@
 #include "scoreLogger.h"
 #include "settingsMenu.h"
 #include "NCursesEngine.h"
+
+#ifdef DEBUG
+  #define BUILD "Debug"
+#else
+  #define BUILD "Release"
+#endif
 
 using namespace std;
 
@@ -102,7 +108,7 @@ void records()
 
 int main()
 {
-    cout << "Snake v" << Snake_VERSION_MAJOR << "." << Snake_VERSION_MINOR << endl;
+    cout << "Snake v" << Snake_VERSION_MAJOR << "." << Snake_VERSION_MINOR << " " << BUILD << endl;
 
     while(true)
     {

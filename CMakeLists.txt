@@ -3,6 +3,11 @@ cmake_minimum_required(VERSION 3.13)
 # set the project name
 project(Snake VERSION 0.2)
 
+#set the DEBUG flag if necessary
+if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+  add_compile_definitions(DEBUG)
+endif()
+  
 # making the configuration file
 configure_file(${PROJECT_SOURCE_DIR}/src/SnakeConfig.h.in ${PROJECT_SOURCE_DIR}/src/SnakeConfig.h)
 
