@@ -18,7 +18,30 @@ parts:
       - libncurses5-dev
     stage-packages:
       - libncursesw5
+
+layout:
+  /var/shellsnake/settings.bin:
+    bind-file: $SNAP_DATA/var/lib/shellsnake/settings.bin
+  /var/shellsnake/scores.bin:
+    bind-file: $SNAP_DATA/var/lib/shellsnake/scores.bin
+  /usr/local/share/shellsnake/logo.txt:
+    bind-file: $SNAP/usr/local/share/shellsnake/logo.txt
+
+
+plugs:
+  config-shellsnake:
+    interface: system-files
+    read:
+      - /usr/local/share/shellsnake/logo.txt
+      - /var/shellsnake/settings.bin
+      - /var/shellsnake/scores.bin
+    write:
+      - /var/shellsnake/settings.bin
+      - /var/shellsnake/scores.bin
+
 apps:
   shellsnake:
     command: usr/local/bin/snake
+    plugs:
+      - config-shellsnake
 
