@@ -4,6 +4,7 @@
 #include <ncurses.h>
 #include <iostream>
 #include <fstream>
+#include "fileManager.h"
 
 using namespace std;
 
@@ -124,7 +125,7 @@ void SettingsMenu::saveSettings()
 
     try
     {
-        ofstream settingsFile("../data/settings.bin", ifstream::binary);
+        ofstream settingsFile(FileManager::getFilePath("settings"), ifstream::binary);
         settingsFile.write((const char *) &settingBinary,sizeof(int));
         settingsFile.close();
     }

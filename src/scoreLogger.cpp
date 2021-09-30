@@ -3,6 +3,7 @@
 #include <fstream>
 #include <ctime>
 #include <algorithm>
+#include "fileManager.h"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ ScoreLogger::ScoreLogger()
 
     try
     {
-        ifstream scoreFile("../data/scores.bin", ifstream::binary);
+        ifstream scoreFile(FileManager::getFilePath("scores"), ifstream::binary);
 
         while(true)
         {
@@ -50,7 +51,7 @@ void ScoreLogger::logScore(int score)
 
     try
     {
-        ofstream scoreFile("../data/scores.bin", ifstream::binary | ifstream::app);
+        ofstream scoreFile(FileManager::getFilePath("scores"), ifstream::binary | ifstream::app);
         scoreFile.write((const char *) &time_now, sizeof(time_t));
         scoreFile.write((const char *) &score, sizeof(int));
         scoreFile.close();
@@ -83,4 +84,3 @@ vector<pair<string,string>> ScoreLogger::getLogList()
 
     return logList;
 }
-
