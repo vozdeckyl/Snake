@@ -50,7 +50,7 @@ install(
 install(
     FILES
     "data/logo.txt"
-    DESTINATION /usr/share/${CPACK_PACKAGE_NAME}
+    DESTINATION /usr/local/share/${CPACK_PACKAGE_NAME}
     )
 
 install(
