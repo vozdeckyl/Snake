@@ -5,8 +5,8 @@ summary: a simple game # 79 char long summary
 description: |
   A simple terminal based game for Linux.
 
-grade: devel #must be 'stable' to release into candidate/stable channels
-confinement: devmode  #use 'strict' once you have the right plugs and slots
+grade: stable #must be 'stable' to release into candidate/stable channels
+confinement: strict  #use 'strict' once you have the right plugs and slots
 
 parts:
   shellsnake:
@@ -16,6 +16,8 @@ parts:
     build-packages:
       - libgtest-dev
       - libncurses5-dev
+    stage-packages:
+      - libncursesw5
 apps:
   shellsnake:
     command: usr/local/bin/snake
