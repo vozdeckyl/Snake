@@ -29,7 +29,7 @@ add_test(NAME ImageTest COMMAND imageTest)
 add_test(NAME MenuTest COMMAND menuTest)
 add_test(NAME ResultTest COMMAND resultTest)
 add_test(NAME FileManagerTest COMMAND fileManagerTest)
-
+add_test(NAME ScoreLoggerTest COMMAND scoreLoggerTest)
 
 set(CPACK_PACKAGE_NAME "shellsnake")
 set(CPACK_PACKAGE_VENDOR "LV")
