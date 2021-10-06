@@ -17,3 +17,13 @@ target_link_libraries(menuTest ${GTEST_LIBRARIES} pthread libSnake)
 
 add_executable(travellerTest travellerTest.cpp)
 target_link_libraries(travellerTest ${GTEST_LIBRARIES} pthread libSnake)
+
+add_executable(resultTest resultTest.cpp)
+target_link_libraries(resultTest ${GTEST_LIBRARIES} pthread libSnake)
+
+add_executable(fileManagerTest fileManagerTest.cpp)
+target_link_libraries(fileManagerTest ${GTEST_LIBRARIES} pthread libSnake)
+
+add_executable(scoreLoggerTest scoreLoggerTest.cpp)
+target_link_libraries(scoreLoggerTest ${GTEST_LIBRARIES} pthread libSnake)
+

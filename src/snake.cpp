@@ -8,6 +8,7 @@
 #include "window.h"
 #include "colors.h"
 #include "scoreLogger.h"
+#include "fileManager.h"
 
 using namespace std;
 
@@ -34,7 +35,7 @@ m_penetrableWalls(true)
 
     try
     {
-        ifstream settingsFile("../data/settings.bin", ifstream::binary);
+        ifstream settingsFile(FileManager::getFilePath("settings"), ifstream::binary);
         settingsFile.read((char *) &settings, sizeof(int));
         settingsFile.close();
 
