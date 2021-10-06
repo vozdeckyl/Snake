@@ -27,6 +27,7 @@ add_test(NAME CounterTest COMMAND counterTest)
 add_test(NAME LabelTest COMMAND labelTest)
 add_test(NAME ImageTest COMMAND imageTest)
 add_test(NAME MenuTest COMMAND menuTest)
+add_test(NAME TravellerTest COMMAND travellerTest)
 add_test(NAME ResultTest COMMAND resultTest)
 add_test(NAME FileManagerTest COMMAND fileManagerTest)
 add_test(NAME ScoreLoggerTest COMMAND scoreLoggerTest)
@@ -69,5 +70,5 @@ install(
     PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ GROUP_WRITE WORLD_READ WORLD_WRITE
     DESTINATION /var/${CPACK_PACKAGE_NAME}
     )
-  
+
 include(CPack)
