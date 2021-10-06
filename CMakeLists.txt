@@ -32,7 +32,7 @@ add_test(NAME ResultTest COMMAND resultTest)
 add_test(NAME FileManagerTest COMMAND fileManagerTest)
 add_test(NAME ScoreLoggerTest COMMAND scoreLoggerTest)
 add_test(NAME SettingTest COMMAND settingTest)
-add_test(NAME SettingMenuTest COMMAND settingMenuTest)
+add_test(NAME SettingsMenuTest COMMAND settingsMenuTest)
 
 set(CPACK_PACKAGE_NAME "shellsnake")
 set(CPACK_PACKAGE_VENDOR "LV")
