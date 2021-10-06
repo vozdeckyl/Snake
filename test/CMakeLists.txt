@@ -29,3 +29,6 @@ target_link_libraries(scoreLoggerTest ${GTEST_LIBRARIES} pthread libSnake)
 
 add_executable(settingTest settingTest.cpp)
 target_link_libraries(settingTest ${GTEST_LIBRARIES} pthread libSnake)
+
+add_executable(settingsMenuTest settingsMenuTest.cpp)
+target_link_libraries(settingsMenuTest ${GTEST_LIBRARIES} pthread libSnake)
