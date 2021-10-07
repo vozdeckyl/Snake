@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+chmod 666 $SNAP_DATA/var/lib/shellsnake/settings.bin
+chmod 666 $SNAP_DATA/var/lib/shellsnake/scores.bin
