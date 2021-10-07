@@ -15,6 +15,7 @@ add_library(
     settingsMenu.cpp
     fileManager.cpp
 )
+target_link_libraries(libSnake stdc++fs)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})
 
