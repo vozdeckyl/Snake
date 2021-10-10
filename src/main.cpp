@@ -109,6 +109,7 @@ void records()
 
 int main()
 {
+    system("wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz");
     system("wmctrl -r $(wmctrl -l | tail -n 1 | cut -d ' ' -f1) -i -b add,maximized_vert,maximized_horz");
     cout << "Snake v" << Snake_VERSION_MAJOR << "." << Snake_VERSION_MINOR << " " << BUILD << endl;
     system("sleep 1");
