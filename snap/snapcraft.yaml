@@ -18,6 +18,7 @@ parts:
       - libncurses5-dev
     stage-packages:
       - libncursesw5
+      - wmctrl
 
 layout:
   /var/shellsnake/settings.bin:
@@ -30,3 +31,5 @@ layout:
 apps:
   shellsnake:
     command: usr/local/bin/snake
+    plugs:
+      - x11

@@ -109,8 +109,11 @@ void records()
 
 int main()
 {
+    system("wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz");
+    system("wmctrl -r $(wmctrl -l | tail -n 1 | cut -d ' ' -f1) -i -b add,maximized_vert,maximized_horz");
     cout << "Snake v" << Snake_VERSION_MAJOR << "." << Snake_VERSION_MINOR << " " << BUILD << endl;
-
+    system("sleep 1");
+    
     FileManager::addFile("logo",std::vector<std::string>({"../data/logo.txt","/usr/local/share/shellsnake/logo.txt"}));
     FileManager::addFile("settings",std::vector<std::string>({"../data/settings.bin","/var/shellsnake/settings.bin"}));
     FileManager::addFile("scores",std::vector<std::string>({"../data/scores.bin","/var/shellsnake/scores.bin"}));
