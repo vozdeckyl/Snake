@@ -15,6 +15,7 @@ add_library(
     settingsMenu.cpp
     fileManager.cpp
 )
+target_link_libraries(libSnake stdc++fs)
 
 add_library(
   Xinterface
