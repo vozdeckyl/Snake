@@ -19,6 +19,10 @@ parts:
       - libx11-dev
     stage-packages:
       - libncursesw5
+      - libx11-6
+      - libxau6
+      - libxcb1
+      - libxdmcp6
 
 layout:
   /var/shellsnake/settings.bin:
