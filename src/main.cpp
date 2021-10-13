@@ -9,6 +9,7 @@
  */
 
 #include <iostream>
+#include <unistd.h>
 #include "SnakeConfig.h"
 #include "window.h"
 #include "menu.h"
@@ -114,7 +115,7 @@ int main()
 {
     maximize_active_window();    
     cout << "Snake v" << Snake_VERSION_MAJOR << "." << Snake_VERSION_MINOR << " " << BUILD << endl;
-    system("sleep 1");
+    sleep(1);
     
     FileManager::addFile("logo",std::vector<std::string>({"../data/logo.txt","/usr/local/share/shellsnake/logo.txt"}));
     FileManager::addFile("settings",std::vector<std::string>({"../data/settings.bin","/var/shellsnake/settings.bin"}));
