@@ -16,9 +16,13 @@ parts:
     build-packages:
       - libgtest-dev
       - libncurses5-dev
+      - libx11-dev
     stage-packages:
       - libncursesw5
-      - wmctrl
+      - libx11-6
+      - libxau6
+      - libxcb1
+      - libxdmcp6
 
 layout:
   /var/shellsnake/settings.bin:

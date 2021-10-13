@@ -17,10 +17,16 @@ add_library(
 )
 target_link_libraries(libSnake stdc++fs)
 
+add_library(
+  Xinterface
+  Xinterface.cpp
+)
+
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})
 
 #create the binary and add the library
 add_executable(snake main.cpp NCursesEngine.cpp colors.cpp)
-target_link_libraries(snake libSnake ncurses pthread)
+target_link_libraries(Xinterface X11)
+target_link_libraries(snake libSnake ncurses pthread Xinterface)
 
 target_include_directories(snake PUBLIC "${PROJECT_BINARY_DIR}")
