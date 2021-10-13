@@ -12,7 +12,7 @@ snap install shellsnake --beta
 ## Install from the source code
 Install the dependencies
 ```bash
-sudo apt install libncurses5-dev libgtest-dev wmctrl
+sudo apt install libncurses5-dev libgtest-dev
 ```
 
 Download the source code
