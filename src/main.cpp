@@ -23,6 +23,7 @@
 #include "NCursesEngine.h"
 #include "fileManager.h"
 
+
 #ifdef DEBUG
   #define BUILD "Debug"
 #else
@@ -30,6 +31,8 @@
 #endif
 
 using namespace std;
+
+void maximize_active_window();
 
 int mainMenu()
 {
@@ -109,8 +112,7 @@ void records()
 
 int main()
 {
-    system("wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz");
-    system("wmctrl -r $(wmctrl -l | tail -n 1 | cut -d ' ' -f1) -i -b add,maximized_vert,maximized_horz");
+    maximize_active_window();    
     cout << "Snake v" << Snake_VERSION_MAJOR << "." << Snake_VERSION_MINOR << " " << BUILD << endl;
     system("sleep 1");
     

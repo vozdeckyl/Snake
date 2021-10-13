@@ -16,9 +16,9 @@ parts:
     build-packages:
       - libgtest-dev
       - libncurses5-dev
+      - libx11-dev
     stage-packages:
       - libncursesw5
-      - wmctrl
 
 layout:
   /var/shellsnake/settings.bin:
