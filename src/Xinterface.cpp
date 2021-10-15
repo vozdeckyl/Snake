@@ -37,14 +37,9 @@ Window get_active_window(Display * display)
         return 0;
     }
 
-    /* null terminate the result to make string handling easier */
-    tmp_size = (ret_format / (32 / sizeof(long))) * ret_nitems;
-    ret = (char *) malloc(tmp_size + 1);
-    memcpy(ret, ret_prop, tmp_size);
-    ret[tmp_size] = '\0';
-    
+    Window activeWindow = *((Window *) ret_prop);
     XFree(ret_prop);
-    return *((Window *) ret);
+    return activeWindow;
 }
     
 
@@ -69,17 +64,16 @@ void window_maximize(Display * display, Window window)
 void enum_windows(Display* display, Window window, int depth, Window active) {
     int i;
     
-    XTextProperty text;
-    XGetWMName(display, window, &text);
     char* name;
     XFetchName(display, window, &name);
+    
     
     if(name != NULL)
     {
 	/*
 	for (i = 0; i < depth; i++)
 	    printf("\t");
-	printf("id=0x%lx, XFetchName=\"%s\", XGetWMName=\"%s\"\n", window, name != NULL ? name : "(no name)", text.value);
+	printf("id=0x%lx, XFetchName=\"%s\" \n", window, name != NULL ? name : "(no name)");
 	*/
 	
 	if(window==active)
@@ -87,6 +81,8 @@ void enum_windows(Display* display, Window window, int depth, Window active) {
 	    window_maximize(display,window);
 	}
     }
+
+    XFree(name);
     
     Window root, parent;
     Window* children;
@@ -105,5 +101,7 @@ void maximize_active_window()
 {
     Display* display = XOpenDisplay(NULL);
     Window root = XDefaultRootWindow(display);
-    enum_windows(display, root, 0, get_active_window(display));
+    Window activeWindow = get_active_window(display);
+    enum_windows(display, root, 0, activeWindow);
+    XCloseDisplay(display);
 }
