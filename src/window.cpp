@@ -16,13 +16,14 @@ Window::Window(IGraphicsEngine * engine) : m_exit(false), m_nextObjectID(0), m_k
 
 Window::~Window()
 {
-    for(pair<ObjectID, IDrawable*> pair : m_elements)
+    for(pair<const ObjectID, IDrawable*> & pair : m_elements)
     { 
-        IDrawable * element = pair.second;
-        delete element;
+	delete pair.second;
+	pair.second = nullptr;
     }
     m_engine->endScreen();
     delete m_engine;
+    m_engine = nullptr;
 }
 
 ObjectID Window::addElement(IDrawable * element, int yPosition, int xPosition)
