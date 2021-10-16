@@ -37,22 +37,34 @@ class Snake : public IDrawable {
         void drawWalls(const IGraphicsEngine * engine);
 
     private:
+        std::mutex m_cellsMutex;
         std::list<std::pair<int,int>> m_cells;
-        double m_verticalFractionPosition;
-        double m_horizontalFractionPosition;
+    
+        std::mutex m_velocityMutex;
         double m_verticalVelocity;
         double m_horizontalVelocity;
-        double m_speed;
+
+        std::mutex m_targetPositionMutex;
         int m_target_vertical;
         int m_target_horizontal;
+
+        std::mutex m_gameOverMutex;
         bool m_gameOver;
+    
+        std::mutex m_scoreMutex;
+        int m_score;
+        
+        std::mutex m_keyLockMutex;
+        bool m_keyLock;
+
+        // variables that do not need mutex locking
         int m_playWindowHeight;
         int m_playWindowWidth;
         std::string gameOverLabel;
-        int m_score;
-        bool m_keyLock;
-        std::mutex m_keyLockMutex;
         bool m_penetrableWalls;
+        double m_verticalFractionPosition;
+        double m_horizontalFractionPosition;
+        double m_speed;
 };
 
 #endif
