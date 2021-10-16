@@ -46,13 +46,12 @@ void SettingsMenu::draw(const IGraphicsEngine * engine)
 
     lock_guard<mutex> guard(m_selector_mutex);
 
-    for(Setting setting : m_settings)
+    for(const Setting & setting : m_settings)
     {   
         Color textColor, backgroundColor;
         if(counter==m_selector)
         {
             // if the menu item is selected, decorate it:
-            //Colors::activateColor(COLOR_WHITE,COLOR_RED);
             textColor = Color::white;
             backgroundColor = Color::red;
         }
@@ -63,8 +62,6 @@ void SettingsMenu::draw(const IGraphicsEngine * engine)
         }
 
         engine->draw((setting.getName() + "    <" + setting.getOption() + ">"),m_vertical_position+counter,m_horizontal_position-setting.getName().size(),textColor,backgroundColor);
-        //mvprintw(m_vertical_position+counter,m_horizontal_position-setting.getName().size(), (setting.getName() + "    <" + setting.getOption() + ">").c_str());
-        //Colors::deactivateColor();
         counter++;
     }
 }
@@ -117,7 +114,7 @@ void SettingsMenu::saveSettings()
     int settingBinary{0};
     int counter{0};
 
-    for(Setting setting : m_settings)
+    for(const Setting & setting : m_settings)
     {
         settingBinary = settingBinary | (setting.getOptionIndex() << 4*counter);
         counter++;

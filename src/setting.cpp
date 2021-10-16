@@ -14,17 +14,17 @@ Setting::~Setting()
 {
 }
 
-string Setting::getName()
+string Setting::getName() const
 {
     return m_name;
 }
 
-int Setting::getOptionIndex()
+int Setting::getOptionIndex() const
 {
     return m_selection;
 }
 
-string Setting::getOption()
+string Setting::getOption() const
 {
     return m_options[m_selection];
 }

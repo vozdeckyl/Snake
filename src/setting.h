@@ -21,17 +21,17 @@ class Setting {
         /*!
             @brief Return the name of the setting
         */
-        std::string getName();
+        std::string getName() const;
 
         /*!
             @brief Returns the selected option
         */
-        std::string getOption();
+        std::string getOption() const;
 
         /*!
             @brief Return the index of the selected option
         */
-        int getOptionIndex();
+        int getOptionIndex() const;
 
         /*!
             @brief Changes the setting to its next option

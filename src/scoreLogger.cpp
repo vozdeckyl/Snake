@@ -70,7 +70,7 @@ vector<pair<string,string>> ScoreLogger::getLogList()
 
     sort(scoreListSorted.begin(),scoreListSorted.end(), [](pair<time_t,int> a, pair<time_t,int> b){return a.second > b.second;});
 
-    for(auto pair : scoreListSorted)
+    for(const auto & pair : scoreListSorted)
     {
         char buffer[20];
         string date;

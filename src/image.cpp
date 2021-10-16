@@ -49,9 +49,8 @@ void Image::draw(const IGraphicsEngine * engine)
 {
     int vertical_offset{0};
 
-    for(string s : m_image)
+    for(const string & s : m_image)
     {
-        //mvprintw(m_vertical_position+vertical_offset,m_horizontal_position,s.c_str());
         engine->draw(s,m_vertical_position+vertical_offset,m_horizontal_position,Color::white,Color::black);
         vertical_offset++;
     }

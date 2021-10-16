@@ -90,43 +90,24 @@ void Window::graphicsLoop()
             kill();
         }
         
-        for(pair<ObjectID, IDrawable*> pair : m_elements)
+        for(const pair<ObjectID, IDrawable*> & pair : m_elements)
         {
-            IDrawable * element = pair.second;
-            if(element->isNotifiable())
+            if(pair.second->isNotifiable())
             {
-                element->notify(input);
+                pair.second->notify(input);
             }
         }
       
-        /*
-        erase();
-	
-	    move(0,0);
-        for(int i = 0; i<=m_numOfRows*m_numOfColumns; i++)
+	m_engine->prepareScreen();
+       
+        for(const pair<ObjectID, IDrawable*> & pair : m_elements)
         {
-            printw(" ");
-        }
-
-        Colors::activateColor(COLOR_BLACK,COLOR_BLACK);
-        box(stdscr, 0, 0);
-        Colors::deactivateColor();
-        */
-
-       m_engine->prepareScreen();
-
-	
-        for(pair<ObjectID, IDrawable*> pair : m_elements)
-        {
-            IDrawable * element = pair.second;
-            if(element->isVisible())
+            if(pair.second->isVisible())
             {
-                element->draw(m_engine);
+                pair.second->draw(m_engine);
             }
         }
-
-        //refresh();
-
+	
         m_engine->refreshScreen();
     }
 }
@@ -135,12 +116,11 @@ void Window::updateLoop()
 {
     while(!exit())
     {
-        for(pair<ObjectID, IDrawable*> pair : m_elements)
+        for(const pair<ObjectID, IDrawable*> & pair : m_elements)
         {
-            IDrawable * element = pair.second;
-            if(element->isUpdatable())
+            if(pair.second->isUpdatable())
             {
-                element->update();
+                pair.second->update();
             }
         }
         m_engine->wait(1);
