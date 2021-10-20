@@ -12,18 +12,18 @@
 
 using namespace std;
 
-Snake::Snake(double verticalVelocity, double horizontalVelocity) : IDrawable(),
-m_verticalFractionPosition(0.0),
-m_horizontalFractionPosition(0.0),
-m_verticalVelocity(0.0),
-m_horizontalVelocity(0.0),
-m_speed(0.0),
-m_target_vertical(5),
-m_target_horizontal(5),
-m_gameOver(false),
-m_score(0),
-m_keyLock(false),
-m_penetrableWalls(true)
+Snake::Snake(double verticalVelocity, double horizontalVelocity) :
+    IDrawable(),
+    m_verticalFractionPosition(0.0),
+    m_horizontalFractionPosition(0.0),
+    m_speed(0.0),
+    m_target_vertical(5),
+    m_target_horizontal(5),
+    m_gameOver(false),
+    m_score(0),
+    m_keyLock(false),
+    m_penetrableWalls(true),
+    m_pace(100)
 {
     gameOverLabel = string("* * * GAME OVER * * *");
 
@@ -86,9 +86,7 @@ m_penetrableWalls(true)
             m_penetrableWalls = true;
             break;
     }
-
-    m_speed = (speedSetting+1)*0.0025;
-    m_horizontalVelocity = 2*m_speed;
+    m_pace = (3-speedSetting)*100;
 }
 
 
@@ -131,32 +129,28 @@ void Snake::draw(const IGraphicsEngine * engine)
 
 void Snake::notify(int ch)
 {
+    lock_guard<mutex> guardVelocity(m_directionMutex);
     lock_guard<mutex> guardLock(m_keyLockMutex);
-    lock_guard<mutex> guardVelocity(m_velocityMutex);
     if(!m_keyLock)
-    {
-        if(ch==KEY_LEFT && m_horizontalVelocity==0.0)
+    {	
+        if(ch==KEY_LEFT && m_direction != Direction::right)
         {
-            m_verticalVelocity = 0.0;
-            m_horizontalVelocity = -m_speed*2.0;
+	    m_direction = Direction::left;
             m_keyLock = true;
         }
-        else if(ch==KEY_RIGHT && m_horizontalVelocity==0.0)
+        else if(ch==KEY_RIGHT && m_direction != Direction::left)
         {
-            m_verticalVelocity = 0.0;
-            m_horizontalVelocity = +m_speed*2.0;
+            m_direction = Direction::right;
             m_keyLock = true;
         }
-        else if(ch==KEY_UP && m_verticalVelocity==0.0)
+        else if(ch==KEY_UP && m_direction != Direction::down)
         {
-            m_verticalVelocity = -m_speed;
-            m_horizontalVelocity = 0.0;
+            m_direction = Direction::up;
             m_keyLock = true;
         }
-        else if(ch==KEY_DOWN && m_verticalVelocity==0.0)
+        else if(ch==KEY_DOWN && m_direction != Direction::up)
         {
-            m_verticalVelocity = m_speed;
-            m_horizontalVelocity = 0.0;
+            m_direction = Direction::down;
             m_keyLock = true;
         }
     }
@@ -167,46 +161,48 @@ void Snake::update()
     lock_guard<mutex> guardGameOver(m_gameOverMutex);
     if(!m_gameOver)
     {
+	lock_guard<mutex> guard(m_directionMutex);
+	
+	if(m_direction==Direction::left || m_direction==Direction::right)
 	{
-	    lock_guard<mutex> guard(m_velocityMutex);
-	    m_verticalFractionPosition += m_verticalVelocity;
-	    m_horizontalFractionPosition += m_horizontalVelocity;
+	    m_counter+=2;
+	}
+	else
+	{
+	    m_counter++;
+	}
+
+	if(m_counter>=m_pace)
+	{
+	    m_counter=0;
+	    shiftCells();
+	    if(m_direction==Direction::up)
+	    {
+		m_vertical_position--;
+		lock_guard<mutex> guard(m_keyLockMutex);
+		m_keyLock = false;
+	    }
+	    else if(m_direction==Direction::down)
+	    {
+		m_vertical_position++;
+		lock_guard<mutex> guard(m_keyLockMutex);
+		m_keyLock = false;
+	    }
+	    else if(m_direction==Direction::left)
+	    {
+		m_horizontal_position--;
+		lock_guard<mutex> guard(m_keyLockMutex);
+		m_keyLock = false;
+	    }
+	    else if(m_direction==Direction::right)
+	    {
+		m_horizontal_position++;
+		lock_guard<mutex> guard(m_keyLockMutex);
+		m_keyLock = false;
+	    }
+
 	}
 	
-        if(m_verticalFractionPosition > 1.0)
-        {
-            m_verticalFractionPosition = 0.0;
-            shiftCells();
-            m_vertical_position++;
-            lock_guard<mutex> guard(m_keyLockMutex);
-            m_keyLock = false;
-        }
-        else if(m_verticalFractionPosition < -1.0)
-        {
-            m_verticalFractionPosition = 0.0;
-            shiftCells();
-            m_vertical_position--;
-            lock_guard<mutex> guard(m_keyLockMutex);
-            m_keyLock = false;
-        }
-
-        if(m_horizontalFractionPosition > 1.0)
-        {
-            m_horizontalFractionPosition = 0.0;
-            shiftCells();
-            m_horizontal_position++;
-            lock_guard<mutex> guard(m_keyLockMutex);
-            m_keyLock = false;
-        }
-        else if(m_horizontalFractionPosition < -1.0)
-        {
-            m_horizontalFractionPosition = 0.0;
-            shiftCells();
-            m_horizontal_position--;
-            lock_guard<mutex> guard(m_keyLockMutex);
-            m_keyLock = false;
-        }
-
 	{
 	    lock_guard<mutex> guard(m_cellsMutex);
 	    for(const auto & cell : m_cells)
