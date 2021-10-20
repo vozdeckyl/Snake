@@ -44,23 +44,15 @@ private:
     void drawWalls(const IGraphicsEngine * engine);
     
 private:
-    std::mutex m_cellsMutex;
-    std::list<std::pair<int,int>> m_cells;
+
+    std::mutex m_mutex;
     
-    std::mutex m_targetPositionMutex;
+    std::list<std::pair<int,int>> m_cells;
     int m_target_vertical;
     int m_target_horizontal;
-    
-    std::mutex m_gameOverMutex;
     bool m_gameOver;
-    
-    std::mutex m_scoreMutex;
     int m_score;
-    
-    std::mutex m_keyLockMutex;
     bool m_keyLock;
-    
-    std::mutex m_directionMutex;
     Direction m_direction; 
     
     // variables that do not need mutex locking
