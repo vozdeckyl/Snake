@@ -243,7 +243,6 @@ void Snake::update()
 
 void Snake::shiftCells()
 {
-    lock_guard<mutex> guard(m_mutex);
     m_cells.emplace_back(make_pair(m_vertical_position,m_horizontal_position));
     // if the position of the last cell is different, don't get rid of the last cell
     // if they are the same, get it attached and generate a new random position for the target
