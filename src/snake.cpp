@@ -251,7 +251,6 @@ void Snake::shiftCells()
     {
         m_target_horizontal = (rand() % (m_playWindowWidth-1))+1;
         m_target_vertical = (rand() % (m_playWindowHeight-1))+1;
-	lock_guard<mutex> guardScore(m_scoreMutex);
         m_score++;
     }
     else
