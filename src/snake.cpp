@@ -12,18 +12,16 @@
 
 using namespace std;
 
-Snake::Snake(double verticalVelocity, double horizontalVelocity) : IDrawable(),
-m_verticalFractionPosition(0.0),
-m_horizontalFractionPosition(0.0),
-m_verticalVelocity(0.0),
-m_horizontalVelocity(0.0),
-m_speed(0.0),
-m_target_vertical(5),
-m_target_horizontal(5),
-m_gameOver(false),
-m_score(0),
-m_keyLock(false),
-m_penetrableWalls(true)
+Snake::Snake(double verticalVelocity, double horizontalVelocity) :
+    IDrawable(),
+    m_target_vertical(5),
+    m_target_horizontal(5),
+    m_gameOver(false),
+    m_score(0),
+    m_keyLock(false),
+    m_penetrableWalls(true),
+    m_pace(100),
+    m_direction(Direction::right)
 {
     gameOverLabel = string("* * * GAME OVER * * *");
 
@@ -86,9 +84,7 @@ m_penetrableWalls(true)
             m_penetrableWalls = true;
             break;
     }
-
-    m_speed = (speedSetting+1)*0.0025;
-    m_horizontalVelocity = 2*m_speed;
+    m_pace = (3-speedSetting)*100;
 }
 
 
@@ -100,29 +96,18 @@ Snake::~Snake()
 
 void Snake::draw(const IGraphicsEngine * engine)
 {
+    lock_guard<mutex> guard(m_mutex);
     drawWalls(engine);
+    engine->draw(("Score: " + to_string(m_score)),m_playWindowHeight+1,(int)m_playWindowWidth*0.5,Color::white,Color::black);
+    engine->draw("X",m_target_vertical,m_target_horizontal,Color::black,Color::yellow);
     
+    for(const pair<int,int> & cell : m_cells)
     {
-	lock_guard<mutex> guard(m_scoreMutex);
-	engine->draw(("Score: " + to_string(m_score)),m_playWindowHeight+1,(int)m_playWindowWidth*0.5,Color::white,Color::black);
-    }
-    
-    {
-	lock_guard<mutex> guard(m_targetPositionMutex);
-	engine->draw("X",m_target_vertical,m_target_horizontal,Color::black,Color::yellow);
-    }
-    
-    {
-	lock_guard<mutex> guard(m_cellsMutex);
-	for(const pair<int,int> & cell : m_cells)
-	{
-	    engine->draw(" ",cell.first,cell.second,Color::red,Color::green);
-	}
+	engine->draw(" ",cell.first,cell.second,Color::red,Color::green);
     }
     
     engine->draw(":",m_vertical_position,m_horizontal_position,Color::red,Color::green);
-
-    lock_guard<mutex> guardGameOver(m_gameOverMutex);
+    
     if(m_gameOver)
     {
         engine->draw(gameOverLabel,(int) (0.5*m_playWindowHeight),(int) (0.5*(m_playWindowWidth-gameOverLabel.size())),Color::white,Color::black);
@@ -131,32 +116,28 @@ void Snake::draw(const IGraphicsEngine * engine)
 
 void Snake::notify(int ch)
 {
-    lock_guard<mutex> guardLock(m_keyLockMutex);
-    lock_guard<mutex> guardVelocity(m_velocityMutex);
+    lock_guard<mutex> guard(m_mutex);
+
     if(!m_keyLock)
-    {
-        if(ch==KEY_LEFT && m_horizontalVelocity==0.0)
+    {	
+        if(ch==KEY_LEFT && m_direction != Direction::right)
         {
-            m_verticalVelocity = 0.0;
-            m_horizontalVelocity = -m_speed*2.0;
+	    m_direction = Direction::left;
             m_keyLock = true;
         }
-        else if(ch==KEY_RIGHT && m_horizontalVelocity==0.0)
+        else if(ch==KEY_RIGHT && m_direction != Direction::left)
         {
-            m_verticalVelocity = 0.0;
-            m_horizontalVelocity = +m_speed*2.0;
+            m_direction = Direction::right;
             m_keyLock = true;
         }
-        else if(ch==KEY_UP && m_verticalVelocity==0.0)
+        else if(ch==KEY_UP && m_direction != Direction::down)
         {
-            m_verticalVelocity = -m_speed;
-            m_horizontalVelocity = 0.0;
+            m_direction = Direction::up;
             m_keyLock = true;
         }
-        else if(ch==KEY_DOWN && m_verticalVelocity==0.0)
+        else if(ch==KEY_DOWN && m_direction != Direction::up)
         {
-            m_verticalVelocity = m_speed;
-            m_horizontalVelocity = 0.0;
+            m_direction = Direction::down;
             m_keyLock = true;
         }
     }
@@ -164,57 +145,51 @@ void Snake::notify(int ch)
 
 void Snake::update()
 {
-    lock_guard<mutex> guardGameOver(m_gameOverMutex);
+    lock_guard<mutex> guard(m_mutex);
     if(!m_gameOver)
     {
+	
+	if(m_direction==Direction::left || m_direction==Direction::right)
 	{
-	    lock_guard<mutex> guard(m_velocityMutex);
-	    m_verticalFractionPosition += m_verticalVelocity;
-	    m_horizontalFractionPosition += m_horizontalVelocity;
+	    m_counter+=2;
+	}
+	else
+	{
+	    m_counter++;
+	}
+
+	if(m_counter>=m_pace)
+	{
+	    m_counter=0;
+	    shiftCells();
+	    if(m_direction==Direction::up)
+	    {
+		m_vertical_position--;
+		m_keyLock = false;
+	    }
+	    else if(m_direction==Direction::down)
+	    {
+		m_vertical_position++;
+		m_keyLock = false;
+	    }
+	    else if(m_direction==Direction::left)
+	    {
+		m_horizontal_position--;
+		m_keyLock = false;
+	    }
+	    else if(m_direction==Direction::right)
+	    {
+		m_horizontal_position++;
+		m_keyLock = false;
+	    }
 	}
 	
-        if(m_verticalFractionPosition > 1.0)
-        {
-            m_verticalFractionPosition = 0.0;
-            shiftCells();
-            m_vertical_position++;
-            lock_guard<mutex> guard(m_keyLockMutex);
-            m_keyLock = false;
-        }
-        else if(m_verticalFractionPosition < -1.0)
-        {
-            m_verticalFractionPosition = 0.0;
-            shiftCells();
-            m_vertical_position--;
-            lock_guard<mutex> guard(m_keyLockMutex);
-            m_keyLock = false;
-        }
 
-        if(m_horizontalFractionPosition > 1.0)
-        {
-            m_horizontalFractionPosition = 0.0;
-            shiftCells();
-            m_horizontal_position++;
-            lock_guard<mutex> guard(m_keyLockMutex);
-            m_keyLock = false;
-        }
-        else if(m_horizontalFractionPosition < -1.0)
-        {
-            m_horizontalFractionPosition = 0.0;
-            shiftCells();
-            m_horizontal_position--;
-            lock_guard<mutex> guard(m_keyLockMutex);
-            m_keyLock = false;
-        }
-
+	for(const auto & cell : m_cells)
 	{
-	    lock_guard<mutex> guard(m_cellsMutex);
-	    for(const auto & cell : m_cells)
+	    if(cell.first == m_vertical_position && cell.second == m_horizontal_position)
 	    {
-		if(cell.first == m_vertical_position && cell.second == m_horizontal_position)
-		{
-		    m_gameOver = true;
-		}
+		m_gameOver = true;
 	    }
 	}
 	
@@ -268,12 +243,10 @@ void Snake::update()
 
 void Snake::shiftCells()
 {
-    lock_guard<mutex> guard(m_cellsMutex);
+    lock_guard<mutex> guard(m_mutex);
     m_cells.emplace_back(make_pair(m_vertical_position,m_horizontal_position));
     // if the position of the last cell is different, don't get rid of the last cell
     // if they are the same, get it attached and generate a new random position for the target
-
-    lock_guard<mutex> guardTarget(m_targetPositionMutex);
     if((*(m_cells.begin())).first == m_target_vertical && (*(m_cells.begin())).second == m_target_horizontal)
     {
         m_target_horizontal = (rand() % (m_playWindowWidth-1))+1;
