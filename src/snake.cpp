@@ -14,9 +14,6 @@ using namespace std;
 
 Snake::Snake(double verticalVelocity, double horizontalVelocity) :
     IDrawable(),
-    m_verticalFractionPosition(0.0),
-    m_horizontalFractionPosition(0.0),
-    m_speed(0.0),
     m_target_vertical(5),
     m_target_horizontal(5),
     m_gameOver(false),

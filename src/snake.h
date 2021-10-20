@@ -60,9 +60,6 @@ private:
     int m_playWindowWidth;
     std::string gameOverLabel;
     bool m_penetrableWalls;
-    double m_verticalFractionPosition;
-    double m_horizontalFractionPosition;
-    double m_speed;
     int m_counter;
     int m_pace;
 };
