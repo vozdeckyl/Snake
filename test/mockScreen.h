@@ -5,126 +5,142 @@
 #include "IGraphicsEngine.h"
 
 class mockScreen : public IGraphicsEngine {
-    public:
+public:
+    mockScreen(int height, int width) :
+	m_isInitialized(false),
+	m_isScreenPrepared(false),
+	m_height(height),
+	m_width(width),
+	m_refreshed(false),
+	m_screenEnded(false),
+	m_waitForMS(0)
+    {
+	m_screen = new char[height*width];
+	m_screenTextColor = new Color[height*width];
+	m_screenBackgroundColor = new Color[height*width];
+	for(int i = 0; i<m_height*m_height; i++)
+	{
+	    m_screen[i] = ' ';
+	    m_screenTextColor[i] = Color::white;
+	    m_screenBackgroundColor[i] = Color::black;
+	}
+    }
+
+    ~mockScreen()
+    {
+	delete[] m_screen;
+    }
+
+    void init() override
+    {
+	m_isInitialized = true;
+    }
+
+    void prepareScreen() override
+    {
+	m_isScreenPrepared = true;
+    }
+
+    void draw(std::string text, int y, int x, Color textColor, Color backgroundColor) const override
+    {
+	char * textString = const_cast<char*>(text.c_str());
+	int length = text.size();
+	
+	for(int i=0; i<length; i++)
+	{
+	    drawChar(textString[i],y,x+i);
+	    m_screenTextColor[y*m_height+x+i] = textColor;
+	    m_screenBackgroundColor[y*m_height+x+i] = backgroundColor;
+	}
+    }
+
+    void drawChar(char ch, int y, int x) const
+    {
+	m_screen[y*m_height+x] = ch;
+    }
         
-        mockScreen(int height, int width) :
-        m_isInitialized(false),
-        m_isScreenPrepared(false),
-        m_height(height),
-        m_width(width),
-        m_refreshed(false),
-        m_screenEnded(false),
-        m_waitForMS(0)
-        {
-            m_screen = new char[height*width];
+    void refreshScreen() override
+    {
+	m_refreshed = true;
+    }
+        
+    void clearScreen() override
+    {
+	for(int i = 0; i<m_height*m_height; i++)
+	{
+	    m_screen[i] = ' ';
+	    m_screenTextColor[i] = Color::white;
+	    m_screenBackgroundColor[i] = Color::black;
+	}
+    }
+    
+    void endScreen()
+    {
+	m_screenEnded = true;
+    }
 
-            for(int i = 0; i<m_height*m_height; i++)
-            {
-                m_screen[i] = ' ';
-            }
-        }
+    int numberOfRows()
+    {
+	return m_height;
+    }
+    
+    int numberOfColumns()
+    {
+	return m_width;
+    }
+    
+    void wait(int timeMS)
+    {
+	m_waitForMS = timeMS;
+    }
 
-        ~mockScreen()
-        {
-            delete[] m_screen;
-        }
+    int input()
+    {
+	if(m_buffer.size() == 0)
+	{
+	    return -1;
+	}
+	else
+	{
+	    char output = *(m_buffer.end()); 
+	    m_buffer.pop_back();
+	    return (int) output;            
+	}
+    }
 
-        void init() override
-        {
-            m_isInitialized = true;
-        }
+    void addToBuffer(char ch)
+    {
+	m_buffer.emplace_back(ch);
+    }
+    
+    bool testScreen(char ch, int y, int x)
+    {
+	return ch == m_screen[y*m_height+x];
+    }
 
-        void prepareScreen() override
-        {
-            m_isScreenPrepared = true;
-        }
+    bool testTextColor(Color color, int y, int x)
+    {
+	return color == m_screenTextColor[y*m_height+x];
+    }
 
-        void draw(std::string text, int y, int x, Color textColor, Color backgroundColor) const override
-        {
-            char * textString = const_cast<char*>(text.c_str());
-            int length = text.size();
-
-            for(int i=0; i<length; i++)
-            {
-                drawChar(textString[i],y,x+i);
-            }
-        }
-
-        void drawChar(char ch, int y, int x) const
-        {
-            m_screen[y*m_height+x] = ch;
-            //m_refreshed = false;
-        }
-
-
-        void refreshScreen() override
-        {
-            m_refreshed = true;
-        }
-
-
-        void clearScreen() override
-        {
-            for(int i = 0; i<m_height*m_height; i++)
-            {
-                m_screen[i] = ' ';
-            }
-        }
-
-        void endScreen()
-        {
-            m_screenEnded = true;
-        }
-
-        int numberOfRows()
-        {
-            return m_height;
-        }
-
-        int numberOfColumns()
-        {
-            return m_width;
-        }
-
-        void wait(int timeMS)
-        {
-            m_waitForMS = timeMS;
-        }
-
-        int input()
-        {
-            if(m_buffer.size() == 0)
-            {
-                return -1;
-            }
-            else
-            {
-                char output = *(m_buffer.end()); 
-                m_buffer.pop_back();
-                return (int) output;            
-            }
-        }
-
-        void addToBuffer(char ch)
-        {
-            m_buffer.emplace_back(ch);
-        }
-
-        bool testScreen(char ch, int y, int x)
-        {
-            return ch == m_screen[y*m_height+x];
-        }
-
-    private:
-        bool m_isInitialized;
-        bool m_isScreenPrepared;
-        char * m_screen;
-        int m_height;
-        int m_width;
-        bool m_refreshed;
-        bool m_screenEnded;
-        int m_waitForMS;
-        std::vector<char> m_buffer;
+    bool testBackgroundColor(Color color, int y, int x)
+    {
+	return color == m_screenBackgroundColor[y*m_height+x];
+    }
+    
+    
+private:
+    bool m_isInitialized;
+    bool m_isScreenPrepared;
+    char * m_screen;
+    Color * m_screenTextColor;
+    Color * m_screenBackgroundColor;
+    int m_height;
+    int m_width;
+    bool m_refreshed;
+    bool m_screenEnded;
+    int m_waitForMS;
+    std::vector<char> m_buffer;
 };
 
 #endif

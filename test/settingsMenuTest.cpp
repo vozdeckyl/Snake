@@ -10,8 +10,8 @@ using namespace std;
 
 TEST(settingsMenuTest, drawing)
 {
-    system("touch settings.dat && rm settings.dat");
-    system("touch settings.dat");
+    ASSERT_TRUE(system("touch settings.dat && rm settings.dat")!=-1);
+    ASSERT_TRUE(system("touch settings.dat")!=-1);
     FileManager::addFile("settings","settings.dat");
     auto engine = new mockScreen(100,100);
     Setting setting1("1",{"A","B","C","D"});
@@ -40,8 +40,8 @@ TEST(settingsMenuTest, drawing)
 
 TEST(settingsMenuTest, verticalSelection)
 {
-    system("touch settings.dat && rm settings.dat");
-    system("touch settings.dat");
+    ASSERT_TRUE(system("touch settings.dat && rm settings.dat")!=-1);
+    ASSERT_TRUE(system("touch settings.dat")!=-1);
     auto engine = new mockScreen(100,100);
     Setting setting("1",{"A","B","C","D"});
     SettingsMenu menu;
@@ -87,8 +87,8 @@ TEST(settingsMenuTest, verticalSelection)
 
 TEST(settingsMenuTest, horizontalSelection)
 {
-    system("touch settings.dat && rm settings.dat");
-    system("touch settings.dat");
+    ASSERT_TRUE(system("touch settings.dat && rm settings.dat")!=-1);
+    ASSERT_TRUE(system("touch settings.dat")!=-1);
     auto engine = new mockScreen(100,100);
     Setting setting1("1",{"A","B","C","D"});
     Setting setting2("2",{"A","B","C","D"});
@@ -141,8 +141,8 @@ TEST(settingsMenuTest, horizontalSelection)
 
 TEST(settingsMenuTest, loadingFile)
 {
-    system("touch settings.dat && rm settings.dat");
-    system("echo A0 > settings.dat"); // "A" = 0011 0000 0100 0001 
+    ASSERT_TRUE(system("touch settings.dat && rm settings.dat")!=-1);
+    ASSERT_TRUE(system("echo A0 > settings.dat")!=-1); // "A" = 0011 0000 0100 0001 
     auto engine = new mockScreen(100,100);
     Setting setting1("1",{"A","B","C","D"});
     Setting setting2("2",{"A","B","C","D","E","F","G"});

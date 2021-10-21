@@ -33,6 +33,21 @@ TEST(labelTest, drawing)
     delete engine;
     delete label;
 }
+
+TEST(labelTest, colors)
+{
+    auto engine = new mockScreen(100,100);
+    auto label = new Label("A",Color::red,Color::white);
+    label->setPosition(0,0);
+    
+    label->draw(engine);
+    ASSERT_TRUE(engine->testScreen('A',0,0));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::white,0,0));
+    ASSERT_TRUE(engine->testTextColor(Color::red,0,0));
+    
+    delete engine;
+    delete label;
+}
  
 int main(int argc, char **argv) 
 {
