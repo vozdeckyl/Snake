@@ -16,9 +16,13 @@ public:
 	m_waitForMS(0)
     {
 	m_screen = new char[height*width];
+	m_screenTextColor = new Color[height*width];
+	m_screenBackgroundColor = new Color[height*width];
 	for(int i = 0; i<m_height*m_height; i++)
 	{
 	    m_screen[i] = ' ';
+	    m_screenTextColor[i] = Color::white;
+	    m_screenBackgroundColor[i] = Color::black;
 	}
     }
 
@@ -45,6 +49,8 @@ public:
 	for(int i=0; i<length; i++)
 	{
 	    drawChar(textString[i],y,x+i);
+	    m_screenTextColor[y*m_height+x+i] = textColor;
+	    m_screenBackgroundColor[y*m_height+x+i] = backgroundColor;
 	}
     }
 
@@ -63,6 +69,8 @@ public:
 	for(int i = 0; i<m_height*m_height; i++)
 	{
 	    m_screen[i] = ' ';
+	    m_screenTextColor[i] = Color::white;
+	    m_screenBackgroundColor[i] = Color::black;
 	}
     }
     
@@ -109,11 +117,24 @@ public:
     {
 	return ch == m_screen[y*m_height+x];
     }
+
+    bool testTextColor(Color color, int y, int x)
+    {
+	return color == m_screenTextColor[y*m_height+x];
+    }
+
+    bool testBackgroundColor(Color color, int y, int x)
+    {
+	return color == m_screenBackgroundColor[y*m_height+x];
+    }
+    
     
 private:
     bool m_isInitialized;
     bool m_isScreenPrepared;
     char * m_screen;
+    Color * m_screenTextColor;
+    Color * m_screenBackgroundColor;
     int m_height;
     int m_width;
     bool m_refreshed;
