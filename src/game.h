@@ -5,13 +5,8 @@
 #include <utility>
 #include <string>
 #include "IDrawable.h"
+#include "direction.h"
 
-enum class Direction {
-    up,
-    down,
-    left,
-    right
-};
 
 /*!
     @brief Object representing the actual snake and the game map
