@@ -16,10 +16,10 @@ enum class Direction {
 /*!
     @brief Object representing the actual snake and the game map
 */
-class Snake : public IDrawable {
+class Game : public IDrawable {
 public:
-    Snake(double verticalVelocity, double horizontalVelocity);
-    ~Snake();
+    Game(double verticalVelocity, double horizontalVelocity);
+    ~Game();
     
     void draw(const IGraphicsEngine * engine) override;
     bool isVisible() override {return true;};

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <mutex>
-#include "snake.h"
+#include "game.h"
 #include "window.h"
 #include "colors.h"
 #include "scoreLogger.h"
@@ -12,7 +12,7 @@
 
 using namespace std;
 
-Snake::Snake(double verticalVelocity, double horizontalVelocity) :
+Game::Game(double verticalVelocity, double horizontalVelocity) :
     IDrawable(),
     m_target_vertical(5),
     m_target_horizontal(5),
@@ -88,13 +88,13 @@ Snake::Snake(double verticalVelocity, double horizontalVelocity) :
 }
 
 
-Snake::~Snake()
+Game::~Game()
 {
     ScoreLogger log;
     log.logScore(m_score);
 }
 
-void Snake::draw(const IGraphicsEngine * engine)
+void Game::draw(const IGraphicsEngine * engine)
 {
     lock_guard<mutex> guard(m_mutex);
     drawWalls(engine);
@@ -114,7 +114,7 @@ void Snake::draw(const IGraphicsEngine * engine)
     }
 }
 
-void Snake::notify(int ch)
+void Game::notify(int ch)
 {
     lock_guard<mutex> guard(m_mutex);
 
@@ -143,7 +143,7 @@ void Snake::notify(int ch)
     }
 }
 
-void Snake::update()
+void Game::update()
 {
     lock_guard<mutex> guard(m_mutex);
     if(!m_gameOver)
@@ -241,7 +241,7 @@ void Snake::update()
     }
 }
 
-void Snake::shiftCells()
+void Game::shiftCells()
 {
     m_cells.emplace_back(make_pair(m_vertical_position,m_horizontal_position));
     // if the position of the last cell is different, don't get rid of the last cell
@@ -258,7 +258,7 @@ void Snake::shiftCells()
     }
 }
 
-void Snake::drawWalls(const IGraphicsEngine * engine)
+void Game::drawWalls(const IGraphicsEngine * engine)
 {
     for(int i=0; i<=m_playWindowWidth; i++)
     {
