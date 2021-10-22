@@ -1,5 +1,5 @@
-#ifndef SNAKE_H
-#define SNAKE_H
+#ifndef GAME_H
+#define GAME_H
 
 #include <list>
 #include <utility>
