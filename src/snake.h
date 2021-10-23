@@ -30,8 +30,11 @@ public:
 
     void draw(const IGraphicsEngine * engine) override;
     bool isVisible() override {return true;};
-    
+
+    void update() override {};
     bool isUpdatable() override {return false;};
+
+    void notify(int ch) override {};
     bool isNotifiable() override {return false;};
 
     /*!
