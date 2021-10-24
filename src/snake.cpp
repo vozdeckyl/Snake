@@ -18,11 +18,11 @@ Snake::~Snake()
 
 void Snake::draw(const IGraphicsEngine * engine)
 {
-    engine->draw(":",m_headYposition,m_headXposition,Color::red,Color::white);
+    engine->draw(":",m_headYposition,m_headXposition,Color::red,Color::green);
 
     for(const std::pair<int,int> & cell : m_tail)
     {
-	engine->draw(" ",cell.first,cell.second,Color::red,Color::white);
+	engine->draw(" ",cell.first,cell.second,Color::red,Color::green);
     }
 }
 
@@ -96,8 +96,8 @@ void Snake::stretch()
 
 void Snake::teleportHeadTo(int y, int x)
 {
-    m_tail.push_back(std::make_pair(m_headYposition,m_headXposition));
-    m_tail.erase(m_tail.begin());
+    // m_tail.push_back(std::make_pair(m_headYposition,m_headXposition));
+    //m_tail.erase(m_tail.begin());
     
     m_headYposition = y;
     m_headXposition = x;

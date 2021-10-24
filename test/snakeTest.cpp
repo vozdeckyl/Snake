@@ -21,7 +21,7 @@ TEST(snakeTest, drawing)
     snake->draw(engine);
     ASSERT_TRUE(engine->testScreen(':',1,1));
     ASSERT_TRUE(engine->testTextColor(Color::red,1,1));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,1));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,1,1));
     
     ASSERT_TRUE(snake->getLength()==1);
     
@@ -37,7 +37,7 @@ TEST(snakeTest, moving)
     snake->draw(engine);
     ASSERT_TRUE(engine->testScreen(':',1,1));
     ASSERT_TRUE(engine->testTextColor(Color::red,1,1));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,1));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,1,1));
     
     engine->clearScreen();
 
@@ -46,7 +46,7 @@ TEST(snakeTest, moving)
 
     ASSERT_TRUE(engine->testScreen(':',1,2));
     ASSERT_TRUE(engine->testTextColor(Color::red,1,2));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,2));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,1,2));
     ASSERT_TRUE(engine->testScreen(' ',1,1));
     ASSERT_TRUE(engine->testTextColor(Color::white,1,1));
     ASSERT_TRUE(engine->testBackgroundColor(Color::black,1,1));
@@ -65,7 +65,7 @@ TEST(snakeTest, direction)
 
     ASSERT_TRUE(engine->testScreen(':',2,1));
     ASSERT_TRUE(engine->testTextColor(Color::red,2,1));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,2,1));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,2,1));
     ASSERT_TRUE(engine->testScreen(' ',1,1));
     ASSERT_TRUE(engine->testTextColor(Color::white,1,1));
     ASSERT_TRUE(engine->testBackgroundColor(Color::black,1,1));
@@ -77,7 +77,7 @@ TEST(snakeTest, direction)
     snake->draw(engine);
     ASSERT_TRUE(engine->testScreen(':',2,2));
     ASSERT_TRUE(engine->testTextColor(Color::red,2,2));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,2,2));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,2,2));
     ASSERT_TRUE(engine->testScreen(' ',2,1));
     ASSERT_TRUE(engine->testTextColor(Color::white,2,1));
     ASSERT_TRUE(engine->testBackgroundColor(Color::black,2,1));
@@ -94,7 +94,7 @@ TEST(snakeTest, direction)
     snake->draw(engine);
     ASSERT_TRUE(engine->testScreen(':',2,2));
     ASSERT_TRUE(engine->testTextColor(Color::red,2,2));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,2,2));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,2,2));
     
     delete engine;
     delete snake;
@@ -112,11 +112,11 @@ TEST(snakeTest, stretch)
     snake->draw(engine);
     ASSERT_TRUE(engine->testScreen(':',1,3));
     ASSERT_TRUE(engine->testTextColor(Color::red,1,3));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,3));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,1,3));
     ASSERT_TRUE(engine->testScreen(' ',1,1));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,1));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,1,1));
     ASSERT_TRUE(engine->testScreen(' ',1,2));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,2));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,1,2));
     
     delete engine;
     delete snake;
@@ -169,19 +169,19 @@ TEST(snakeTest, teleport)
 
     ASSERT_TRUE(engine->testScreen(':',20,21));
     ASSERT_TRUE(engine->testTextColor(Color::red,20,21));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,20,21));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,20,21));
     ASSERT_TRUE(engine->testScreen(' ',20,20));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,20,20));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,20,20));
     ASSERT_TRUE(engine->testScreen(' ',20,19));
     ASSERT_TRUE(engine->testTextColor(Color::white,20,19));
     ASSERT_TRUE(engine->testBackgroundColor(Color::black,20,19));
 
+    ASSERT_TRUE(engine->testScreen(' ',1,2));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,1,2));
     ASSERT_TRUE(engine->testScreen(' ',1,3));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,3));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,1,3));
     ASSERT_TRUE(engine->testScreen(' ',1,4));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,4));
-    ASSERT_TRUE(engine->testScreen(' ',1,5));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,5));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,1,4));
 
     ASSERT_TRUE(engine->testScreen(' ',1,6));
     ASSERT_TRUE(engine->testTextColor(Color::white,1,6));
