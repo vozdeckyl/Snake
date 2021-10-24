@@ -1,10 +1,14 @@
 #include "snake.h"
+#include <utility>
 
-Snake::Snake(int startPositionY, int startPositionX, Direction startDirection)
+Snake::Snake(int startPositionY, int startPositionX, Direction startDirection) :
+    m_headXposition(startPositionX),
+    m_headYposition(startPositionY),
+    m_direction(startDirection)
 {
 }
 
-Snake::Snake(int startPositionY, int startPositionX)
+Snake::Snake(int startPositionY, int startPositionX) : Snake(startPositionY, startPositionX, Direction::right)
 {
 }
 
@@ -14,45 +18,99 @@ Snake::~Snake()
 
 void Snake::draw(const IGraphicsEngine * engine)
 {
+    engine->draw(":",m_headYposition,m_headXposition,Color::red,Color::white);
+
+    for(const std::pair<int,int> & cell : m_tail)
+    {
+	engine->draw(" ",cell.first,cell.second,Color::red,Color::white);
+    }
 }
 
 int Snake::getLength()
 {
-    return -1;
+    return m_tail.size()+1;
 }
 
 int Snake::getHeadXposition()
 {
-    return -1;
+    return m_headXposition;
 }
 
 int Snake::getHeadYposition()
 {
-    return -1;
+    return m_headYposition;
 }
 
 Direction Snake::getDirection()
 {
-    return Direction::up;
+    return m_direction;
 }
 
 void Snake::setDirection(Direction dir)
 {
+    m_direction = dir;
 }
 
 void Snake::advance()
 {
+    m_tail.push_back(std::make_pair(m_headYposition,m_headXposition));
+    m_tail.erase(m_tail.begin());
+
+    switch(m_direction)
+    {
+    case Direction::up:
+	m_headYposition--;
+	break;
+    case Direction::down:
+	m_headYposition++;
+	break;
+    case Direction::left:
+	m_headXposition--;
+	break;
+    case Direction::right:
+	m_headXposition++;
+	break;
+    }
 }
 
 void Snake::stretch()
 {
+    m_tail.push_back(std::make_pair(m_headYposition,m_headXposition));
+
+    switch(m_direction)
+    {
+    case Direction::up:
+	m_headYposition--;
+	break;
+    case Direction::down:
+	m_headYposition++;
+	break;
+    case Direction::left:
+	m_headXposition--;
+	break;
+    case Direction::right:
+	m_headXposition++;
+	break;
+    }
 }
 
 void Snake::teleportHeadTo(int y, int x)
 {
+    m_tail.push_back(std::make_pair(m_headYposition,m_headXposition));
+    m_tail.erase(m_tail.begin());
+    
+    m_headYposition = y;
+    m_headXposition = x;
 }
 
 bool Snake::biteItself()
 {
-    return true;
+    for(const std::pair<int,int> & cell : m_tail)
+    {
+	if(cell.first == m_headYposition && cell.second == m_headXposition)
+	{
+	    return true;
+	}
+    }
+    return false;
 }
