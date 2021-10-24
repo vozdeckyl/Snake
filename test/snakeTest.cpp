@@ -18,7 +18,6 @@ TEST(snakeTest, drawing)
     auto engine = new mockScreen(100,100);
     auto snake = new Snake(1,1);
     
-    
     snake->draw(engine);
     ASSERT_TRUE(engine->testScreen(':',1,1));
     ASSERT_TRUE(engine->testTextColor(Color::red,1,1));
@@ -105,18 +104,20 @@ TEST(snakeTest, direction)
 TEST(snakeTest, stretch)
 {
     auto engine = new mockScreen(100,100);
-    auto snake = new Snake(1,1,Direction::down);
+    auto snake = new Snake(1,1);
     
     snake->stretch();
     snake->stretch();
 
     snake->draw(engine);
-    ASSERT_TRUE(engine->testScreen(':',1,2));
-    ASSERT_TRUE(engine->testTextColor(Color::red,1,2));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,2));
+    ASSERT_TRUE(engine->testScreen(':',1,3));
+    ASSERT_TRUE(engine->testTextColor(Color::red,1,3));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,3));
     ASSERT_TRUE(engine->testScreen(' ',1,1));
     ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,1));
-
+    ASSERT_TRUE(engine->testScreen(' ',1,2));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,2));
+    
     delete engine;
     delete snake;
 }
@@ -167,10 +168,10 @@ TEST(snakeTest, teleport)
     snake->draw(engine);
 
     ASSERT_TRUE(engine->testScreen(':',20,21));
-    ASSERT_TRUE(engine->testTextColor(Color::red,1,2));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,2));
+    ASSERT_TRUE(engine->testTextColor(Color::red,20,21));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::white,20,21));
     ASSERT_TRUE(engine->testScreen(' ',20,20));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,2));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::white,20,20));
     ASSERT_TRUE(engine->testScreen(' ',20,19));
     ASSERT_TRUE(engine->testTextColor(Color::white,20,19));
     ASSERT_TRUE(engine->testBackgroundColor(Color::black,20,19));
@@ -193,7 +194,6 @@ TEST(snakeTest, teleport)
     delete engine;
     delete snake;
 }
-
 
 int main(int argc, char **argv) 
 {
