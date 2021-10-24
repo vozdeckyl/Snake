@@ -6,6 +6,7 @@
 #include <string>
 #include "IDrawable.h"
 #include "direction.h"
+#include "snake.h"
 
 
 /*!
@@ -41,14 +42,14 @@ private:
 private:
 
     std::mutex m_mutex;
+    Snake m_snake;
     
-    std::list<std::pair<int,int>> m_cells;
     int m_target_vertical;
     int m_target_horizontal;
     bool m_gameOver;
     int m_score;
     bool m_keyLock;
-    Direction m_direction; 
+    
     
     // variables that do not need mutex locking
     int m_playWindowHeight;

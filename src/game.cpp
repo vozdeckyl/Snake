@@ -21,7 +21,7 @@ Game::Game(double verticalVelocity, double horizontalVelocity) :
     m_keyLock(false),
     m_penetrableWalls(true),
     m_pace(100),
-    m_direction(Direction::right)
+    m_snake(Snake(1,1))
 {
     gameOverLabel = string("* * * GAME OVER * * *");
 
@@ -100,13 +100,7 @@ void Game::draw(const IGraphicsEngine * engine)
     drawWalls(engine);
     engine->draw(("Score: " + to_string(m_score)),m_playWindowHeight+1,(int)m_playWindowWidth*0.5,Color::white,Color::black);
     engine->draw("X",m_target_vertical,m_target_horizontal,Color::black,Color::yellow);
-    
-    for(const pair<int,int> & cell : m_cells)
-    {
-	engine->draw(" ",cell.first,cell.second,Color::red,Color::green);
-    }
-    
-    engine->draw(":",m_vertical_position,m_horizontal_position,Color::red,Color::green);
+    m_snake.draw(engine);
     
     if(m_gameOver)
     {
@@ -120,24 +114,24 @@ void Game::notify(int ch)
 
     if(!m_keyLock)
     {	
-        if(ch==KEY_LEFT && m_direction != Direction::right)
+        if(ch==KEY_LEFT && m_snake.getDirection() != Direction::right)
         {
-	    m_direction = Direction::left;
+	    m_snake.setDirection(Direction::left);
             m_keyLock = true;
         }
-        else if(ch==KEY_RIGHT && m_direction != Direction::left)
+        else if(ch==KEY_RIGHT && m_snake.getDirection() != Direction::left)
         {
-            m_direction = Direction::right;
+            m_snake.setDirection(Direction::right);
             m_keyLock = true;
         }
-        else if(ch==KEY_UP && m_direction != Direction::down)
+        else if(ch==KEY_UP && m_snake.getDirection() != Direction::down)
         {
-            m_direction = Direction::up;
+            m_snake.setDirection(Direction::up);
             m_keyLock = true;
         }
-        else if(ch==KEY_DOWN && m_direction != Direction::up)
+        else if(ch==KEY_DOWN && m_snake.getDirection() != Direction::up)
         {
-            m_direction = Direction::down;
+            m_snake.setDirection(Direction::down);
             m_keyLock = true;
         }
     }
@@ -149,7 +143,7 @@ void Game::update()
     if(!m_gameOver)
     {
 	
-	if(m_direction==Direction::left || m_direction==Direction::right)
+	if(m_snake.getDirection()==Direction::left || m_snake.getDirection()==Direction::right)
 	{
 	    m_counter+=2;
 	}
@@ -161,39 +155,27 @@ void Game::update()
 	if(m_counter>=m_pace)
 	{
 	    m_counter=0;
-	    shiftCells();
-	    if(m_direction==Direction::up)
+	    if(m_snake.getHeadYposition() == m_target_vertical && m_snake.getHeadXposition() == m_target_horizontal)
 	    {
-		m_vertical_position--;
-		m_keyLock = false;
+		m_target_horizontal = (rand() % (m_playWindowWidth-1))+1;
+		m_target_vertical = (rand() % (m_playWindowHeight-1))+1;
+		m_score++;
+		m_snake.stretch();
 	    }
-	    else if(m_direction==Direction::down)
+	    else
 	    {
-		m_vertical_position++;
-		m_keyLock = false;
+		m_snake.advance();
 	    }
-	    else if(m_direction==Direction::left)
-	    {
-		m_horizontal_position--;
-		m_keyLock = false;
-	    }
-	    else if(m_direction==Direction::right)
-	    {
-		m_horizontal_position++;
-		m_keyLock = false;
-	    }
-	}
-	
 
-	for(const auto & cell : m_cells)
+	    m_keyLock = false;
+	}
+
+	if(m_snake.biteItself())
 	{
-	    if(cell.first == m_vertical_position && cell.second == m_horizontal_position)
-	    {
-		m_gameOver = true;
-	    }
+	    m_gameOver = true;
 	}
 	
-        if(m_vertical_position <= 0)
+        if(m_snake.getHeadYposition() <= 0)
         {
             if(!m_penetrableWalls)
             {
@@ -201,10 +183,10 @@ void Game::update()
             }
             else
             {
-                m_vertical_position = m_playWindowHeight-1;
+		m_snake.teleportHeadTo(m_playWindowHeight-1, m_snake.getHeadXposition());
             }
         }
-        else if(m_vertical_position >= m_playWindowHeight)
+        else if(m_snake.getHeadYposition() >= m_playWindowHeight)
         {
             if(!m_penetrableWalls)
             {
@@ -212,11 +194,11 @@ void Game::update()
             }
             else
             {
-                m_vertical_position=1;
+		m_snake.teleportHeadTo(1, m_snake.getHeadXposition());
             }
         }
 
-        if(m_horizontal_position <= 0)
+        if(m_snake.getHeadXposition() <= 0)
         {
             if(!m_penetrableWalls)
             {
@@ -224,10 +206,10 @@ void Game::update()
             }
             else
             {
-                m_horizontal_position = m_playWindowWidth-1;
+		m_snake.teleportHeadTo(m_snake.getHeadYposition(), m_playWindowWidth-1);
             }
         }
-        else if(m_horizontal_position >= m_playWindowWidth)
+        else if(m_snake.getHeadXposition() >= m_playWindowWidth)
         {
             if(!m_penetrableWalls)
             {
@@ -235,26 +217,9 @@ void Game::update()
             }
             else
             {
-                m_horizontal_position = 1;
+		m_snake.teleportHeadTo(m_snake.getHeadYposition(), 1);
             }
         }
-    }
-}
-
-void Game::shiftCells()
-{
-    m_cells.emplace_back(make_pair(m_vertical_position,m_horizontal_position));
-    // if the position of the last cell is different, don't get rid of the last cell
-    // if they are the same, get it attached and generate a new random position for the target
-    if((*(m_cells.begin())).first == m_target_vertical && (*(m_cells.begin())).second == m_target_horizontal)
-    {
-        m_target_horizontal = (rand() % (m_playWindowWidth-1))+1;
-        m_target_vertical = (rand() % (m_playWindowHeight-1))+1;
-        m_score++;
-    }
-    else
-    {
-        m_cells.pop_front();
     }
 }
 
