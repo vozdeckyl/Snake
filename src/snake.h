@@ -2,7 +2,7 @@
 #define SNAKE_H
 
 #include "IDrawable.h"
-#include <vector>
+#include <list>
 #include <utility>
 #include "direction.h"
 
@@ -89,7 +89,7 @@ private:
     Direction m_direction;
     int m_headXposition;
     int m_headYposition;
-    std::vector<std::pair<int,int>> m_tail;
+    std::list<std::pair<int,int>> m_tail;
     
 };
 

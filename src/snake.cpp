@@ -53,8 +53,8 @@ void Snake::setDirection(Direction dir)
 
 void Snake::advance()
 {
-    m_tail.push_back(std::make_pair(m_headYposition,m_headXposition));
-    m_tail.erase(m_tail.begin());
+    m_tail.push_front(std::make_pair(m_headYposition,m_headXposition));
+    m_tail.pop_back();
 
     switch(m_direction)
     {
@@ -75,7 +75,7 @@ void Snake::advance()
 
 void Snake::stretch()
 {
-    m_tail.push_back(std::make_pair(m_headYposition,m_headXposition));
+    m_tail.push_front(std::make_pair(m_headYposition,m_headXposition));
 
     switch(m_direction)
     {
