@@ -84,7 +84,7 @@ class Window {
         mutex m_mutex_exit;
         bool m_exit;
         bool m_killByKeyQ;
-        IGraphicsEngine * m_engine;
+        unique_ptr<IGraphicsEngine> m_engine;
 };
 
 #endif

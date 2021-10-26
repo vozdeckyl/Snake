@@ -7,7 +7,7 @@
 
 Window::Window(IGraphicsEngine * engine) : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
 {
-    m_engine = engine;
+    m_engine = unique_ptr<IGraphicsEngine>(engine);
     m_engine->init();
 
     m_numOfRows = m_engine->numberOfRows();
@@ -17,8 +17,6 @@ Window::Window(IGraphicsEngine * engine) : m_exit(false), m_nextObjectID(0), m_k
 Window::~Window()
 {
     m_engine->endScreen();
-    delete m_engine;
-    m_engine = nullptr;
 }
 
 ObjectID Window::addElement(IDrawable * element, int yPosition, int xPosition)
@@ -99,7 +97,7 @@ void Window::graphicsLoop()
         {
             if(pair.second->isVisible())
             {
-                pair.second->draw(m_engine);
+                pair.second->draw(m_engine.get());
             }
         }
 	
