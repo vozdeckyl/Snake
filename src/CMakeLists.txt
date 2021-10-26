@@ -9,6 +9,7 @@ add_library(
     result.cpp
     traveller.cpp
     image.cpp
+    game.cpp
     snake.cpp
     scoreLogger.cpp
     setting.cpp

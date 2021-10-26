@@ -18,7 +18,7 @@
 #include "result.h"
 #include "traveller.h"
 #include "image.h"
-#include "snake.h"
+#include "game.h"
 #include "scoreLogger.h"
 #include "settingsMenu.h"
 #include "NCursesEngine.h"
@@ -56,7 +56,7 @@ void play()
 {
     Window play(new NCursesEngine());
 
-    play.addElement(new Snake(0.0,0.005), 1, 1);
+    play.addElement(new Game(0.0,0.005), 1, 1);
     play.addElement(new Label("Press Q to quit..."), play.getHeight()-1, 1);
     play.enableKillByKeyQ();
 

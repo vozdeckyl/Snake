@@ -1,67 +1,96 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
+#include "IDrawable.h"
 #include <list>
 #include <utility>
-#include <string>
-#include "IDrawable.h"
-
-enum class Direction {
-    up,
-    down,
-    left,
-    right
-};
+#include "direction.h"
 
 /*!
-    @brief Object representing the actual snake and the game map
+    @brief Class representing the actual snake
 */
 class Snake : public IDrawable {
 public:
-    Snake(double verticalVelocity, double horizontalVelocity);
+    /*!
+      @brief Constructor
+      @param startPositionY Starting vertical position
+      @param startPositionX Starting horizontal position
+      @param startDirection Direction in which the snake starts moving at the beginning
+    */
+    Snake(int startPositionY, int startPositionX, Direction startDirection);
+
+    /*!
+      @brief Constructor
+      @param startPositionY Starting vertical position
+      @param startPositionX Starting horizontal position
+    */
+    Snake(int startPositionY, int startPositionX);
+
     ~Snake();
-    
+
     void draw(const IGraphicsEngine * engine) override;
     bool isVisible() override {return true;};
-    
-    void update() override;
-    bool isUpdatable() override {return true;};
-    
-    void notify(int ch) override;
-    bool isNotifiable() override {return true;};
-    
-private:
-    /*!
-      @brief Shifts the whole snake
-      
-      If the last cell of the snake is on the target X, it gets extended.
-    */
-    void shiftCells();
-    
-    /*!
-      @brief Draws the walls around the map
-    */
-    void drawWalls(const IGraphicsEngine * engine);
-    
-private:
 
-    std::mutex m_mutex;
+    void update() override {};
+    bool isUpdatable() override {return false;};
+
+    void notify(int ch) override {};
+    bool isNotifiable() override {return false;};
+
+    /*!
+      @brief Returns the snake length - i.e. the number of cells
+    */
+    int getLength();
+
+    /*!
+      @brief Returns the horizontal position of the snake's first cell (head)
+    */
+    int getHeadXposition();
+
+    /*!
+      @brief Returns the vertical position of the snake's first cell (head)
+    */
+    int getHeadYposition();
+
+    /*!
+      @brief Returns the direction the snake is moving
+    */
+    Direction getDirection();
+
+    /*!
+      @brief Sets the snake's direction
+      @param dir Snake's direction
+    */
+    void setDirection(Direction dir);
+
+    /*!
+      @brief Moves the whole snake in the direction it's facing
+    */
+    void advance();
+
+    /*!
+      @brief Moves the head in the snake's direction and adds one cell behind the head while leaving the rest of the body still
+    */
+    void stretch();
+
+    /*!
+      @brief Move the head to a completely random location
+      @param y new vertical position of snake's head
+      @param x new horizontal position of snake's head
+    */
+    void teleportHeadTo(int y, int x);
+
+    /*!
+      @brief Check if the snake is not biting itself - i.e. the head is at the same coordinate as one of its cells
+    */
+    bool biteItself();
+
+private:
+    Direction m_direction;
+    int m_headXposition;
+    int m_headYposition;
+    std::list<std::pair<int,int>> m_tail;
     
-    std::list<std::pair<int,int>> m_cells;
-    int m_target_vertical;
-    int m_target_horizontal;
-    bool m_gameOver;
-    int m_score;
-    bool m_keyLock;
-    Direction m_direction; 
-    
-    // variables that do not need mutex locking
-    int m_playWindowHeight;
-    int m_playWindowWidth;
-    std::string gameOverLabel;
-    bool m_penetrableWalls;
-    int m_counter;
-    int m_pace;
 };
 
 #endif
