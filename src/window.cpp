@@ -16,13 +16,6 @@ Window::Window(IGraphicsEngine * engine) : m_exit(false), m_nextObjectID(0), m_k
 
 Window::~Window()
 {
-    /*
-    for(pair<const ObjectID, IDrawable*> & pair : m_elements)
-    { 
-	delete pair.second;
-	pair.second = nullptr;
-    }
-    */
     m_engine->endScreen();
     delete m_engine;
     m_engine = nullptr;
