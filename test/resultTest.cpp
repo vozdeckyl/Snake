@@ -14,7 +14,7 @@ TEST(resultTest, menuResults)
     
     std::map<ObjectID,std::unique_ptr<IDrawable>> results;
 
-    results.emplace(std::make_pair(1,std::unique_ptr<IDrawable>((IDrawable *) (menu))));
+    results.emplace(std::make_pair(1,std::unique_ptr<IDrawable>(static_cast<IDrawable *>(menu))));
 
     Result result(results);
 
