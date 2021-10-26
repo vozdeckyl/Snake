@@ -96,9 +96,6 @@ void Snake::stretch()
 
 void Snake::teleportHeadTo(int y, int x)
 {
-    // m_tail.push_back(std::make_pair(m_headYposition,m_headXposition));
-    //m_tail.erase(m_tail.begin());
-    
     m_headYposition = y;
     m_headXposition = x;
 }
