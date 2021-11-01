@@ -5,6 +5,7 @@
 #include <utility>
 #include <string>
 #include <mutex>
+#include <random>
 #include "IDrawable.h"
 #include "direction.h"
 #include "snake.h"
@@ -59,6 +60,9 @@ private:
     bool m_penetrableWalls;
     int m_counter;
     int m_pace;
+    std::default_random_engine m_generator;
+    std::uniform_int_distribution<int> m_horizontalDistribution;
+    std::uniform_int_distribution<int> m_verticalDistribution;
 };
 
 #endif

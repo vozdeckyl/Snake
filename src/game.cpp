@@ -28,6 +28,7 @@ Game::Game(double verticalVelocity, double horizontalVelocity) :
     int speedSetting{1};
     int penetrableWalls;
 
+    
     try
     {
         ifstream settingsFile(FileManager::getFilePath("settings"), ifstream::binary);
@@ -82,6 +83,11 @@ Game::Game(double verticalVelocity, double horizontalVelocity) :
             break;
     }
     m_pace = (3-speedSetting)*100;
+
+    std::random_device rd;
+    m_generator = std::default_random_engine(rd());
+    m_horizontalDistribution = std::uniform_int_distribution<int> (1,(m_playWindowWidth-1));
+    m_verticalDistribution = std::uniform_int_distribution<int>(1,(m_playWindowHeight-1));
 }
 
 
@@ -154,8 +160,8 @@ void Game::update()
 	    m_counter=0;
 	    if(m_snake.getHeadYposition() == m_target_vertical && m_snake.getHeadXposition() == m_target_horizontal)
 	    {
-		m_target_horizontal = (rand() % (m_playWindowWidth-1))+1;
-		m_target_vertical = (rand() % (m_playWindowHeight-1))+1;
+		m_target_horizontal = m_horizontalDistribution(m_generator);
+		m_target_vertical = m_verticalDistribution(m_generator);
 		m_score++;
 		m_snake.stretch();
 	    }
