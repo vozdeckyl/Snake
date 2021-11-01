@@ -1,9 +1,7 @@
 #include <ncurses.h>
-#include <cmath>
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
-#include <mutex>
 #include "game.h"
 #include "window.h"
 #include "colors.h"

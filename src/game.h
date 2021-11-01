@@ -4,6 +4,7 @@
 #include <list>
 #include <utility>
 #include <string>
+#include <mutex>
 #include "IDrawable.h"
 #include "direction.h"
 #include "snake.h"
