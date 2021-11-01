@@ -107,6 +107,8 @@ void Window::graphicsLoop()
 
 void Window::updateLoop()
 {
+    int usFreeze = 1000;
+    std::chrono::time_point<std::chrono::steady_clock> tick = std::chrono::steady_clock::now();
     while(!exit())
     {
         for(const auto & pair : m_elements)
@@ -116,6 +118,14 @@ void Window::updateLoop()
                 pair.second->update();
             }
         }
-        m_engine->wait(1);
+	
+	std::chrono::duration<double, std::micro> elapsed{std::chrono::steady_clock::now()-tick};
+	
+	if(elapsed.count()<usFreeze)
+	{
+	    std::this_thread::sleep_until(tick + std::chrono::microseconds(usFreeze));
+	}
+	
+	tick = std::chrono::steady_clock::now();
     }
 }
