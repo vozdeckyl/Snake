@@ -7,7 +7,7 @@
 
 Window::Window(IGraphicsEngine * engine) : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
 {
-    m_engine = engine;
+    m_engine = unique_ptr<IGraphicsEngine>(engine);
     m_engine->init();
 
     m_numOfRows = m_engine->numberOfRows();
@@ -16,21 +16,14 @@ Window::Window(IGraphicsEngine * engine) : m_exit(false), m_nextObjectID(0), m_k
 
 Window::~Window()
 {
-    for(pair<const ObjectID, IDrawable*> & pair : m_elements)
-    { 
-	delete pair.second;
-	pair.second = nullptr;
-    }
     m_engine->endScreen();
-    delete m_engine;
-    m_engine = nullptr;
 }
 
 ObjectID Window::addElement(IDrawable * element, int yPosition, int xPosition)
 {
     element->setPosition(yPosition,xPosition);
     element->setOwner(this);
-    m_elements.insert({m_nextObjectID++,element});
+    m_elements.insert({m_nextObjectID++,std::unique_ptr<IDrawable>(element)});
     return (m_nextObjectID-1);
 }
 
@@ -90,7 +83,7 @@ void Window::graphicsLoop()
             kill();
         }
         
-        for(const pair<ObjectID, IDrawable*> & pair : m_elements)
+        for(const auto & pair : m_elements)
         {
             if(pair.second->isNotifiable())
             {
@@ -100,11 +93,11 @@ void Window::graphicsLoop()
       
 	m_engine->prepareScreen();
        
-        for(const pair<ObjectID, IDrawable*> & pair : m_elements)
+        for(const auto & pair : m_elements)
         {
             if(pair.second->isVisible())
             {
-                pair.second->draw(m_engine);
+                pair.second->draw(m_engine.get());
             }
         }
 	
@@ -116,7 +109,7 @@ void Window::updateLoop()
 {
     while(!exit())
     {
-        for(const pair<ObjectID, IDrawable*> & pair : m_elements)
+        for(const auto & pair : m_elements)
         {
             if(pair.second->isUpdatable())
             {

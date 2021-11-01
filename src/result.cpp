@@ -1,11 +1,12 @@
+#include <memory>
 #include "IDrawable.h"
 #include "result.h"
 
 using namespace std;
 
-Result::Result(const map<ObjectID,IDrawable*> & objects)
+Result::Result(const map<ObjectID,unique_ptr<IDrawable>> & objects)
 {
-    for(pair<ObjectID,IDrawable*> pair : objects)
+    for(const auto & pair : objects)
     {
         m_resultTable.insert({
                                 pair.first,

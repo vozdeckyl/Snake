@@ -6,13 +6,15 @@
 #include "menu.h"
 #include "label.h"
 #include <map>
+#include <memory>
 
 TEST(resultTest, menuResults)
 {
     Menu * menu = new Menu({"A","B","C"});
-    std::map<ObjectID,IDrawable *> results;
+    
+    std::map<ObjectID,std::unique_ptr<IDrawable>> results;
 
-    results.emplace(std::make_pair(1,menu));
+    results.emplace(std::make_pair(1,std::unique_ptr<IDrawable>(static_cast<IDrawable *>(menu))));
 
     Result result(results);
 
@@ -23,16 +25,12 @@ TEST(resultTest, menuResults)
     Result result2(results);
 
     ASSERT_TRUE(result2.getResultOfEelement(1) == 1);
-    
-    delete menu;
-    menu = nullptr;
 }
 
 TEST(resultTest, labelResults)
 {
-    Label * label = new Label("a");
-    std::map<ObjectID,IDrawable *> results;                                                                                                          
-    results.emplace(std::make_pair(1,label));
+    std::map<ObjectID,std::unique_ptr<IDrawable>> results;                                                                                                          
+    results.emplace(std::make_pair(1,std::unique_ptr<IDrawable>(new Label("a"))));
     Result result(results);
     ASSERT_TRUE(result.getResultOfEelement(1) == -1);
 }

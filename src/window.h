@@ -2,6 +2,7 @@
 #define WINDOW_H
 
 #include <map>
+#include <memory>
 #include <mutex>
 #include "objectid.h"
 #include "IGraphicsEngine.h"
@@ -76,14 +77,14 @@ class Window {
         bool exit();
 
     private:
-        map<ObjectID,IDrawable*> m_elements;
+        map<ObjectID,unique_ptr<IDrawable>> m_elements;
         ObjectID m_nextObjectID;
         int m_numOfRows;
         int m_numOfColumns;
         mutex m_mutex_exit;
         bool m_exit;
         bool m_killByKeyQ;
-        IGraphicsEngine * m_engine;
+        unique_ptr<IGraphicsEngine> m_engine;
 };
 
 #endif

@@ -2,6 +2,7 @@
 #define RESULT_H
 
 #include <map>
+#include <memory>
 #include "objectid.h"
 
 class IDrawable;
@@ -13,7 +14,7 @@ class IDrawable;
 */
 class Result {
     public:
-        Result(const std::map<ObjectID,IDrawable*> & objects);
+        Result(const std::map<ObjectID,std::unique_ptr<IDrawable>> & objects);
 
         ~Result();
 
