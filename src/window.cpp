@@ -73,7 +73,10 @@ void Window::graphicsLoop()
      */
 
     int input;
-  
+
+    int msFreeze = 33;
+    std::chrono::time_point<std::chrono::steady_clock> tick = std::chrono::steady_clock::now();
+    
     while(!exit())
     {
         input = m_engine->input();
@@ -102,6 +105,15 @@ void Window::graphicsLoop()
         }
 	
         m_engine->refreshScreen();
+
+	std::chrono::duration<double, std::milli> elapsed{std::chrono::steady_clock::now()-tick};
+	
+	if(elapsed.count()<msFreeze)
+	{
+	    std::this_thread::sleep_until(tick + std::chrono::milliseconds(msFreeze));
+	}
+	
+	tick = std::chrono::steady_clock::now();
     }
 }
 
