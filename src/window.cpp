@@ -107,12 +107,7 @@ void Window::graphicsLoop()
         m_engine->refreshScreen();
 
 	std::chrono::duration<double, std::milli> elapsed{std::chrono::steady_clock::now()-tick};
-	
-	if(elapsed.count()<msFreeze)
-	{
-	    std::this_thread::sleep_until(tick + std::chrono::milliseconds(msFreeze));
-	}
-	
+	std::this_thread::sleep_until(tick + std::chrono::milliseconds(msFreeze));
 	tick = std::chrono::steady_clock::now();
     }
 }
@@ -132,12 +127,7 @@ void Window::updateLoop()
         }
 	
 	std::chrono::duration<double, std::micro> elapsed{std::chrono::steady_clock::now()-tick};
-	
-	if(elapsed.count()<usFreeze)
-	{
-	    std::this_thread::sleep_until(tick + std::chrono::microseconds(usFreeze));
-	}
-	
+	std::this_thread::sleep_until(tick + std::chrono::microseconds(usFreeze));
 	tick = std::chrono::steady_clock::now();
     }
 }
