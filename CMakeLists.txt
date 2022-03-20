@@ -34,6 +34,7 @@ add_test(NAME ScoreLoggerTest COMMAND scoreLoggerTest)
 add_test(NAME SettingTest COMMAND settingTest)
 add_test(NAME SettingsMenuTest COMMAND settingsMenuTest)
 add_test(NAME snakeTest COMMAND snakeTest)
+add_test(NAME gameTest COMMAND gameTest)
 
 set(CPACK_PACKAGE_NAME "shellsnake")
 set(CPACK_PACKAGE_VENDOR "LV")

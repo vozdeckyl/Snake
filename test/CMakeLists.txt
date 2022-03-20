@@ -35,3 +35,6 @@ target_link_libraries(settingsMenuTest ${GTEST_LIBRARIES} pthread libSnake)
 
 add_executable(snakeTest snakeTest.cpp)
 target_link_libraries(snakeTest ${GTEST_LIBRARIES} pthread libSnake)
+
+add_executable(gameTest gameTest.cpp)
+target_link_libraries(gameTest ${GTEST_LIBRARIES} pthread libSnake)
