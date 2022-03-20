@@ -1,9 +1,11 @@
 #include <gtest/gtest.h>
 #include "game.h"
 #include "mockScreen.h"
+#include "colors.h"
+#include "fileManager.h"
 
 TEST(gameTest, boolStates)
-{
+{   
     auto g = new Game(1.0,1.0);
     ASSERT_TRUE(g->isVisible());
     ASSERT_TRUE(g->isUpdatable());
@@ -13,19 +15,29 @@ TEST(gameTest, boolStates)
 }
 
 TEST(couterTest, drawing)
-{
+{    
     auto engine = new mockScreen(100,100);
     auto g = new Game(1.0,1.0);
 
     g->draw(engine);
-    //ASSERT_TRUE(engine->testScreen('0',0,0));
     g->update();
 
-    /*
-    ASSERT_TRUE(engine->testScreen('1',0,0));
-    ASSERT_TRUE(engine->testScreen('0',0,1));
-    ASSERT_TRUE(engine->testScreen(' ',1,1));
-    */
+    ASSERT_TRUE(engine->testScreen(':',1,1));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,1,1));
+    ASSERT_TRUE(engine->testTextColor(Color::red,1,1));
+    
+    ASSERT_TRUE(engine->testBackgroundColor(Color::white,0,0));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::white,0,1));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::white,1,0));
+
+    ASSERT_TRUE(engine->testScreen(' ',2,2));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::black,2,2));
+
+    ASSERT_TRUE(engine->testScreen(' ',1,2));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::black,1,2));
+
+    ASSERT_TRUE(engine->testScreen(' ',2,1));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::black,2,1));
     
     delete engine;
     delete g;
@@ -33,6 +45,10 @@ TEST(couterTest, drawing)
  
 int main(int argc, char **argv) 
 {
+    FileManager::addFile("settings",std::vector<std::string>({"../data/settings.bin"}));
+    FileManager::addFile("logo",std::vector<std::string>({"../data/logo.txt"}));
+    FileManager::addFile("scores",std::vector<std::string>({"../data/scores.bin"}));
+    
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
