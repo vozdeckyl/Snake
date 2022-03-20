@@ -14,7 +14,7 @@ TEST(gameTest, boolStates)
     delete g;
 }
 
-TEST(couterTest, drawing)
+TEST(gameTest, drawing)
 {    
     auto engine = new mockScreen(100,100);
     auto g = new Game(1.0,1.0);
@@ -38,6 +38,45 @@ TEST(couterTest, drawing)
 
     ASSERT_TRUE(engine->testScreen(' ',2,1));
     ASSERT_TRUE(engine->testBackgroundColor(Color::black,2,1));
+    
+    delete engine;
+    delete g;
+}
+
+TEST(gameTest,movement)
+{
+    auto engine = new mockScreen(100,100);
+    auto g = new Game(10000.0,10000.0);
+    
+    g->draw(engine);
+
+    ASSERT_TRUE(engine->testScreen(':',1,1));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,1,1));
+    ASSERT_TRUE(engine->testTextColor(Color::red,1,1));
+
+    engine->clearScreen();
+    
+    g->notify(KEY_RIGHT);
+    for(int i=0;i<150;i++) g->update();
+    g->draw(engine);
+
+    ASSERT_TRUE(engine->testScreen(':',1,2));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,1,2));
+    ASSERT_TRUE(engine->testTextColor(Color::red,1,2));
+    ASSERT_TRUE(engine->testScreen(' ',1,1));
+
+    
+    engine->clearScreen();
+
+    
+    g->notify(KEY_DOWN);
+    for(int i=0;i<300;i++) g->update();
+    g->draw(engine);
+
+    ASSERT_TRUE(engine->testScreen(':',2,2));
+    ASSERT_TRUE(engine->testBackgroundColor(Color::green,2,2));
+    ASSERT_TRUE(engine->testTextColor(Color::red,2,2));
+    ASSERT_TRUE(engine->testScreen(' ',1,2));
     
     delete engine;
     delete g;
