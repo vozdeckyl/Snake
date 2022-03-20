@@ -43,6 +43,26 @@ TEST(gameTest, drawing)
     delete g;
 }
 
+TEST(gameTest,score)
+{
+    auto engine = new mockScreen(100,100);
+    auto g = new Game(1.0,1.0);
+
+    g->draw(engine);
+    
+    ASSERT_TRUE(engine->testScreen('S',11,15));
+    ASSERT_TRUE(engine->testScreen('c',11,16));
+    ASSERT_TRUE(engine->testScreen('o',11,17));
+    ASSERT_TRUE(engine->testScreen('r',11,18));
+    ASSERT_TRUE(engine->testScreen('e',11,19));
+    ASSERT_TRUE(engine->testScreen(':',11,20));
+    ASSERT_TRUE(engine->testScreen(' ',11,21));
+    ASSERT_TRUE(engine->testScreen('0',11,22));
+    
+    delete engine;
+    delete g;
+}
+
 TEST(gameTest,movement)
 {
     auto engine = new mockScreen(100,100);
@@ -105,6 +125,8 @@ TEST(gameTest,target)
     ASSERT_TRUE(engine->testBackgroundColor(Color::green,4,5));
     ASSERT_TRUE(engine->testTextColor(Color::red,4,5));
 
+    ASSERT_TRUE(engine->testScreen('0',11,22));
+
     ASSERT_TRUE(engine->testScreen('X',5,5));
 
     engine->clearScreen();
@@ -127,10 +149,14 @@ TEST(gameTest,target)
 
     ASSERT_TRUE(engine->testScreen(' ',5,5));
     ASSERT_TRUE(engine->testBackgroundColor(Color::green,5,5));
+
+    ASSERT_TRUE(engine->testScreen('1',11,22));
     
     delete engine;
     delete g;
 }
+
+
  
 int main(int argc, char **argv) 
 {
