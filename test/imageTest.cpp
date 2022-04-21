@@ -1,7 +1,8 @@
+#include <gtest/gtest.h>
+
 #include "image.h"
 #include "mockScreen.h"
 #include <fstream>
-#include <gtest/gtest.h>
 
 using namespace std;
 

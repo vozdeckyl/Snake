@@ -1,8 +1,9 @@
+#include <gtest/gtest.h>
+
 #include "settingsMenu.h"
 #include "fileManager.h"
 #include "mockScreen.h"
 #include "setting.h"
-#include <gtest/gtest.h>
 #include <string>
 #include <vector>
 

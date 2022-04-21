@@ -1,6 +1,7 @@
+#include <gtest/gtest.h>
+
 #include "scoreLogger.h"
 #include "fileManager.h"
-#include <gtest/gtest.h>
 #include <string>
 #include <utility>
 #include <vector>

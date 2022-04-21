@@ -1,6 +1,8 @@
+#include <gtest/gtest.h>
+
 #include "counter.h"
 #include "mockScreen.h"
-#include <gtest/gtest.h>
+
 
 TEST(counterTest, boolStates)
 {

@@ -1,5 +1,6 @@
-#include "setting.h"
 #include <gtest/gtest.h>
+
+#include "setting.h"
 #include <string>
 #include <vector>
 

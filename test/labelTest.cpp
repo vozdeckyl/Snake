@@ -1,6 +1,7 @@
+#include <gtest/gtest.h>
+
 #include "label.h"
 #include "mockScreen.h"
-#include <gtest/gtest.h>
 
 TEST(labelTest, boolStates)
 {

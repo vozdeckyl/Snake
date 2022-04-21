@@ -1,8 +1,9 @@
+#include <gtest/gtest.h>
+
 #include "game.h"
 #include "colors.h"
 #include "fileManager.h"
 #include "mockScreen.h"
-#include <gtest/gtest.h>
 
 TEST(gameTest, boolStates)
 {

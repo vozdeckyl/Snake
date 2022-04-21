@@ -1,5 +1,6 @@
-#include "fileManager.h"
 #include <gtest/gtest.h>
+
+#include "fileManager.h"
 #include <iostream>
 
 TEST(fileManagerTest, singlePath)
