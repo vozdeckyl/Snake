@@ -1,5 +1,5 @@
-#include <ncurses.h>
 #include "label.h"
+#include <ncurses.h>
 
 using namespace std;
 
@@ -19,14 +19,16 @@ Label::Label(string labelString, Color fontColor, Color backgroundColor) : Label
     m_backgroundColor = backgroundColor;
 }
 
-Label::~Label(){}
+Label::~Label()
+{
+}
 
-void Label::draw(const IGraphicsEngine * engine)
+void Label::draw(const IGraphicsEngine* engine)
 {
     /*
     Colors::activateColor(m_fontColor,m_backgroundColor);
     mvprintw(m_vertical_position,m_horizontal_position, m_labelString.c_str());
     Colors::deactivateColor();
     */
-    engine->draw(m_labelString,m_vertical_position,m_horizontal_position,m_fontColor,m_backgroundColor);
+    engine->draw(m_labelString, m_vertical_position, m_horizontal_position, m_fontColor, m_backgroundColor);
 }

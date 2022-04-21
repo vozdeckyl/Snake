@@ -1,11 +1,10 @@
-#include <thread>
-#include "IDrawable.h"
-#include "result.h"
 #include "window.h"
+#include "IDrawable.h"
 #include "colors.h"
+#include "result.h"
+#include <thread>
 
-
-Window::Window(IGraphicsEngine * engine) : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
+Window::Window(IGraphicsEngine* engine) : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
 {
     m_engine = unique_ptr<IGraphicsEngine>(engine);
     m_engine->init();
@@ -19,12 +18,12 @@ Window::~Window()
     m_engine->endScreen();
 }
 
-ObjectID Window::addElement(IDrawable * element, int yPosition, int xPosition)
+ObjectID Window::addElement(IDrawable* element, int yPosition, int xPosition)
 {
-    element->setPosition(yPosition,xPosition);
+    element->setPosition(yPosition, xPosition);
     element->setOwner(this);
-    m_elements.insert({m_nextObjectID++,std::unique_ptr<IDrawable>(element)});
-    return (m_nextObjectID-1);
+    m_elements.insert({m_nextObjectID++, std::unique_ptr<IDrawable>(element)});
+    return (m_nextObjectID - 1);
 }
 
 Result Window::run()
@@ -76,39 +75,39 @@ void Window::graphicsLoop()
 
     int msFreeze = 33;
     std::chrono::time_point<std::chrono::steady_clock> tick = std::chrono::steady_clock::now();
-    
-    while(!exit())
+
+    while (!exit())
     {
         input = m_engine->input();
-       
-        if(input=='q' && m_killByKeyQ)
+
+        if (input == 'q' && m_killByKeyQ)
         {
             kill();
         }
-        
-        for(const auto & pair : m_elements)
+
+        for (const auto& pair : m_elements)
         {
-            if(pair.second->isNotifiable())
+            if (pair.second->isNotifiable())
             {
                 pair.second->notify(input);
             }
         }
-      
-	m_engine->prepareScreen();
-       
-        for(const auto & pair : m_elements)
+
+        m_engine->prepareScreen();
+
+        for (const auto& pair : m_elements)
         {
-            if(pair.second->isVisible())
+            if (pair.second->isVisible())
             {
                 pair.second->draw(m_engine.get());
             }
         }
-	
+
         m_engine->refreshScreen();
 
-	std::chrono::duration<double, std::milli> elapsed{std::chrono::steady_clock::now()-tick};
-	std::this_thread::sleep_until(tick + std::chrono::milliseconds(msFreeze));
-	tick = std::chrono::steady_clock::now();
+        std::chrono::duration<double, std::milli> elapsed{std::chrono::steady_clock::now() - tick};
+        std::this_thread::sleep_until(tick + std::chrono::milliseconds(msFreeze));
+        tick = std::chrono::steady_clock::now();
     }
 }
 
@@ -116,18 +115,18 @@ void Window::updateLoop()
 {
     int usFreeze = 1000;
     std::chrono::time_point<std::chrono::steady_clock> tick = std::chrono::steady_clock::now();
-    while(!exit())
+    while (!exit())
     {
-        for(const auto & pair : m_elements)
+        for (const auto& pair : m_elements)
         {
-            if(pair.second->isUpdatable())
+            if (pair.second->isUpdatable())
             {
                 pair.second->update();
             }
         }
-	
-	std::chrono::duration<double, std::micro> elapsed{std::chrono::steady_clock::now()-tick};
-	std::this_thread::sleep_until(tick + std::chrono::microseconds(usFreeze));
-	tick = std::chrono::steady_clock::now();
+
+        std::chrono::duration<double, std::micro> elapsed{std::chrono::steady_clock::now() - tick};
+        std::this_thread::sleep_until(tick + std::chrono::microseconds(usFreeze));
+        tick = std::chrono::steady_clock::now();
     }
 }

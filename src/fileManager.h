@@ -1,20 +1,21 @@
 #ifndef FILEMANAGER_H
 #define FILEMANAGER_H
 
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
 
 /*!
 @brief Static class for managing files and their paths
 
 Each file is given a nickname and a list of possible paths.
 If the file is not found in the first path the next one is tried.
-IF the file is not found in any of the paths, error is thrown. 
+IF the file is not found in any of the paths, error is thrown.
 */
-class FileManager {
+class FileManager
+{
 
-public:
+  public:
     /*!
       @brief Add a file and the list of possible paths
       @param nickname The name by which the file is referred to as in the code
@@ -34,29 +35,30 @@ public:
       @param nickname File nickname given to the file using the addFile method
      */
     static std::string getFilePath(std::string nickname);
-    
-private:
+
+  private:
     /*!
       @brief Private constructor to prevent instances
      */
     FileManager();
-    
-    static std::map<std::string,std::string> m_paths;
+
+    static std::map<std::string, std::string> m_paths;
 };
 
-class FileManagerException : public std::exception {
-public:
+class FileManagerException : public std::exception
+{
+  public:
     FileManagerException(std::string message) : std::exception()
     {
-	m_message = "FileManagerException: " + message;
+        m_message = "FileManagerException: " + message;
     }
 
     virtual const char* what() const throw()
     {
-	return m_message.c_str();
+        return m_message.c_str();
     }
 
-private:
+  private:
     std::string m_message;
 };
 
