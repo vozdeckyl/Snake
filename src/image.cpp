@@ -31,7 +31,7 @@ Image::Image(string imagePath) : IDrawable(), m_width(0), m_height(0)
             m_image.push_back(string("| | | - - - - this img. faild to load - - - - | | |"));
         }
     }
-    catch (fstream::failure error)
+    catch (const fstream::failure& error)
     {
         cerr << error.what() << endl;
         m_image.push_back(string("| | | - - - - this img. faild to load - - - - | | |"));
