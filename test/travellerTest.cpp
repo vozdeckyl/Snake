@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "traveller.h"
 #include "mockScreen.h"
+#include "traveller.h"
 
 TEST(travellerTest, boolStates)
 {

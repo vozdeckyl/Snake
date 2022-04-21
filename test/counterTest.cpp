@@ -3,7 +3,6 @@
 #include "counter.h"
 #include "mockScreen.h"
 
-
 TEST(counterTest, boolStates)
 {
     auto c = new Counter();
