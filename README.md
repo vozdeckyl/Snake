@@ -1,5 +1,7 @@
 ![example workflow](https://github.com/vozdeckyl/Snake/actions/workflows/ci.yml/badge.svg)
 [![shellsnake](https://snapcraft.io/shellsnake/badge.svg)](https://snapcraft.io/shellsnake)
+[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/vozdeckyl/Snake.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/vozdeckyl/Snake/context:cpp)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/vozdeckyl/Snake.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/vozdeckyl/Snake/alerts/)
 
 # Snake
 A simple terminal based game for Linux
