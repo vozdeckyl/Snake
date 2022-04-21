@@ -7,10 +7,11 @@
 /*!
     @brief Drawable number whose value increases by one in a given interval.
 */
-class Counter : public IDrawable {
-public:
+class Counter : public IDrawable
+{
+  public:
     Counter();
-    
+
     /*!
         @brief Contructor
         @param interval the interval in miliseconds after which the counter is increased
@@ -25,16 +26,25 @@ public:
     */
     void setInterval(unsigned int intervalMS);
 
-    void draw(const IGraphicsEngine * engine) override;
-    bool isVisible() override {return true;};
+    void draw(const IGraphicsEngine* engine) override;
+    bool isVisible() override
+    {
+        return true;
+    };
 
     void update() override;
-    bool isUpdatable() override {return true;};
+    bool isUpdatable() override
+    {
+        return true;
+    };
 
-    void notify(int ch) override {};
-    bool isNotifiable() override {return false;};
+    void notify(int ch) override{};
+    bool isNotifiable() override
+    {
+        return false;
+    };
 
-private:
+  private:
     unsigned int m_counter;
     unsigned int m_pulse_counter;
     unsigned int m_interval;

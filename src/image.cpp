@@ -11,13 +11,13 @@ Image::Image(string imagePath) : IDrawable(), m_width(0), m_height(0)
 
     try
     {
-        imageFile.open(imagePath,ios::in);
+        imageFile.open(imagePath, ios::in);
 
-        if(imageFile.is_open())
+        if (imageFile.is_open())
         {
             string line;
-            while(getline(imageFile, line))
-            { 
+            while (getline(imageFile, line))
+            {
                 m_image.push_back(line);
 
                 if (line.size() > m_width)
@@ -31,27 +31,26 @@ Image::Image(string imagePath) : IDrawable(), m_width(0), m_height(0)
             m_image.push_back(string("| | | - - - - this img. faild to load - - - - | | |"));
         }
     }
-    catch (fstream::failure error)
+    catch (const fstream::failure& error)
     {
         cerr << error.what() << endl;
         m_image.push_back(string("| | | - - - - this img. faild to load - - - - | | |"));
     }
 
     m_height = m_image.size();
-
 }
 
 Image::~Image()
 {
 }
 
-void Image::draw(const IGraphicsEngine * engine)
+void Image::draw(const IGraphicsEngine* engine)
 {
     int vertical_offset{0};
 
-    for(const string & s : m_image)
+    for (const string& s : m_image)
     {
-        engine->draw(s,m_vertical_position+vertical_offset,m_horizontal_position,Color::white,Color::black);
+        engine->draw(s, m_vertical_position + vertical_offset, m_horizontal_position, Color::white, Color::black);
         vertical_offset++;
     }
 }

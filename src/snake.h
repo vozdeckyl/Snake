@@ -2,15 +2,16 @@
 #define SNAKE_H
 
 #include "IDrawable.h"
+#include "direction.h"
 #include <list>
 #include <utility>
-#include "direction.h"
 
 /*!
     @brief Class representing the actual snake
 */
-class Snake : public IDrawable {
-public:
+class Snake : public IDrawable
+{
+  public:
     /*!
       @brief Constructor
       @param startPositionY Starting vertical position
@@ -28,14 +29,23 @@ public:
 
     ~Snake();
 
-    void draw(const IGraphicsEngine * engine) override;
-    bool isVisible() override {return true;};
+    void draw(const IGraphicsEngine* engine) override;
+    bool isVisible() override
+    {
+        return true;
+    };
 
-    void update() override {};
-    bool isUpdatable() override {return false;};
+    void update() override{};
+    bool isUpdatable() override
+    {
+        return false;
+    };
 
-    void notify(int ch) override {};
-    bool isNotifiable() override {return false;};
+    void notify(int ch) override{};
+    bool isNotifiable() override
+    {
+        return false;
+    };
 
     /*!
       @brief Returns the snake length - i.e. the number of cells
@@ -69,7 +79,8 @@ public:
     void advance();
 
     /*!
-      @brief Moves the head in the snake's direction and adds one cell behind the head while leaving the rest of the body still
+      @brief Moves the head in the snake's direction and adds one cell behind the head while leaving the rest of the
+      body still
     */
     void stretch();
 
@@ -85,12 +96,11 @@ public:
     */
     bool biteItself();
 
-private:
+  private:
     Direction m_direction;
     int m_headXposition;
     int m_headYposition;
-    std::list<std::pair<int,int>> m_tail;
-    
+    std::list<std::pair<int, int>> m_tail;
 };
 
 #endif
