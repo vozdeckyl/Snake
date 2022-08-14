@@ -8,7 +8,6 @@
  *
  */
 
-#include "NCursesEngine.h"
 #include "SnakeConfig.h"
 #include "counter.h"
 #include "fileManager.h"
@@ -21,8 +20,11 @@
 #include "settingsMenu.h"
 #include "traveller.h"
 #include "window.h"
+#include "AllegroEngine.hpp"
+#include "NCursesEngine.h"
 #include <iostream>
 #include <unistd.h>
+
 
 #ifdef DEBUG
 #define BUILD "Debug"
@@ -34,10 +36,9 @@ using namespace std;
 
 void maximize_active_window();
 
-int mainMenu()
+int mainMenu(shared_ptr<IGraphicsEngine> engine)
 {
-    Window preGameWindow(new NCursesEngine());
-
+    Window preGameWindow(engine);
     ObjectID menuID = preGameWindow.addElement(new Menu({"Play", "Game Settings", "Records", "Exit"}), 15, 10);
     preGameWindow.addElement(new Counter(), 0, 0);
     preGameWindow.addElement(new Counter(1), 1, 0);
@@ -48,13 +49,12 @@ int mainMenu()
 
     Result preGameWindowResults = preGameWindow.run();
     int result = preGameWindowResults.getResultOfEelement(menuID);
-
     return result;
 }
 
-void play()
+void play(shared_ptr<IGraphicsEngine> engine)
 {
-    Window play(new NCursesEngine());
+    Window play(engine);
 
     play.addElement(new Game(0.0, 0.005), 1, 1);
     play.addElement(new Label("Press Q to quit..."), play.getHeight() - 1, 1);
@@ -63,9 +63,9 @@ void play()
     play.run();
 }
 
-void gameSettings()
+void gameSettings(shared_ptr<IGraphicsEngine> engine)
 {
-    Window settings(new NCursesEngine());
+    Window settings(engine);
 
     SettingsMenu* settingsMenu = new SettingsMenu();
     settingsMenu->addSetting(Setting("Map size", {"small", "medium", "large"}));
@@ -79,9 +79,9 @@ void gameSettings()
     settings.run();
 }
 
-void records()
+void records(shared_ptr<IGraphicsEngine> engine)
 {
-    Window records(new NCursesEngine());
+    Window records(engine);
     records.enableKillByKeyQ();
 
     records.addElement(new Label(" TOP 10 SCORES ", Color::black, Color::white), 2, 10);
@@ -123,9 +123,12 @@ int main()
                          std::vector<std::string>({"../data/settings.bin", "/var/shellsnake/settings.bin"}));
     FileManager::addFile("scores", std::vector<std::string>({"../data/scores.bin", "/var/shellsnake/scores.bin"}));
 
+    //shared_ptr<IGraphicsEngine> engine(dynamic_cast<IGraphicsEngine *>(new AllegroEngine(100,50)));
+    shared_ptr<IGraphicsEngine> engine(dynamic_cast<IGraphicsEngine *>(new NCursesEngine()));
+
     while (true)
     {
-        int mainMenuResult = mainMenu();
+        int mainMenuResult = mainMenu(engine);
 
         if (mainMenuResult == 3)
         {
@@ -133,15 +136,15 @@ int main()
         }
         else if (mainMenuResult == 0)
         {
-            play();
+            play(engine);
         }
         else if (mainMenuResult == 1)
         {
-            gameSettings();
+            gameSettings(engine);
         }
         else if (mainMenuResult == 2)
         {
-            records();
+            records(engine);
         }
     }
 }

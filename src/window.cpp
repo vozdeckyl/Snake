@@ -4,10 +4,9 @@
 #include "result.h"
 #include <thread>
 
-Window::Window(IGraphicsEngine* engine) : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
+Window::Window(shared_ptr<IGraphicsEngine> engine) : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
 {
-    m_engine = unique_ptr<IGraphicsEngine>(engine);
-    m_engine->init();
+    m_engine = engine;
 
     m_numOfRows = m_engine->numberOfRows();
     m_numOfColumns = m_engine->numberOfColumns();
@@ -70,6 +69,8 @@ void Window::graphicsLoop()
      * This function runs on a separate thread. It iterates through
      * all the drawable objects and calls draw() on them.
      */
+
+    m_engine->init();
 
     int input;
 
