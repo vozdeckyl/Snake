@@ -50,6 +50,7 @@ public:
 	    }
 	    
 	    al_set_window_title(m_display, "Shell Snake");
+	    al_hide_mouse_cursor(m_display);
 		
 	    m_events = al_create_event_queue();
             al_register_event_source(m_events, al_get_display_event_source(m_display));
