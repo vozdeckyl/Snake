@@ -40,14 +40,17 @@ public:
 	    al_init_font_addon();
 	    al_init_ttf_addon();
 	    al_init_primitives_addon();
-	    
-	    
+
+	    al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
 	    m_display = al_create_display(m_height*10, m_width*10);
 	    
 	    if (!m_display)
 	    {
 		throw std::runtime_error("Unable to create display");
 	    }
+	    
+	    al_set_window_title(m_display, "Shell Snake");
+		
 	    m_events = al_create_event_queue();
             al_register_event_source(m_events, al_get_display_event_source(m_display));
             al_register_event_source(m_events, al_get_keyboard_event_source());
@@ -119,7 +122,7 @@ public:
         if(!al_is_event_queue_empty(m_events))
         {
             if(al_get_next_event(m_events, &m_event))
-            {
+            {	
                 if(m_event.type == ALLEGRO_EVENT_KEY_DOWN)
                 {
                     int key = m_event.keyboard.keycode;
@@ -132,6 +135,14 @@ public:
                     {
                         return 258;
                     }
+		    else if(key == ALLEGRO_KEY_LEFT)
+		    {
+			return 260;
+		    }
+		    else if(key == ALLEGRO_KEY_RIGHT)
+		    {
+			return 261;
+		    }
                     else if (key == ALLEGRO_KEY_Q)
                     {
                         return 'q';
