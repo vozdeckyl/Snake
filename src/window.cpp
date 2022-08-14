@@ -7,6 +7,7 @@
 Window::Window(shared_ptr<IGraphicsEngine> engine) : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
 {
     m_engine = engine;
+    m_engine->init();
 
     m_numOfRows = m_engine->numberOfRows();
     m_numOfColumns = m_engine->numberOfColumns();
@@ -14,7 +15,6 @@ Window::Window(shared_ptr<IGraphicsEngine> engine) : m_exit(false), m_nextObject
 
 Window::~Window()
 {
-    m_engine->endScreen();
 }
 
 ObjectID Window::addElement(IDrawable* element, int yPosition, int xPosition)
@@ -27,12 +27,9 @@ ObjectID Window::addElement(IDrawable* element, int yPosition, int xPosition)
 
 Result Window::run()
 {
-    thread graphicsThread(&Window::graphicsLoop, this);
     thread updateThread(&Window::updateLoop, this);
-
-    graphicsThread.join();
+    graphicsLoop();
     updateThread.join();
-
     return Result(m_elements);
 }
 
@@ -69,14 +66,12 @@ void Window::graphicsLoop()
      * This function runs on a separate thread. It iterates through
      * all the drawable objects and calls draw() on them.
      */
-
-    m_engine->init();
-
+    
     int input;
 
     int msFreeze = 33;
     std::chrono::time_point<std::chrono::steady_clock> tick = std::chrono::steady_clock::now();
-
+    
     while (!exit())
     {
         input = m_engine->input();

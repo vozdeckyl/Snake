@@ -8,6 +8,7 @@ NCursesEngine::NCursesEngine() : m_columns(0), m_rows(0)
 
 NCursesEngine::~NCursesEngine()
 {
+    endScreen();
 }
 
 void NCursesEngine::init()

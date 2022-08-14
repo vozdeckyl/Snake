@@ -12,7 +12,6 @@
 #include <vector>
 #include "IGraphicsEngine.h"
 
-
 class AllegroEngine : public IGraphicsEngine
 {
 public:
@@ -33,35 +32,37 @@ public:
 
     void init() override
     {
-        al_init();
-        al_install_keyboard();
-        al_init_font_addon();
-        al_init_ttf_addon();
-        al_init_primitives_addon();
-
         if(!m_screenCreated)
         {
-            m_screenCreated = true;
-            m_display = al_create_display(m_height*10, m_width*10);
-            
-            if (!m_display)
-            {
-                throw std::runtime_error("Unable to create display");
-            }
-
-            m_events = al_create_event_queue();
+	    m_screenCreated = true;
+	    al_init();
+	    al_install_keyboard();
+	    al_init_font_addon();
+	    al_init_ttf_addon();
+	    al_init_primitives_addon();
+	    
+	    
+	    m_display = al_create_display(m_height*10, m_width*10);
+	    
+	    if (!m_display)
+	    {
+		throw std::runtime_error("Unable to create display");
+	    }
+	    m_events = al_create_event_queue();
             al_register_event_source(m_events, al_get_display_event_source(m_display));
             al_register_event_source(m_events, al_get_keyboard_event_source());
 
             m_font = al_load_ttf_font("consola.ttf", 18, ALLEGRO_TTF_NO_KERNING);
-            al_set_target_backbuffer(m_display);
-            al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
-        }
-    }
 
+	    al_set_target_backbuffer(m_display);
+	    al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
+	}
+
+    }
+    
     void prepareScreen() override
     {
-        
+        clearScreen();
     }
 
     void draw(std::string text, int y, int x, Color textColor, Color backgroundColor) const override

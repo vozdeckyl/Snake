@@ -123,8 +123,10 @@ int main()
                          std::vector<std::string>({"../data/settings.bin", "/var/shellsnake/settings.bin"}));
     FileManager::addFile("scores", std::vector<std::string>({"../data/scores.bin", "/var/shellsnake/scores.bin"}));
 
-    //shared_ptr<IGraphicsEngine> engine(dynamic_cast<IGraphicsEngine *>(new AllegroEngine(100,50)));
-    shared_ptr<IGraphicsEngine> engine(dynamic_cast<IGraphicsEngine *>(new NCursesEngine()));
+   
+    //shared_ptr<IGraphicsEngine> engine = dynamic_pointer_cast<IGraphicsEngine>(std::make_shared<AllegroEngine>(150,80));
+    shared_ptr<IGraphicsEngine> engine = dynamic_pointer_cast<IGraphicsEngine>(std::make_shared<NCursesEngine>());
+   
 
     while (true)
     {
