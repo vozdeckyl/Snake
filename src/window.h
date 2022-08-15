@@ -24,7 +24,7 @@ class Window
         @brief Contructor
         @param engine Graphics engine used for drawing objects on the screen
     */
-    Window(shared_ptr<IGraphicsEngine> engine);
+    Window(IGraphicsEngine& engine);
     ~Window();
 
     /*!
@@ -87,7 +87,7 @@ class Window
     mutex m_mutex_exit;
     bool m_exit;
     bool m_killByKeyQ;
-    shared_ptr<IGraphicsEngine> m_engine;
+    IGraphicsEngine& m_engine;
 };
 
 #endif

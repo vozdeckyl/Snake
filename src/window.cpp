@@ -4,13 +4,12 @@
 #include "result.h"
 #include <thread>
 
-Window::Window(shared_ptr<IGraphicsEngine> engine) : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false)
+Window::Window(IGraphicsEngine& engine) : m_exit(false), m_nextObjectID(0), m_killByKeyQ(false), m_engine(engine)
 {
-    m_engine = engine;
-    m_engine->init();
+    m_engine.init();
 
-    m_numOfRows = m_engine->numberOfRows();
-    m_numOfColumns = m_engine->numberOfColumns();
+    m_numOfRows = m_engine.numberOfRows();
+    m_numOfColumns = m_engine.numberOfColumns();
 }
 
 Window::~Window()
@@ -74,7 +73,7 @@ void Window::graphicsLoop()
     
     while (!exit())
     {
-        input = m_engine->input();
+        input = m_engine.input();
 
         if (input == 'q' && m_killByKeyQ)
         {
@@ -89,17 +88,17 @@ void Window::graphicsLoop()
             }
         }
 
-        m_engine->prepareScreen();
+        m_engine.prepareScreen();
 
         for (const auto& pair : m_elements)
         {
             if (pair.second->isVisible())
             {
-                pair.second->draw(m_engine.get());
+                pair.second->draw(&m_engine);
             }
         }
 
-        m_engine->refreshScreen();
+        m_engine.refreshScreen();
 
         std::chrono::duration<double, std::milli> elapsed{std::chrono::steady_clock::now() - tick};
         std::this_thread::sleep_until(tick + std::chrono::milliseconds(msFreeze));

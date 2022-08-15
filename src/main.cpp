@@ -36,7 +36,7 @@ using namespace std;
 
 void maximize_active_window();
 
-int mainMenu(shared_ptr<IGraphicsEngine> engine)
+int mainMenu(IGraphicsEngine& engine)
 {
     Window preGameWindow(engine);
     ObjectID menuID = preGameWindow.addElement(new Menu({"Play", "Game Settings", "Records", "Exit"}), 15, 10);
@@ -52,7 +52,7 @@ int mainMenu(shared_ptr<IGraphicsEngine> engine)
     return result;
 }
 
-void play(shared_ptr<IGraphicsEngine> engine)
+void play(IGraphicsEngine& engine)
 {
     Window play(engine);
 
@@ -63,7 +63,7 @@ void play(shared_ptr<IGraphicsEngine> engine)
     play.run();
 }
 
-void gameSettings(shared_ptr<IGraphicsEngine> engine)
+void gameSettings(IGraphicsEngine& engine)
 {
     Window settings(engine);
 
@@ -79,7 +79,7 @@ void gameSettings(shared_ptr<IGraphicsEngine> engine)
     settings.run();
 }
 
-void records(shared_ptr<IGraphicsEngine> engine)
+void records(IGraphicsEngine& engine)
 {
     Window records(engine);
     records.enableKillByKeyQ();
@@ -124,8 +124,10 @@ int main()
     FileManager::addFile("scores", std::vector<std::string>({"../data/scores.bin", "/var/shellsnake/scores.bin"}));
 
    
-    shared_ptr<IGraphicsEngine> engine = dynamic_pointer_cast<IGraphicsEngine>(std::make_shared<AllegroEngine>(150,80));
-    //shared_ptr<IGraphicsEngine> engine = dynamic_pointer_cast<IGraphicsEngine>(std::make_shared<NCursesEngine>());
+
+    AllegroEngine engine(150,80);
+    //NCursesEngine engine;
+
    
 
     while (true)
