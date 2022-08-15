@@ -14,7 +14,7 @@ TEST(settingsMenuTest, drawing)
     ASSERT_TRUE(system("touch settings.dat && rm settings.dat") != -1);
     ASSERT_TRUE(system("touch settings.dat") != -1);
     FileManager::addFile("settings", "settings.dat");
-    auto engine = new mockScreen(100, 100);
+    mockScreen engine(100, 100);
     Setting setting1("1", {"A", "B", "C", "D"});
     Setting setting2("2", {"A", "B", "C", "D"});
     SettingsMenu menu;
@@ -24,25 +24,24 @@ TEST(settingsMenuTest, drawing)
 
     menu.draw(engine);
 
-    ASSERT_TRUE(engine->testScreen('1', 0, 0));
-    ASSERT_TRUE(engine->testScreen('2', 1, 0));
-    ASSERT_TRUE(engine->testScreen(' ', 0, 1));
-    ASSERT_TRUE(engine->testScreen('<', 0, 5));
-    ASSERT_TRUE(engine->testScreen('A', 0, 6));
-    ASSERT_TRUE(engine->testScreen('>', 0, 7));
+    ASSERT_TRUE(engine.testScreen('1', 0, 0));
+    ASSERT_TRUE(engine.testScreen('2', 1, 0));
+    ASSERT_TRUE(engine.testScreen(' ', 0, 1));
+    ASSERT_TRUE(engine.testScreen('<', 0, 5));
+    ASSERT_TRUE(engine.testScreen('A', 0, 6));
+    ASSERT_TRUE(engine.testScreen('>', 0, 7));
 
-    ASSERT_TRUE(engine->testScreen('<', 1, 5));
-    ASSERT_TRUE(engine->testScreen('A', 1, 6));
-    ASSERT_TRUE(engine->testScreen('>', 1, 7));
-
-    delete engine;
+    ASSERT_TRUE(engine.testScreen('<', 1, 5));
+    ASSERT_TRUE(engine.testScreen('A', 1, 6));
+    ASSERT_TRUE(engine.testScreen('>', 1, 7));
+    
 }
 
 TEST(settingsMenuTest, verticalSelection)
 {
     ASSERT_TRUE(system("touch settings.dat && rm settings.dat") != -1);
     ASSERT_TRUE(system("touch settings.dat") != -1);
-    auto engine = new mockScreen(100, 100);
+    mockScreen engine(100, 100);
     Setting setting("1", {"A", "B", "C", "D"});
     SettingsMenu menu;
     menu.addSetting(setting);
@@ -50,46 +49,45 @@ TEST(settingsMenuTest, verticalSelection)
 
     menu.draw(engine);
 
-    ASSERT_TRUE(engine->testScreen('1', 0, 0));
-    ASSERT_TRUE(engine->testScreen(' ', 1, 0));
-    ASSERT_TRUE(engine->testScreen(' ', 0, 1));
-    ASSERT_TRUE(engine->testScreen('<', 0, 5));
-    ASSERT_TRUE(engine->testScreen('A', 0, 6));
-    ASSERT_TRUE(engine->testScreen('>', 0, 7));
+    ASSERT_TRUE(engine.testScreen('1', 0, 0));
+    ASSERT_TRUE(engine.testScreen(' ', 1, 0));
+    ASSERT_TRUE(engine.testScreen(' ', 0, 1));
+    ASSERT_TRUE(engine.testScreen('<', 0, 5));
+    ASSERT_TRUE(engine.testScreen('A', 0, 6));
+    ASSERT_TRUE(engine.testScreen('>', 0, 7));
 
-    engine->clearScreen();
+    engine.clearScreen();
     menu.notify(KEY_RIGHT);
     menu.draw(engine);
 
-    ASSERT_TRUE(engine->testScreen('<', 0, 5));
-    ASSERT_TRUE(engine->testScreen('B', 0, 6));
-    ASSERT_TRUE(engine->testScreen('>', 0, 7));
+    ASSERT_TRUE(engine.testScreen('<', 0, 5));
+    ASSERT_TRUE(engine.testScreen('B', 0, 6));
+    ASSERT_TRUE(engine.testScreen('>', 0, 7));
 
-    engine->clearScreen();
+    engine.clearScreen();
     menu.notify(KEY_RIGHT);
     menu.draw(engine);
 
-    ASSERT_TRUE(engine->testScreen('<', 0, 5));
-    ASSERT_TRUE(engine->testScreen('C', 0, 6));
-    ASSERT_TRUE(engine->testScreen('>', 0, 7));
+    ASSERT_TRUE(engine.testScreen('<', 0, 5));
+    ASSERT_TRUE(engine.testScreen('C', 0, 6));
+    ASSERT_TRUE(engine.testScreen('>', 0, 7));
 
-    engine->clearScreen();
+    engine.clearScreen();
     menu.notify(KEY_LEFT);
     menu.notify(KEY_LEFT);
     menu.draw(engine);
 
-    ASSERT_TRUE(engine->testScreen('<', 0, 5));
-    ASSERT_TRUE(engine->testScreen('A', 0, 6));
-    ASSERT_TRUE(engine->testScreen('>', 0, 7));
-
-    delete engine;
+    ASSERT_TRUE(engine.testScreen('<', 0, 5));
+    ASSERT_TRUE(engine.testScreen('A', 0, 6));
+    ASSERT_TRUE(engine.testScreen('>', 0, 7));
+    
 }
 
 TEST(settingsMenuTest, horizontalSelection)
 {
     ASSERT_TRUE(system("touch settings.dat && rm settings.dat") != -1);
     ASSERT_TRUE(system("touch settings.dat") != -1);
-    auto engine = new mockScreen(100, 100);
+    mockScreen engine(100, 100);
     Setting setting1("1", {"A", "B", "C", "D"});
     Setting setting2("2", {"A", "B", "C", "D"});
     SettingsMenu menu;
@@ -99,50 +97,49 @@ TEST(settingsMenuTest, horizontalSelection)
 
     menu.draw(engine);
 
-    ASSERT_TRUE(engine->testScreen('<', 0, 5));
-    ASSERT_TRUE(engine->testScreen('A', 0, 6));
-    ASSERT_TRUE(engine->testScreen('>', 0, 7));
+    ASSERT_TRUE(engine.testScreen('<', 0, 5));
+    ASSERT_TRUE(engine.testScreen('A', 0, 6));
+    ASSERT_TRUE(engine.testScreen('>', 0, 7));
 
-    ASSERT_TRUE(engine->testScreen('<', 1, 5));
-    ASSERT_TRUE(engine->testScreen('A', 1, 6));
-    ASSERT_TRUE(engine->testScreen('>', 1, 7));
+    ASSERT_TRUE(engine.testScreen('<', 1, 5));
+    ASSERT_TRUE(engine.testScreen('A', 1, 6));
+    ASSERT_TRUE(engine.testScreen('>', 1, 7));
 
-    engine->clearScreen();
+    engine.clearScreen();
     menu.notify(KEY_DOWN);
     menu.notify(KEY_RIGHT);
     menu.notify(KEY_RIGHT);
     menu.draw(engine);
 
-    ASSERT_TRUE(engine->testScreen('<', 0, 5));
-    ASSERT_TRUE(engine->testScreen('A', 0, 6));
-    ASSERT_TRUE(engine->testScreen('>', 0, 7));
+    ASSERT_TRUE(engine.testScreen('<', 0, 5));
+    ASSERT_TRUE(engine.testScreen('A', 0, 6));
+    ASSERT_TRUE(engine.testScreen('>', 0, 7));
 
-    ASSERT_TRUE(engine->testScreen('<', 1, 5));
-    ASSERT_TRUE(engine->testScreen('C', 1, 6));
-    ASSERT_TRUE(engine->testScreen('>', 1, 7));
+    ASSERT_TRUE(engine.testScreen('<', 1, 5));
+    ASSERT_TRUE(engine.testScreen('C', 1, 6));
+    ASSERT_TRUE(engine.testScreen('>', 1, 7));
 
-    engine->clearScreen();
+    engine.clearScreen();
     menu.notify(KEY_LEFT);
     menu.notify(KEY_UP);
     menu.notify(KEY_RIGHT);
     menu.draw(engine);
 
-    ASSERT_TRUE(engine->testScreen('<', 0, 5));
-    ASSERT_TRUE(engine->testScreen('B', 0, 6));
-    ASSERT_TRUE(engine->testScreen('>', 0, 7));
+    ASSERT_TRUE(engine.testScreen('<', 0, 5));
+    ASSERT_TRUE(engine.testScreen('B', 0, 6));
+    ASSERT_TRUE(engine.testScreen('>', 0, 7));
 
-    ASSERT_TRUE(engine->testScreen('<', 1, 5));
-    ASSERT_TRUE(engine->testScreen('B', 1, 6));
-    ASSERT_TRUE(engine->testScreen('>', 1, 7));
-
-    delete engine;
+    ASSERT_TRUE(engine.testScreen('<', 1, 5));
+    ASSERT_TRUE(engine.testScreen('B', 1, 6));
+    ASSERT_TRUE(engine.testScreen('>', 1, 7));
+    
 }
 
 TEST(settingsMenuTest, loadingFile)
 {
     ASSERT_TRUE(system("touch settings.dat && rm settings.dat") != -1);
     ASSERT_TRUE(system("echo A0 > settings.dat") != -1); // "A" = 0011 0000 0100 0001
-    auto engine = new mockScreen(100, 100);
+    mockScreen engine(100, 100);
     Setting setting1("1", {"A", "B", "C", "D"});
     Setting setting2("2", {"A", "B", "C", "D", "E", "F", "G"});
     SettingsMenu menu;
@@ -153,15 +150,14 @@ TEST(settingsMenuTest, loadingFile)
 
     menu.draw(engine);
 
-    ASSERT_TRUE(engine->testScreen('<', 0, 5));
-    ASSERT_TRUE(engine->testScreen('B', 0, 6));
-    ASSERT_TRUE(engine->testScreen('>', 0, 7));
+    ASSERT_TRUE(engine.testScreen('<', 0, 5));
+    ASSERT_TRUE(engine.testScreen('B', 0, 6));
+    ASSERT_TRUE(engine.testScreen('>', 0, 7));
 
-    ASSERT_TRUE(engine->testScreen('<', 1, 5));
-    ASSERT_TRUE(engine->testScreen('E', 1, 6));
-    ASSERT_TRUE(engine->testScreen('>', 1, 7));
-
-    delete engine;
+    ASSERT_TRUE(engine.testScreen('<', 1, 5));
+    ASSERT_TRUE(engine.testScreen('E', 1, 6));
+    ASSERT_TRUE(engine.testScreen('>', 1, 7));
+    
 }
 
 int main(int argc, char** argv)

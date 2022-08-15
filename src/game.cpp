@@ -87,18 +87,18 @@ Game::~Game()
     log.logScore(m_score);
 }
 
-void Game::draw(const IGraphicsEngine* engine)
+void Game::draw(const IGraphicsEngine& engine)
 {
     lock_guard<mutex> guard(m_mutex);
     drawWalls(engine);
-    engine->draw(("Score: " + to_string(m_score)), m_playWindowHeight + 1, (int)m_playWindowWidth * 0.5, Color::white,
+    engine.draw(("Score: " + to_string(m_score)), m_playWindowHeight + 1, (int)m_playWindowWidth * 0.5, Color::white,
                  Color::black);
-    engine->draw("X", m_target_vertical, m_target_horizontal, Color::black, Color::yellow);
+    engine.draw("X", m_target_vertical, m_target_horizontal, Color::black, Color::yellow);
     m_snake.draw(engine);
 
     if (m_gameOver)
     {
-        engine->draw(gameOverLabel, (int)(0.5 * m_playWindowHeight),
+        engine.draw(gameOverLabel, (int)(0.5 * m_playWindowHeight),
                      (int)(0.5 * (m_playWindowWidth - gameOverLabel.size())), Color::white, Color::black);
     }
 }
@@ -218,17 +218,17 @@ void Game::update()
     }
 }
 
-void Game::drawWalls(const IGraphicsEngine* engine)
+void Game::drawWalls(const IGraphicsEngine& engine)
 {
     for (int i = 0; i <= m_playWindowWidth; i++)
     {
-        engine->draw(" ", 0, i, Color::red, Color::white);
-        engine->draw(" ", m_playWindowHeight, i, Color::red, Color::white);
+        engine.draw(" ", 0, i, Color::red, Color::white);
+        engine.draw(" ", m_playWindowHeight, i, Color::red, Color::white);
     }
 
     for (int i = 0; i <= m_playWindowHeight; i++)
     {
-        engine->draw(" ", i, 0, Color::red, Color::white);
-        engine->draw(" ", i, m_playWindowWidth, Color::red, Color::white);
+        engine.draw(" ", i, 0, Color::red, Color::white);
+        engine.draw(" ", i, m_playWindowWidth, Color::red, Color::white);
     }
 }

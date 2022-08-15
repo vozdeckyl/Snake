@@ -94,7 +94,7 @@ void Window::graphicsLoop()
         {
             if (pair.second->isVisible())
             {
-                pair.second->draw(&m_engine);
+                pair.second->draw(m_engine);
             }
         }
 

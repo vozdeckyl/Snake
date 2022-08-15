@@ -20,7 +20,7 @@ class IDrawable
         @brief Function that is called to draw the object
         @param engine Engine that is used to draw the object
     */
-    virtual void draw(const IGraphicsEngine* engine) = 0;
+    virtual void draw(const IGraphicsEngine& engine) = 0;
 
     /*!
         @brief This function is called bin regular intervals to update the internal state of the object.

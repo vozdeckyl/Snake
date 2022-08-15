@@ -39,7 +39,7 @@ SettingsMenu::~SettingsMenu()
     this->saveSettings();
 }
 
-void SettingsMenu::draw(const IGraphicsEngine* engine)
+void SettingsMenu::draw(const IGraphicsEngine& engine)
 {
     int counter{0};
 
@@ -60,7 +60,7 @@ void SettingsMenu::draw(const IGraphicsEngine* engine)
             backgroundColor = Color::black;
         }
 
-        engine->draw((setting.getName() + "    <" + setting.getOption() + ">"), m_vertical_position + counter,
+        engine.draw((setting.getName() + "    <" + setting.getOption() + ">"), m_vertical_position + counter,
                      m_horizontal_position - setting.getName().size(), textColor, backgroundColor);
         counter++;
     }

@@ -26,7 +26,7 @@ class Counter : public IDrawable
     */
     void setInterval(unsigned int intervalMS);
 
-    void draw(const IGraphicsEngine* engine) override;
+    void draw(const IGraphicsEngine& engine) override;
     bool isVisible() override
     {
         return true;

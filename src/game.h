@@ -19,7 +19,7 @@ class Game : public IDrawable
     Game(double verticalVelocity, double horizontalVelocity);
     ~Game();
 
-    void draw(const IGraphicsEngine* engine) override;
+    void draw(const IGraphicsEngine& engine) override;
     bool isVisible() override
     {
         return true;
@@ -48,7 +48,7 @@ class Game : public IDrawable
     /*!
       @brief Draws the walls around the map
     */
-    void drawWalls(const IGraphicsEngine* engine);
+    void drawWalls(const IGraphicsEngine& engine);
 
   private:
     std::mutex m_mutex;

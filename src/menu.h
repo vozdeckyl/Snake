@@ -37,7 +37,7 @@ class Menu : public IDrawable
     */
     ~Menu();
 
-    void draw(const IGraphicsEngine* engine) override;
+    void draw(const IGraphicsEngine& engine) override;
     bool isVisible() override
     {
         return true;

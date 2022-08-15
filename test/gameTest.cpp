@@ -17,95 +17,92 @@ TEST(gameTest, boolStates)
 
 TEST(gameTest, drawing)
 {
-    auto engine = new mockScreen(100, 100);
+    mockScreen engine(100, 100);
     auto g = new Game(1.0, 1.0);
 
     g->draw(engine);
     g->update();
 
-    ASSERT_TRUE(engine->testScreen(':', 1, 1));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::green, 1, 1));
-    ASSERT_TRUE(engine->testTextColor(Color::red, 1, 1));
+    ASSERT_TRUE(engine.testScreen(':', 1, 1));
+    ASSERT_TRUE(engine.testBackgroundColor(Color::green, 1, 1));
+    ASSERT_TRUE(engine.testTextColor(Color::red, 1, 1));
 
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white, 0, 0));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white, 0, 1));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::white, 1, 0));
+    ASSERT_TRUE(engine.testBackgroundColor(Color::white, 0, 0));
+    ASSERT_TRUE(engine.testBackgroundColor(Color::white, 0, 1));
+    ASSERT_TRUE(engine.testBackgroundColor(Color::white, 1, 0));
 
-    ASSERT_TRUE(engine->testScreen(' ', 2, 2));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::black, 2, 2));
+    ASSERT_TRUE(engine.testScreen(' ', 2, 2));
+    ASSERT_TRUE(engine.testBackgroundColor(Color::black, 2, 2));
 
-    ASSERT_TRUE(engine->testScreen(' ', 1, 2));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::black, 1, 2));
+    ASSERT_TRUE(engine.testScreen(' ', 1, 2));
+    ASSERT_TRUE(engine.testBackgroundColor(Color::black, 1, 2));
 
-    ASSERT_TRUE(engine->testScreen(' ', 2, 1));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::black, 2, 1));
-
-    delete engine;
+    ASSERT_TRUE(engine.testScreen(' ', 2, 1));
+    ASSERT_TRUE(engine.testBackgroundColor(Color::black, 2, 1));
+    
     delete g;
 }
 
 TEST(gameTest, score)
 {
-    auto engine = new mockScreen(100, 100);
+    mockScreen engine(100, 100);
     auto g = new Game(1.0, 1.0);
 
     g->draw(engine);
 
-    ASSERT_TRUE(engine->testScreen('S', 11, 15));
-    ASSERT_TRUE(engine->testScreen('c', 11, 16));
-    ASSERT_TRUE(engine->testScreen('o', 11, 17));
-    ASSERT_TRUE(engine->testScreen('r', 11, 18));
-    ASSERT_TRUE(engine->testScreen('e', 11, 19));
-    ASSERT_TRUE(engine->testScreen(':', 11, 20));
-    ASSERT_TRUE(engine->testScreen(' ', 11, 21));
-    ASSERT_TRUE(engine->testScreen('0', 11, 22));
-
-    delete engine;
+    ASSERT_TRUE(engine.testScreen('S', 11, 15));
+    ASSERT_TRUE(engine.testScreen('c', 11, 16));
+    ASSERT_TRUE(engine.testScreen('o', 11, 17));
+    ASSERT_TRUE(engine.testScreen('r', 11, 18));
+    ASSERT_TRUE(engine.testScreen('e', 11, 19));
+    ASSERT_TRUE(engine.testScreen(':', 11, 20));
+    ASSERT_TRUE(engine.testScreen(' ', 11, 21));
+    ASSERT_TRUE(engine.testScreen('0', 11, 22));
+    
     delete g;
 }
 
 TEST(gameTest, movement)
 {
-    auto engine = new mockScreen(100, 100);
+    mockScreen engine(100, 100);
     auto g = new Game(1.0, 1.0);
 
     g->draw(engine);
 
-    ASSERT_TRUE(engine->testScreen(':', 1, 1));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::green, 1, 1));
-    ASSERT_TRUE(engine->testTextColor(Color::red, 1, 1));
+    ASSERT_TRUE(engine.testScreen(':', 1, 1));
+    ASSERT_TRUE(engine.testBackgroundColor(Color::green, 1, 1));
+    ASSERT_TRUE(engine.testTextColor(Color::red, 1, 1));
 
-    engine->clearScreen();
+    engine.clearScreen();
 
     g->notify(KEY_RIGHT);
     for (int i = 0; i < 150; i++)
         g->update();
     g->draw(engine);
 
-    ASSERT_TRUE(engine->testScreen(':', 1, 2));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::green, 1, 2));
-    ASSERT_TRUE(engine->testTextColor(Color::red, 1, 2));
-    ASSERT_TRUE(engine->testScreen(' ', 1, 1));
+    ASSERT_TRUE(engine.testScreen(':', 1, 2));
+    ASSERT_TRUE(engine.testBackgroundColor(Color::green, 1, 2));
+    ASSERT_TRUE(engine.testTextColor(Color::red, 1, 2));
+    ASSERT_TRUE(engine.testScreen(' ', 1, 1));
 
-    engine->clearScreen();
+    engine.clearScreen();
 
     g->notify(KEY_DOWN);
     for (int i = 0; i < 300; i++)
         g->update();
     g->draw(engine);
 
-    ASSERT_TRUE(engine->testScreen(':', 2, 2));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::green, 2, 2));
-    ASSERT_TRUE(engine->testTextColor(Color::red, 2, 2));
-    ASSERT_TRUE(engine->testScreen(' ', 1, 2));
-
-    delete engine;
+    ASSERT_TRUE(engine.testScreen(':', 2, 2));
+    ASSERT_TRUE(engine.testBackgroundColor(Color::green, 2, 2));
+    ASSERT_TRUE(engine.testTextColor(Color::red, 2, 2));
+    ASSERT_TRUE(engine.testScreen(' ', 1, 2));
+    
     delete g;
 }
 
 TEST(gameTest, target)
 {
-    auto engine = new mockScreen(100, 100);
+    mockScreen engine(100, 100);
     auto g = new Game(1.0, 1.0);
 
     g->notify(KEY_RIGHT);
@@ -113,51 +110,50 @@ TEST(gameTest, target)
         g->update();
     g->draw(engine);
 
-    ASSERT_TRUE(engine->testScreen(':', 1, 5));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::green, 1, 5));
-    ASSERT_TRUE(engine->testTextColor(Color::red, 1, 5));
+    ASSERT_TRUE(engine.testScreen(':', 1, 5));
+    ASSERT_TRUE(engine.testBackgroundColor(Color::green, 1, 5));
+    ASSERT_TRUE(engine.testTextColor(Color::red, 1, 5));
 
-    engine->clearScreen();
+    engine.clearScreen();
 
     g->notify(KEY_DOWN);
     for (int i = 0; i < 300 * 3; i++)
         g->update();
     g->draw(engine);
 
-    ASSERT_TRUE(engine->testScreen(':', 4, 5));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::green, 4, 5));
-    ASSERT_TRUE(engine->testTextColor(Color::red, 4, 5));
+    ASSERT_TRUE(engine.testScreen(':', 4, 5));
+    ASSERT_TRUE(engine.testBackgroundColor(Color::green, 4, 5));
+    ASSERT_TRUE(engine.testTextColor(Color::red, 4, 5));
 
-    ASSERT_TRUE(engine->testScreen('0', 11, 22));
+    ASSERT_TRUE(engine.testScreen('0', 11, 22));
 
-    ASSERT_TRUE(engine->testScreen('X', 5, 5));
+    ASSERT_TRUE(engine.testScreen('X', 5, 5));
 
-    engine->clearScreen();
-
-    for (int i = 0; i < 300; i++)
-        g->update();
-    g->draw(engine);
-
-    ASSERT_TRUE(engine->testScreen(':', 5, 5));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::green, 5, 5));
-    ASSERT_TRUE(engine->testTextColor(Color::red, 5, 5));
-
-    engine->clearScreen();
+    engine.clearScreen();
 
     for (int i = 0; i < 300; i++)
         g->update();
     g->draw(engine);
 
-    ASSERT_TRUE(engine->testScreen(':', 6, 5));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::green, 6, 5));
-    ASSERT_TRUE(engine->testTextColor(Color::red, 6, 5));
+    ASSERT_TRUE(engine.testScreen(':', 5, 5));
+    ASSERT_TRUE(engine.testBackgroundColor(Color::green, 5, 5));
+    ASSERT_TRUE(engine.testTextColor(Color::red, 5, 5));
 
-    ASSERT_TRUE(engine->testScreen(' ', 5, 5));
-    ASSERT_TRUE(engine->testBackgroundColor(Color::green, 5, 5));
+    engine.clearScreen();
 
-    ASSERT_TRUE(engine->testScreen('1', 11, 22));
+    for (int i = 0; i < 300; i++)
+        g->update();
+    g->draw(engine);
 
-    delete engine;
+    ASSERT_TRUE(engine.testScreen(':', 6, 5));
+    ASSERT_TRUE(engine.testBackgroundColor(Color::green, 6, 5));
+    ASSERT_TRUE(engine.testTextColor(Color::red, 6, 5));
+
+    ASSERT_TRUE(engine.testScreen(' ', 5, 5));
+    ASSERT_TRUE(engine.testBackgroundColor(Color::green, 5, 5));
+
+    ASSERT_TRUE(engine.testScreen('1', 11, 22));
+    
     delete g;
 }
 

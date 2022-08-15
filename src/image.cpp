@@ -44,13 +44,13 @@ Image::~Image()
 {
 }
 
-void Image::draw(const IGraphicsEngine* engine)
+void Image::draw(const IGraphicsEngine& engine)
 {
     int vertical_offset{0};
 
     for (const string& s : m_image)
     {
-        engine->draw(s, m_vertical_position + vertical_offset, m_horizontal_position, Color::white, Color::black);
+        engine.draw(s, m_vertical_position + vertical_offset, m_horizontal_position, Color::white, Color::black);
         vertical_offset++;
     }
 }

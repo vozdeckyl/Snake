@@ -14,13 +14,13 @@ Snake::~Snake()
 {
 }
 
-void Snake::draw(const IGraphicsEngine* engine)
+void Snake::draw(const IGraphicsEngine& engine)
 {
-    engine->draw(":", m_headYposition, m_headXposition, Color::red, Color::green);
+    engine.draw(":", m_headYposition, m_headXposition, Color::red, Color::green);
 
     for (const std::pair<int, int>& cell : m_tail)
     {
-        engine->draw(" ", cell.first, cell.second, Color::red, Color::green);
+        engine.draw(" ", cell.first, cell.second, Color::red, Color::green);
     }
 }
 

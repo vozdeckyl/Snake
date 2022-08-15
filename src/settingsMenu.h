@@ -23,7 +23,7 @@ class SettingsMenu : public IDrawable
     */
     void loadFromFile(std::string fileName);
 
-    void draw(const IGraphicsEngine* engine) override;
+    void draw(const IGraphicsEngine& engine) override;
     bool isVisible() override
     {
         return true;

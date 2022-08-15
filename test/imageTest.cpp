@@ -31,24 +31,23 @@ TEST(imageTest, drawing)
     {
         std::cerr << e.what() << '\n';
     }
-
-    auto engine = new mockScreen(100, 100);
+    
+    mockScreen engine(100, 100);
     auto image = new Image("test/testimg.txt");
     image->setPosition(0, 0);
 
     image->draw(engine);
-    ASSERT_TRUE(engine->testScreen('A', 0, 0));
-    ASSERT_TRUE(engine->testScreen('l', 0, 1));
-    ASSERT_TRUE(engine->testScreen('l', 0, 2));
-    ASSERT_TRUE(engine->testScreen(' ', 0, 3));
-    ASSERT_TRUE(engine->testScreen('w', 0, 4));
-    ASSERT_TRUE(engine->testScreen('o', 0, 5));
-    ASSERT_TRUE(engine->testScreen('r', 0, 6));
+    ASSERT_TRUE(engine.testScreen('A', 0, 0));
+    ASSERT_TRUE(engine.testScreen('l', 0, 1));
+    ASSERT_TRUE(engine.testScreen('l', 0, 2));
+    ASSERT_TRUE(engine.testScreen(' ', 0, 3));
+    ASSERT_TRUE(engine.testScreen('w', 0, 4));
+    ASSERT_TRUE(engine.testScreen('o', 0, 5));
+    ASSERT_TRUE(engine.testScreen('r', 0, 6));
 
-    ASSERT_TRUE(engine->testScreen('y', 0, 41));
-    ASSERT_TRUE(engine->testScreen(' ', 0, 42));
-
-    delete engine;
+    ASSERT_TRUE(engine.testScreen('y', 0, 41));
+    ASSERT_TRUE(engine.testScreen(' ', 0, 42));
+    
     delete image;
 }
 
@@ -72,22 +71,21 @@ TEST(imageTest, multiline)
     {
         std::cerr << e.what() << '\n';
     }
-
-    auto engine = new mockScreen(100, 100);
+    
+    mockScreen engine(100, 100);
     auto image = new Image("test/testimg.txt");
     image->setPosition(0, 0);
 
     image->draw(engine);
-    ASSERT_TRUE(engine->testScreen('A', 0, 0));
-    ASSERT_TRUE(engine->testScreen('B', 1, 0));
-    ASSERT_TRUE(engine->testScreen('C', 2, 0));
-    ASSERT_TRUE(engine->testScreen('D', 3, 0));
-    ASSERT_TRUE(engine->testScreen('E', 4, 0));
-    ASSERT_TRUE(engine->testScreen('F', 5, 0));
+    ASSERT_TRUE(engine.testScreen('A', 0, 0));
+    ASSERT_TRUE(engine.testScreen('B', 1, 0));
+    ASSERT_TRUE(engine.testScreen('C', 2, 0));
+    ASSERT_TRUE(engine.testScreen('D', 3, 0));
+    ASSERT_TRUE(engine.testScreen('E', 4, 0));
+    ASSERT_TRUE(engine.testScreen('F', 5, 0));
 
-    ASSERT_TRUE(engine->testScreen(' ', 6, 0));
-
-    delete engine;
+    ASSERT_TRUE(engine.testScreen(' ', 6, 0));
+    
     delete image;
 }
 

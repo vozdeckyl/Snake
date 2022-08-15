@@ -34,7 +34,7 @@ void Menu::addEntry(string entry)
     m_entries.push_back(entry);
 }
 
-void Menu::draw(const IGraphicsEngine* engine)
+void Menu::draw(const IGraphicsEngine& engine)
 {
 
     int counter{0};
@@ -45,12 +45,12 @@ void Menu::draw(const IGraphicsEngine* engine)
     {
         if (counter == m_selector)
         {
-            engine->draw((">" + entry + "<"), m_vertical_position + counter, m_horizontal_position - 1, Color::white,
+            engine.draw((">" + entry + "<"), m_vertical_position + counter, m_horizontal_position - 1, Color::white,
                          Color::red);
         }
         else
         {
-            engine->draw(entry, m_vertical_position + counter, m_horizontal_position, Color::white, Color::black);
+            engine.draw(entry, m_vertical_position + counter, m_horizontal_position, Color::white, Color::black);
         }
         counter++;
     }
