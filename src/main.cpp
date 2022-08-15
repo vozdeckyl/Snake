@@ -8,6 +8,8 @@
  *
  */
 
+#include "AllegroEngine.hpp"
+#include "NCursesEngine.h"
 #include "SnakeConfig.h"
 #include "counter.h"
 #include "fileManager.h"
@@ -20,11 +22,8 @@
 #include "settingsMenu.h"
 #include "traveller.h"
 #include "window.h"
-#include "AllegroEngine.hpp"
-#include "NCursesEngine.h"
 #include <iostream>
 #include <unistd.h>
-
 
 #ifdef DEBUG
 #define BUILD "Debug"
@@ -123,12 +122,8 @@ int main()
                          std::vector<std::string>({"../data/settings.bin", "/var/shellsnake/settings.bin"}));
     FileManager::addFile("scores", std::vector<std::string>({"../data/scores.bin", "/var/shellsnake/scores.bin"}));
 
-   
-
-    AllegroEngine engine(150,80);
-    //NCursesEngine engine;
-
-   
+    AllegroEngine engine(150, 80);
+    // NCursesEngine engine;
 
     while (true)
     {

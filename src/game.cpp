@@ -92,14 +92,14 @@ void Game::draw(const IGraphicsEngine& engine)
     lock_guard<mutex> guard(m_mutex);
     drawWalls(engine);
     engine.draw(("Score: " + to_string(m_score)), m_playWindowHeight + 1, (int)m_playWindowWidth * 0.5, Color::white,
-                 Color::black);
+                Color::black);
     engine.draw("X", m_target_vertical, m_target_horizontal, Color::black, Color::yellow);
     m_snake.draw(engine);
 
     if (m_gameOver)
     {
         engine.draw(gameOverLabel, (int)(0.5 * m_playWindowHeight),
-                     (int)(0.5 * (m_playWindowWidth - gameOverLabel.size())), Color::white, Color::black);
+                    (int)(0.5 * (m_playWindowWidth - gameOverLabel.size())), Color::white, Color::black);
     }
 }
 

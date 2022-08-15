@@ -1,21 +1,20 @@
 #ifndef ALLEGROENGINE_H
 #define ALLEGROENGINE_H
 
+#include "IGraphicsEngine.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
-#include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
-#include <thread>
+#include <allegro5/allegro_ttf.h>
 #include <chrono>
 #include <iostream>
 #include <string>
+#include <thread>
 #include <vector>
-#include "IGraphicsEngine.h"
 
 class AllegroEngine : public IGraphicsEngine
 {
-public:
-
+  public:
     AllegroEngine(int h, int w)
     {
         m_width = w;
@@ -24,7 +23,7 @@ public:
 
     ~AllegroEngine()
     {
-        if(!m_screenEnded)
+        if (!m_screenEnded)
         {
             endScreen();
         }
@@ -32,38 +31,37 @@ public:
 
     void init() override
     {
-        if(!m_screenCreated)
+        if (!m_screenCreated)
         {
-	    m_screenCreated = true;
-	    al_init();
-	    al_install_keyboard();
-	    al_init_font_addon();
-	    al_init_ttf_addon();
-	    al_init_primitives_addon();
+            m_screenCreated = true;
+            al_init();
+            al_install_keyboard();
+            al_init_font_addon();
+            al_init_ttf_addon();
+            al_init_primitives_addon();
 
-	    al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
-	    m_display = al_create_display(m_height*10, m_width*10);
-	    
-	    if (!m_display)
-	    {
-		throw std::runtime_error("Unable to create display");
-	    }
-	    
-	    al_set_window_title(m_display, "Shell Snake");
-	    al_hide_mouse_cursor(m_display);
-		
-	    m_events = al_create_event_queue();
+            al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+            m_display = al_create_display(m_height * 10, m_width * 10);
+
+            if (!m_display)
+            {
+                throw std::runtime_error("Unable to create display");
+            }
+
+            al_set_window_title(m_display, "Shell Snake");
+            al_hide_mouse_cursor(m_display);
+
+            m_events = al_create_event_queue();
             al_register_event_source(m_events, al_get_display_event_source(m_display));
             al_register_event_source(m_events, al_get_keyboard_event_source());
 
             m_font = al_load_ttf_font("consola.ttf", 18, ALLEGRO_TTF_NO_KERNING);
 
-	    al_set_target_backbuffer(m_display);
-	    al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
-	}
-
+            al_set_target_backbuffer(m_display);
+            al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
+        }
     }
-    
+
     void prepareScreen() override
     {
         clearScreen();
@@ -71,17 +69,18 @@ public:
 
     void draw(std::string text, int y, int x, Color textColor, Color backgroundColor) const override
     {
-        //al_set_target_backbuffer(m_display);
-        //al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
+        // al_set_target_backbuffer(m_display);
+        // al_set_blender(ALLEGRO_ADD, ALLEGRO_ONE, ALLEGRO_INVERSE_ALPHA);
         int n{0};
-        
-        for(const char & ch : text)
+
+        for (const char& ch : text)
         {
-            al_draw_filled_rectangle(10.0f*(x+n), 18.0f*y, 10.0f*(x+n+1), 18.0f*(y+1), get_al_color(backgroundColor));
-            al_draw_text(m_font, get_al_color(textColor), 10.0f*(x+n), 18.0f*y, ALLEGRO_ALIGN_LEFT, &ch);
+            al_draw_filled_rectangle(10.0f * (x + n), 18.0f * y, 10.0f * (x + n + 1), 18.0f * (y + 1),
+                                     get_al_color(backgroundColor));
+            al_draw_text(m_font, get_al_color(textColor), 10.0f * (x + n), 18.0f * y, ALLEGRO_ALIGN_LEFT, &ch);
             n++;
         }
-        //al_flip_display();
+        // al_flip_display();
     }
 
     void refreshScreen() override
@@ -120,30 +119,30 @@ public:
 
     int input()
     {
-        if(!al_is_event_queue_empty(m_events))
+        if (!al_is_event_queue_empty(m_events))
         {
-            if(al_get_next_event(m_events, &m_event))
-            {	
-                if(m_event.type == ALLEGRO_EVENT_KEY_DOWN)
+            if (al_get_next_event(m_events, &m_event))
+            {
+                if (m_event.type == ALLEGRO_EVENT_KEY_DOWN)
                 {
                     int key = m_event.keyboard.keycode;
 
-                    if(key == ALLEGRO_KEY_UP)
+                    if (key == ALLEGRO_KEY_UP)
                     {
                         return 259;
                     }
-                    else if (key == ALLEGRO_KEY_DOWN) 
+                    else if (key == ALLEGRO_KEY_DOWN)
                     {
                         return 258;
                     }
-		    else if(key == ALLEGRO_KEY_LEFT)
-		    {
-			return 260;
-		    }
-		    else if(key == ALLEGRO_KEY_RIGHT)
-		    {
-			return 261;
-		    }
+                    else if (key == ALLEGRO_KEY_LEFT)
+                    {
+                        return 260;
+                    }
+                    else if (key == ALLEGRO_KEY_RIGHT)
+                    {
+                        return 261;
+                    }
                     else if (key == ALLEGRO_KEY_Q)
                     {
                         return 'q';
@@ -163,53 +162,51 @@ public:
         return -1;
     }
 
-
-private:
-
+  private:
     ALLEGRO_COLOR get_al_color(Color c) const
     {
         ALLEGRO_COLOR result;
         switch (c)
         {
-            case Color::black:
-                result = al_map_rgb(0,0,0);
-                break;
-            case Color::blue:
-                result = al_map_rgb(0,0,255);
-                break;
-            case Color::green:
-                result = al_map_rgb(0,255,0);
-                break;
-            case Color::cyan:
-                result = al_map_rgb(0, 255, 255);
-                break;
-            case Color::red:
-                result = al_map_rgb(255,0,0);
-                break;
-            case Color::magenta:
-                result = al_map_rgb(255, 0, 255);
-                break;
-            case Color::white:
-                result = al_map_rgb(255,255,255);
-                break;
-            case Color::yellow:
-                result = al_map_rgb(255,255,0);
-                break;
-            default:
-                throw std::runtime_error("Unimplemented color in AllegroEngine::get_al_color()");
-                break;
+        case Color::black:
+            result = al_map_rgb(0, 0, 0);
+            break;
+        case Color::blue:
+            result = al_map_rgb(0, 0, 255);
+            break;
+        case Color::green:
+            result = al_map_rgb(0, 255, 0);
+            break;
+        case Color::cyan:
+            result = al_map_rgb(0, 255, 255);
+            break;
+        case Color::red:
+            result = al_map_rgb(255, 0, 0);
+            break;
+        case Color::magenta:
+            result = al_map_rgb(255, 0, 255);
+            break;
+        case Color::white:
+            result = al_map_rgb(255, 255, 255);
+            break;
+        case Color::yellow:
+            result = al_map_rgb(255, 255, 0);
+            break;
+        default:
+            throw std::runtime_error("Unimplemented color in AllegroEngine::get_al_color()");
+            break;
         }
         return result;
     }
 
-    private:
+  private:
     int m_width = 500;
     int m_height = 500;
 
-    ALLEGRO_DISPLAY * m_display;
+    ALLEGRO_DISPLAY* m_display;
     ALLEGRO_EVENT m_event;
-    ALLEGRO_EVENT_QUEUE * m_events;
-    ALLEGRO_FONT * m_font;
+    ALLEGRO_EVENT_QUEUE* m_events;
+    ALLEGRO_FONT* m_font;
 
     bool m_screenEnded = false;
     bool m_screenCreated = false;

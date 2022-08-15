@@ -46,7 +46,7 @@ void Menu::draw(const IGraphicsEngine& engine)
         if (counter == m_selector)
         {
             engine.draw((">" + entry + "<"), m_vertical_position + counter, m_horizontal_position - 1, Color::white,
-                         Color::red);
+                        Color::red);
         }
         else
         {

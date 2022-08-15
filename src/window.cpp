@@ -65,12 +65,12 @@ void Window::graphicsLoop()
      * This function runs on a separate thread. It iterates through
      * all the drawable objects and calls draw() on them.
      */
-    
+
     int input;
 
     int msFreeze = 33;
     std::chrono::time_point<std::chrono::steady_clock> tick = std::chrono::steady_clock::now();
-    
+
     while (!exit())
     {
         input = m_engine.input();

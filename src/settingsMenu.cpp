@@ -61,7 +61,7 @@ void SettingsMenu::draw(const IGraphicsEngine& engine)
         }
 
         engine.draw((setting.getName() + "    <" + setting.getOption() + ">"), m_vertical_position + counter,
-                     m_horizontal_position - setting.getName().size(), textColor, backgroundColor);
+                    m_horizontal_position - setting.getName().size(), textColor, backgroundColor);
         counter++;
     }
 }
