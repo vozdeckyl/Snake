@@ -75,16 +75,19 @@ void Window::graphicsLoop()
     {
         input = m_engine.input();
 
-        if (input == 'q' && m_killByKeyQ)
+        if (input != -1)
         {
-            kill();
-        }
-
-        for (const auto& pair : m_elements)
-        {
-            if (pair.second->isNotifiable())
+            if (input == 'q' && m_killByKeyQ)
             {
-                pair.second->notify(input);
+                kill();
+            }
+
+            for (const auto& pair : m_elements)
+            {
+                if (pair.second->isNotifiable())
+                {
+                    pair.second->notify(input);
+                }
             }
         }
 
