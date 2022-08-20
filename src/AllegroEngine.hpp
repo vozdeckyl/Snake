@@ -23,7 +23,7 @@ class AllegroEngine : public IGraphicsEngine
 
     ~AllegroEngine()
     {
-        if (!m_screenEnded)
+        if (!m_screenEnded && m_screenCreated)
         {
             endScreen();
         }

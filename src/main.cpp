@@ -110,24 +110,43 @@ void records(IGraphicsEngine& engine)
     records.run();
 }
 
-int main()
+int main(int argc, char **argv)
 {
-    maximize_active_window();
+    string argument;
+    if(argc>1)
+    {
+	argument = string(argv[1]);
+    }
+
+    AllegroEngine engineAllegro(150, 80);
+    NCursesEngine engineClassic;
+    IGraphicsEngine * engine;
+
     cout << "Snake v" << Snake_VERSION_MAJOR << "." << Snake_VERSION_MINOR << " " << BUILD << endl;
-    sleep(1);
+    
+    if(argument == "--classic")
+    {
+	maximize_active_window();
+	engine = dynamic_cast<IGraphicsEngine *>(&engineClassic);
+	sleep(1);
+    }
+    else
+    {
+	engine = dynamic_cast<IGraphicsEngine *>(&engineAllegro);
+    }
 
+    
     FileManager::addFile("logo",
-                         std::vector<std::string>({"../data/logo.txt", "/usr/local/share/shellsnake/logo.txt"}));
+                         vector<string>({"../data/logo.txt", "/usr/local/share/shellsnake/logo.txt"}));
     FileManager::addFile("settings",
-                         std::vector<std::string>({"../data/settings.bin", "/var/shellsnake/settings.bin"}));
-    FileManager::addFile("scores", std::vector<std::string>({"../data/scores.bin", "/var/shellsnake/scores.bin"}));
+                         vector<string>({"../data/settings.bin", "/var/shellsnake/settings.bin"}));
+    FileManager::addFile("scores", vector<string>({"../data/scores.bin", "/var/shellsnake/scores.bin"}));
 
-    AllegroEngine engine(150, 80);
-    // NCursesEngine engine;
-
+    
+    
     while (true)
     {
-        int mainMenuResult = mainMenu(engine);
+        int mainMenuResult = mainMenu(*engine);
 
         if (mainMenuResult == 3)
         {
@@ -135,15 +154,15 @@ int main()
         }
         else if (mainMenuResult == 0)
         {
-            play(engine);
+            play(*engine);
         }
         else if (mainMenuResult == 1)
         {
-            gameSettings(engine);
+            gameSettings(*engine);
         }
         else if (mainMenuResult == 2)
         {
-            records(engine);
+            records(*engine);
         }
     }
 }
