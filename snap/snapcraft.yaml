@@ -17,12 +17,19 @@ parts:
       - libgtest-dev
       - libncurses5-dev
       - libx11-dev
+      - liballegro-ttf5-dev
+      - liballegro5-dev
     stage-packages:
       - libncursesw5
       - libx11-6
       - libxau6
       - libxcb1
       - libxdmcp6
+      - liballegro5.2
+      - liballegro-ttf5.2
+      - libgl1-mesa-dri
+      - mesa-utils
+      - libgl1-mesa-glx
 
 layout:
   /var/shellsnake/settings.bin:
