@@ -39,13 +39,11 @@ Result Window::run()
 
 bool Window::exit()
 {
-    lock_guard<mutex> guard(m_mutex_exit);
-    return m_exit;
+    return m_exit.load();
 }
 
 void Window::kill()
 {
-    lock_guard<mutex> guard(m_mutex_exit);
     m_exit = true;
 }
 

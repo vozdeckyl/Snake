@@ -5,7 +5,7 @@
 #include "objectid.h"
 #include <map>
 #include <memory>
-#include <mutex>
+#include <atomic>
 
 class IDrawable;
 class Result;
@@ -84,8 +84,7 @@ class Window
     ObjectID m_nextObjectID;
     int m_numOfRows;
     int m_numOfColumns;
-    mutex m_mutex_exit;
-    bool m_exit;
+    atomic<bool> m_exit;
     bool m_killByKeyQ;
     unique_ptr<IGraphicsEngine> m_engine;
 };

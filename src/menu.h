@@ -2,7 +2,7 @@
 #define MENU_H
 
 #include "IDrawable.h"
-#include <mutex>
+#include <atomic>
 #include <string>
 #include <vector>
 
@@ -84,8 +84,7 @@ class Menu : public IDrawable
 
   private:
     std::vector<std::string> m_entries;
-    int m_selector;
-    std::mutex m_selector_mutex;
+    std::atomic<int> m_selector;
 };
 
 #endif

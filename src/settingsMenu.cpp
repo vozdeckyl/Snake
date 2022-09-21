@@ -42,13 +42,11 @@ SettingsMenu::~SettingsMenu()
 void SettingsMenu::draw(const IGraphicsEngine* engine)
 {
     int counter{0};
-
-    lock_guard<mutex> guard(m_selector_mutex);
-
+    
     for (const Setting& setting : m_settings)
     {
         Color textColor, backgroundColor;
-        if (counter == m_selector)
+        if (counter == m_selector.load())
         {
             // if the menu item is selected, decorate it:
             textColor = Color::white;
@@ -68,16 +66,14 @@ void SettingsMenu::draw(const IGraphicsEngine* engine)
 
 void SettingsMenu::moveSelectorUp()
 {
-    lock_guard<mutex> guard(m_selector_mutex);
-    if (m_selector != 0)
+    if (m_selector.load() != 0)
         m_selector--;
 }
 
 void SettingsMenu::moveSelectorDown()
 {
     int numOfEntries = m_settings.size();
-    lock_guard<mutex> guard(m_selector_mutex);
-    if (m_selector != numOfEntries - 1)
+    if (m_selector.load() != numOfEntries - 1)
         m_selector++;
 }
 
@@ -93,11 +89,11 @@ void SettingsMenu::notify(int ch)
     }
     else if (ch == KEY_LEFT)
     {
-        m_settings[m_selector].previousOption();
+        m_settings[m_selector.load()].previousOption();
     }
     else if (ch == KEY_RIGHT)
     {
-        m_settings[m_selector].nextOption();
+        m_settings[m_selector.load()].nextOption();
     }
     else if (ch == 10) /* 10 = KEY_ENTER */
     {

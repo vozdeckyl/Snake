@@ -2,7 +2,7 @@
 #define COUNTER_H
 
 #include "IDrawable.h"
-#include <mutex>
+#include <atomic>
 
 /*!
     @brief Drawable number whose value increases by one in a given interval.
@@ -45,11 +45,9 @@ class Counter : public IDrawable
     };
 
   private:
-    unsigned int m_counter;
+    std::atomic<unsigned int> m_counter;
     unsigned int m_pulse_counter;
     unsigned int m_interval;
-
-    std::mutex m_counter_mutex;
 };
 
 #endif
