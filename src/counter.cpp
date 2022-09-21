@@ -1,5 +1,4 @@
 #include "counter.h"
-#include <mutex>
 #include <ncurses.h>
 
 using namespace std;
@@ -23,9 +22,8 @@ void Counter::setInterval(unsigned int interval)
 
 void Counter::draw(const IGraphicsEngine* engine)
 {
-    lock_guard<mutex> guard(m_counter_mutex);
     // mvprintw(m_vertical_position,m_horizontal_position, to_string(m_counter).c_str());
-    engine->draw(to_string(m_counter), m_vertical_position, m_horizontal_position, Color::white, Color::black);
+    engine->draw(to_string(m_counter.load()), m_vertical_position, m_horizontal_position, Color::white, Color::black);
 }
 
 void Counter::update()
@@ -35,7 +33,6 @@ void Counter::update()
     if (m_pulse_counter == m_interval)
     {
         m_pulse_counter = 0;
-        lock_guard<mutex> guard(m_counter_mutex);
         m_counter++;
     }
 }

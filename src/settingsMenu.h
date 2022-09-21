@@ -3,7 +3,7 @@
 
 #include "IDrawable.h"
 #include "setting.h"
-#include <mutex>
+#include <atomic>
 #include <vector>
 
 /*!
@@ -64,8 +64,7 @@ class SettingsMenu : public IDrawable
 
   private:
     std::vector<Setting> m_settings;
-    std::mutex m_selector_mutex;
-    int m_selector;
+    std::atomic<int> m_selector;
 };
 
 #endif

@@ -39,11 +39,9 @@ void Menu::draw(const IGraphicsEngine* engine)
 
     int counter{0};
 
-    lock_guard<mutex> guard(m_selector_mutex);
-
     for (const string& entry : m_entries)
     {
-        if (counter == m_selector)
+        if (counter == m_selector.load())
         {
             engine->draw((">" + entry + "<"), m_vertical_position + counter, m_horizontal_position - 1, Color::white,
                          Color::red);
@@ -74,16 +72,14 @@ void Menu::notify(int ch)
 
 void Menu::moveSelectorUp()
 {
-    lock_guard<mutex> guard(m_selector_mutex);
-    if (m_selector != 0)
+    if (m_selector.load() != 0)
         m_selector--;
 }
 
 void Menu::moveSelectorDown()
 {
     int numOfEntries = m_entries.size();
-    lock_guard<mutex> guard(m_selector_mutex);
-    if (m_selector != numOfEntries - 1)
+    if (m_selector.load() != numOfEntries - 1)
         m_selector++;
 }
 
