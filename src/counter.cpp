@@ -1,5 +1,4 @@
 #include "counter.h"
-#include <mutex>
 #include <ncurses.h>
 
 using namespace std;
