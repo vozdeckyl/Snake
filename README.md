@@ -1,4 +1,4 @@
-![example workflow](https://github.com/vozdeckyl/Snake/actions/workflows/ci.yml/badge.svg)
+[![CMake workflow](https://github.com/vozdeckyl/Snake/actions/workflows/ci.yml/badge.svg)](https://github.com/vozdeckyl/Snake/actions/workflows/ci.yml)
 [![shellsnake](https://snapcraft.io/shellsnake/badge.svg)](https://snapcraft.io/shellsnake)
 [![CodeQL](https://github.com/vozdeckyl/Snake/actions/workflows/codeql.yml/badge.svg)](https://github.com/vozdeckyl/Snake/actions/workflows/codeql.yml)
 
