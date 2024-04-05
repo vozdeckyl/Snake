@@ -13,6 +13,10 @@ endif()
 # making the configuration file
 configure_file(${PROJECT_SOURCE_DIR}/src/SnakeConfig.h.in ${PROJECT_SOURCE_DIR}/src/SnakeConfig.h)
 
+# copy the font
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data/fonts/consola.ttf
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
