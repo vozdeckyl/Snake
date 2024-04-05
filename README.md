@@ -7,7 +7,7 @@ A simple terminal based game for Linux
 
 ## Install using snap
 ```bash
-snap install shellsnake --beta
+snap install shellsnake
 ```
 
 ## Install from the source code
