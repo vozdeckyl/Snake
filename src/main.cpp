@@ -117,11 +117,21 @@ int main()
     cout << "Snake v" << Snake_VERSION_MAJOR << "." << Snake_VERSION_MINOR << " " << BUILD << endl;
     sleep(1);
 
-    FileManager::addFile("logo",
-                         std::vector<std::string>({"../data/logo.txt", "/usr/local/share/shellsnake/logo.txt"}));
-    FileManager::addFile("settings",
-                         std::vector<std::string>({"../data/settings.bin", "/var/shellsnake/settings.bin"}));
-    FileManager::addFile("scores", std::vector<std::string>({"../data/scores.bin", "/var/shellsnake/scores.bin"}));
+    FileManager::addFile("logo", std::vector<std::string>({
+                                     "../data/logo.txt",
+                                     "/usr/local/share/shellsnake/logo.txt",
+                                     "/app/usr/local/share/shellsnake/logo.txt",
+                                 }));
+    FileManager::addFile("settings", std::vector<std::string>({
+                                         "../data/settings.bin",
+                                         "/var/shellsnake/settings.bin",
+                                         "/app/var/shellsnake/settings.bin",
+                                     }));
+    FileManager::addFile("scores", std::vector<std::string>({
+                                       "../data/scores.bin",
+                                       "/var/shellsnake/scores.bin",
+                                       "/app/var/shellsnake/scores.bin",
+                                   }));
 
     while (true)
     {
