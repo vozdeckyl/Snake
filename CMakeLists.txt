@@ -60,18 +60,23 @@ install(
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} # include
     )
 
-install(
-    FILES
-    "data/logo.txt"
-    DESTINATION /usr/local/share/${CPACK_PACKAGE_NAME}
-    )
+if(DEFINED ENV{FLATPAK_ID})
+  set(FlatpakPrefix "/app")
+endif()
 
 install(
-    FILES
-    "data/scores.bin"
-    "data/settings.bin"
-    PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ GROUP_WRITE WORLD_READ WORLD_WRITE
-    DESTINATION /var/${CPACK_PACKAGE_NAME}
-    )
+  FILES
+  "data/logo.txt"
+  DESTINATION ${FlatpakPrefix}/usr/local/share/${CPACK_PACKAGE_NAME}
+)
+
+install(
+  FILES
+  "data/scores.bin"
+  "data/settings.bin"
+  PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ GROUP_WRITE WORLD_READ WORLD_WRITE
+  DESTINATION ${FlatpakPrefix}/var/${CPACK_PACKAGE_NAME}
+)
+
 
 include(CPack)
