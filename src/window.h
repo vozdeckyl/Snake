@@ -3,9 +3,9 @@
 
 #include "IGraphicsEngine.h"
 #include "objectid.h"
+#include <atomic>
 #include <map>
 #include <memory>
-#include <atomic>
 
 class IDrawable;
 class Result;

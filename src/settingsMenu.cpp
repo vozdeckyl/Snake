@@ -42,7 +42,7 @@ SettingsMenu::~SettingsMenu()
 void SettingsMenu::draw(const IGraphicsEngine* engine)
 {
     int counter{0};
-    
+
     for (const Setting& setting : m_settings)
     {
         Color textColor, backgroundColor;
