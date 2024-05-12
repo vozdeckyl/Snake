@@ -1,0 +1,35 @@
+id: org.flatpak.Shellsnake
+runtime: org.freedesktop.Platform
+runtime-version: '1.0'
+sdk: org.freedesktop.Sdk
+command: snake
+finish-args:
+  - --socket=x11
+modules:
+  - name: gtest
+    buildsystem: cmake
+    sources:
+       -  type: archive
+          url: https://github.com/google/googletest/archive/refs/tags/v1.14.0.tar.gz
+          sha256: 8ad598c73ad796e0d8280b082cebd82a630d73e73cd3c70057938a6501bba5d7
+
+  - name: ncurses
+    disabled: false
+    buildsystem: autotools
+    no-autogen: true
+    config-opts: --prefix=/usr
+    build-options:
+      cflags: '-fPIC'
+      cppflags: '-fPIC'
+      ldflags: '-fpic'
+    sources:
+       -  type: archive
+          url: https://invisible-mirror.net/archives/ncurses/ncurses-6.4.tar.gz
+          sha256: 6931283d9ac87c5073f30b6290c4c75f21632bb4fc3603ac8100812bed248159
+
+  - name: shellsnake
+    buildsystem: cmake
+    sources:
+      - type: git
+        url: https://github.com/vozdeckyl/Snake.git
+        tag: v1.0
