@@ -74,7 +74,6 @@ install(
   FILES
   "data/scores.bin"
   "data/settings.bin"
-  PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ GROUP_WRITE WORLD_READ WORLD_WRITE
   DESTINATION ${FlatpakPrefix}/var/${CPACK_PACKAGE_NAME}
 )
 
