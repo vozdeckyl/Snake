@@ -76,6 +76,8 @@ void gameSettings()
     settings.addElement(settingsMenu, 5, 20);
     settings.enableKillByKeyQ();
 
+    settings.addElement(new Label("Press Q to save & quit"), settings.getHeight() - 1, 1);
+
     settings.run();
 }
 
