@@ -1,6 +1,6 @@
 id: org.flatpak.Shellsnake
 runtime: org.freedesktop.Platform
-runtime-version: '1.0'
+runtime-version: '1.1'
 sdk: org.freedesktop.Sdk
 command: snake
 finish-args:
@@ -32,4 +32,4 @@ modules:
     sources:
       - type: git
         url: https://github.com/vozdeckyl/Snake.git
-        tag: v1.0
+        tag: v1.1
