@@ -13,6 +13,14 @@ env:
   BUILD_TYPE: Release
 
 jobs:
+  code_format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check code format
+        run: clang-format src/*.cpp src/*.h test/*.cpp test/*.h -n --Werror
   build:
     # The CMake configure and build commands are platform agnostic and should work equally
     # well on Windows or Mac.  You can convert this to a matrix build if you need
