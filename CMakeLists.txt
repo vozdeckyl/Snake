@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 # set the project name
-project(Snake VERSION 0.4)
+project(Snake VERSION 1.0)
 
 #set the DEBUG flag if necessary
 if(CMAKE_BUILD_TYPE)
