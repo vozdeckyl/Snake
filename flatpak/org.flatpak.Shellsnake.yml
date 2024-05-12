@@ -1,6 +1,6 @@
 id: org.flatpak.Shellsnake
 runtime: org.freedesktop.Platform
-runtime-version: '1.1'
+runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
 command: snake
 finish-args:
