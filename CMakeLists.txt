@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 # set the project name
-project(Snake VERSION 1.0)
+project(Snake VERSION 1.1)
 
 #set the DEBUG flag if necessary
 if(CMAKE_BUILD_TYPE)
@@ -74,7 +74,6 @@ install(
   FILES
   "data/scores.bin"
   "data/settings.bin"
-  PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ GROUP_WRITE WORLD_READ WORLD_WRITE
   DESTINATION ${FlatpakPrefix}/var/${CPACK_PACKAGE_NAME}
 )
 
