@@ -38,7 +38,7 @@ class Counter : public IDrawable
         return true;
     };
 
-    void notify(int ch) override{};
+    void notify(int ch) override {};
     bool isNotifiable() override
     {
         return false;
