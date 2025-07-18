@@ -35,13 +35,13 @@ class Snake : public IDrawable
         return true;
     };
 
-    void update() override{};
+    void update() override {};
     bool isUpdatable() override
     {
         return false;
     };
 
-    void notify(int ch) override{};
+    void notify(int ch) override {};
     bool isNotifiable() override
     {
         return false;

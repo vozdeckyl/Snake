@@ -29,7 +29,7 @@ class SettingsMenu : public IDrawable
         return true;
     }
 
-    void update() override{};
+    void update() override {};
     bool isUpdatable() override
     {
         return false;
